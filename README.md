@@ -1,10 +1,10 @@
-# 🚢 Compañía Naviera SEA STAR
+#  Compañía Naviera SEA STAR
 
 Proyecto desarrollado para resolver el caso práctico de la **Compañía Naviera SEA STAR**, una empresa dedicada a la realización de cruceros.
 
 El sistema permite administrar la información relacionada con los navíos, sus cubiertas, camarotes, tripulantes, itinerarios, puertos, viajes y pasajeros.
 
-## 📌 Descripción del proyecto
+##  Descripción del proyecto
 
 La compañía SEA STAR cuenta actualmente con tres navíos y tiene previsto incorporar nuevas embarcaciones a su flota.
 
@@ -21,7 +21,7 @@ El sistema busca organizar y relacionar toda la información necesaria para la g
 - Pasajeros y sus reservas.
 - Camarotes ocupados por los pasajeros.
 
-## 🚢 Navíos
+##  Navíos
 
 De cada navío se registran los siguientes datos:
 
@@ -40,7 +40,7 @@ De cada navío se registran los siguientes datos:
 
 Cada navío está formado por varias **cubiertas**, las cuales poseen un número único dentro de cada barco y una descripción.
 
-## 🛳️ Cubiertas y camarotes
+##  Cubiertas y camarotes
 
 Cada cubierta pertenece a un navío y cuenta con un encargado.
 
@@ -57,7 +57,7 @@ De cada camarote se registra:
 
 El número de camarote puede repetirse en diferentes cubiertas del mismo navío.
 
-## 👨‍✈️ Tripulación
+##  Tripulación
 
 Cada navío cuenta con una tripulación que puede variar según el viaje.
 
@@ -81,7 +81,7 @@ Entre los puestos pueden encontrarse:
 
 Un tripulante no puede formar parte de la tripulación de dos navíos al mismo tiempo.
 
-## 🌎 Itinerarios y puertos
+##  Itinerarios y puertos
 
 Los itinerarios están formados por diferentes puertos que son visitados durante el recorrido.
 
@@ -96,7 +96,7 @@ Los itinerarios tienen una categoría:
 - Lujoso.
 - Común.
 
-## 🗺️ Viajes
+## Viajes
 
 El sistema permite registrar los viajes realizados por los distintos navíos.
 
@@ -109,7 +109,7 @@ De cada viaje se registra:
 
 La duración se registra para cada viaje debido a que un mismo itinerario puede tener diferentes duraciones dependiendo del viaje y del navío que lo realice.
 
-## 👥 Pasajeros
+##  Pasajeros
 
 El sistema también permite registrar los pasajeros que hayan viajado o realizado reservas.
 
@@ -123,7 +123,7 @@ De cada pasajero se registra:
 - Crucero realizado.
 - Camarote en el que se alojó.
 
-## 🛠️ Tecnologías utilizadas
+##  Tecnologías utilizadas
 
 - Python 3.12.3
 - Django 5.2
@@ -132,7 +132,7 @@ De cada pasajero se registra:
 - CSS
 - GitHub
 
-  ## ⚙️ Instalacion
+  ##  Instalacion
 Para ejecutar el proyecto localmente:
 1. Clonar el repositorio
 git clone git@github.com:Villada-PG3/trabajo-practico-integrador-compania_naviera_sea-star.git
@@ -160,7 +160,7 @@ Luego se puede acceder al proyecto desde:
 
 http://127.0.0.1:8000/
 
-## 📂 Estructura del proyecto
+##  Estructura del proyecto
 
 La estructura principal del proyecto se organiza de la siguiente manera:
 
