@@ -1,0 +1,107 @@
+erDiagram
+    NAVIO {
+        string codigo_navio PK
+        string nombre
+        float altura
+        float eslora
+        float manga
+        float desplazamiento
+        float autonomia_viaje
+        int cantidad_camarotes
+        int cantidad_max_pasajeros
+        int cantidad_motores
+        int cantidad_tripulantes
+        string nivel_lujo
+    }
+
+    CUBIERTA {
+        string numero_cubierta PK
+        string codigo_navio FK "FK a NAVIO"
+        string legajo_encargado FK "FK a TRIPULANTE"
+        string descripcion
+    }
+
+    CAMAROTE {
+        string numero_camarote PK
+        string numero_cubierta FK "FK a CUBIERTA"
+        string codigo_navio FK "FK a NAVIO"
+        string tipo
+        string ubicacion "Babor, Crujía, Estribor"
+    }
+
+    TRIPULANTE {
+        string legajo PK
+        string nombre
+        string puesto
+        string codigo_navio FK "FK a NAVIO"
+        string legajo_jefe FK "FK a TRIPULANTE"
+    }
+
+    ITINERARIO {
+        int id_itinerario PK
+        string categoria "Especial, Super Lujo, Lujoso, Común"
+    }
+
+    PUERTO {
+        int id_puerto PK
+        string nombre_puerto
+    }
+
+    ESCALA {
+        int id_escala PK
+        int id_itinerario FK "FK a ITINERARIO"
+        int id_puerto FK "FK a PUERTO"
+        int numero_escala
+    }
+
+    VIAJE {
+        int id_viaje PK
+        string codigo_navio FK "FK a NAVIO"
+        int id_itinerario FK "FK a ITINERARIO"
+        date fecha_viaje
+        int duracion "En días/horas"
+    }
+
+    PASAJERO {
+        string tipo_documento PK
+        string numero_documento PK
+        string nombre
+        string pais_procedencia
+        string ciudad_procedencia
+    }
+
+    RESERVA_VIAJE {
+        int id_reserva PK
+        string tipo_documento FK "FK a PASAJERO"
+        string numero_documento FK "FK a PASAJERO"
+        int id_viaje FK "FK a VIAJE"
+        string numero_camarote FK "FK a CAMAROTE"
+    }
+
+    %% ==========================================
+    %% CONEXIONES DIRECTAS PARA CADA CLAVE FORÁNEA
+    %% ==========================================
+
+    %% Conexiones desde NAVIO
+    NAVIO ||--o{ CUBIERTA : "origen de codigo_navio"
+    NAVIO ||--o{ CAMAROTE : "origen de codigo_navio"
+    NAVIO ||--o{ TRIPULANTE : "origen de codigo_navio"
+    NAVIO ||--o{ VIAJE : "origen de codigo_navio"
+
+    %% Conexiones desde CUBIERTA
+    CUBIERTA ||--o{ CAMAROTE : "origen de numero_cubierta"
+
+    %% Conexiones desde TRIPULANTE
+    TRIPULANTE ||--o{ CUBIERTA : "origen de legajo_encargado"
+
+    %% Conexiones a ESCALA
+    ITINERARIO ||--|{ ESCALA : "origen de id_itinerario"
+    PUERTO ||--o{ ESCALA : "origen de id_puerto"
+
+    %% Conexiones a VIAJE
+    ITINERARIO ||--o{ VIAJE : "origen de id_itinerario"
+
+    %% Conexiones a RESERVA_VIAJE
+    PASAJERO ||--o{ RESERVA_VIAJE : "origen de documento"
+    VIAJE ||--o{ RESERVA_VIAJE : "origen de id_viaje"
+    CAMAROTE ||--o{ RESERVA_VIAJE : "origen de numero_camarote"

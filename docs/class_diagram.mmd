@@ -1,0 +1,80 @@
+classDiagram
+    class Navio {
+        +String codigoNavio
+        +String nombre
+        +float altura
+        +float eslora
+        +float manga
+        +float desplazamiento
+        +float autonomiaViaje
+        +int cantidadCamarotes
+        +int cantidadMaximaPasajeros
+        +int cantidadMotores
+        +int cantidadTripulantes
+        +String clasificacion
+    }
+
+    class Cubierta {
+        +String numeroCubierta
+        +String encargado
+        +String descripcion
+    }
+
+    class Camarote {
+        +int numeroCamarote
+        +String tipo
+        +String ubicacion
+    }
+
+    class Tripulante {
+        +String legajo
+        +String nombre
+        +String puesto
+    }
+
+    class Itinerario {
+        +String codigoItinerario
+        +String categoria
+    }
+
+    class Escala {
+        +int numeroEscala
+    }
+
+    class Puerto {
+        +String codigoPuerto
+        +String nombre
+    }
+
+    class Viaje {
+        +String codigoViaje
+        +Date fechaViaje
+        +int duracion
+    }
+
+    class Pasajero {
+        +String tipoDocumento
+        +String numeroDocumento
+        +String nombre
+        +String paisProcedencia
+        +String ciudadProcedencia
+    }
+
+    class Reserva {
+        +String codigoReserva
+        +Date fechaReserva
+    }
+
+    Navio "1" *-- "1..*" Cubierta : contiene
+    Cubierta "1" *-- "0..*" Camarote : posee
+    Navio "1" -- "1..*" Tripulante : asignado a
+
+    Navio "1" -- "0..*" Viaje : realiza
+    Itinerario "1" -- "0..*" Viaje : define
+    
+    Itinerario "1" *-- "1..*" Escala : compone
+    Escala "*" -- "1" Puerto : referencia
+
+    Pasajero "1" -- "0..*" Reserva : realiza
+    Viaje "1" -- "0..*" Reserva : asigna
+    Camarote "1" -- "0..*" Reserva : aloja
