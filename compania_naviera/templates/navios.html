@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}SEA STAR - Navíos{% endblock %}
+
+{% block content %}
+
+<h1 style="text-align: center; color: #003b5c; margin-bottom: 30px;">
+    Nuestra Flota
+</h1>
+
+<div style="
+    display: flex;
+    flex-wrap: wrap;
+    gap: 25px;
+    justify-content: center;
+">
+
+    {% for navio in navios %}
+
+    <div style="
+        background: white;
+        width: 350px;
+        padding: 25px;
+        border-radius: 10px;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    ">
+
+        <h2 style="color: #003b5c;">
+            {{ navio.nombre }}
+        </h2>
+
+        <p><strong>Código:</strong> {{ navio.codigo }}</p>
+        <p><strong>Clasificación:</strong> {{ navio.clasificacion }}</p>
+        <p><strong>Altura:</strong> {{ navio.altura }} m</p>
+        <p><strong>Eslora:</strong> {{ navio.eslora }} m</p>
+        <p><strong>Manga:</strong> {{ navio.manga }} m</p>
+        <p><strong>Desplazamiento:</strong> {{ navio.desplazamiento }}</p>
+        <p><strong>Autonomía:</strong> {{ navio.autonomia }}</p>
+        <p><strong>Camarotes:</strong> {{ navio.cantidad_camarotes }}</p>
+        <p><strong>Máximo de pasajeros:</strong> {{ navio.max_pasajeros }}</p>
+        <p><strong>Motores:</strong> {{ navio.cantidad_motores }}</p>
+        <p><strong>Tripulantes:</strong> {{ navio.cantidad_tripulantes }}</p>
+
+    </div>
+
+    {% empty %}
+
+    <p>No hay navíos cargados actualmente.</p>
+
+    {% endfor %}
+
+</div>
+
+{% endblock %}

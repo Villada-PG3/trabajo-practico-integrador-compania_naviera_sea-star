@@ -1,11 +1,93 @@
 {% extends "base.html" %}
 
-{% block title %}SEA STAR{% endblock %}
+{% block title %}SEA STAR - Inicio{% endblock %}
 
 {% block content %}
 
-<h1>Compañía Naviera SEA STAR</h1>
+<section style="text-align: center; padding: 60px 20px;">
 
-<p>Bienvenido a SEA STAR, compañía dedicada a la realización de cruceros.</p>
+    <h1 style="font-size: 45px; color: #003b5c; margin-bottom: 20px;">
+        Bienvenido a SEA STAR
+    </h1>
+
+    <p style="font-size: 20px; color: #555; margin-bottom: 30px;">
+        Viví una experiencia única navegando por los mejores destinos.
+    </p>
+
+    <a href="{% url 'cruceros' %}" class="boton">
+        Ver nuestros cruceros
+    </a>
+
+</section>
+
+
+<section style="
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    flex-wrap: wrap;
+    margin-top: 30px;
+">
+
+    <div style="
+        background: white;
+        width: 300px;
+        padding: 30px;
+        border-radius: 10px;
+        text-align: center;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    ">
+        <h2 style="color: #003b5c;"> Nuestros Navíos</h2>
+
+        <p style="margin-top: 15px;">
+            Conocé nuestra flota y las características de cada embarcación.
+        </p>
+
+        <a href="{% url 'navios' %}" class="boton">
+            Ver navíos
+        </a>
+    </div>
+
+
+    <div style="
+        background: white;
+        width: 300px;
+        padding: 30px;
+        border-radius: 10px;
+        text-align: center;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    ">
+        <h2 style="color: #003b5c;"> Itinerarios</h2>
+
+        <p style="margin-top: 15px;">
+            Descubrí los destinos y puertos que podés visitar.
+        </p>
+
+        <a href="{% url 'itinerarios' %}" class="boton">
+            Ver itinerarios
+        </a>
+    </div>
+
+
+    <div style="
+        background: white;
+        width: 300px;
+        padding: 30px;
+        border-radius: 10px;
+        text-align: center;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    ">
+        <h2 style="color: #003b5c;"> Cruceros</h2>
+
+        <p style="margin-top: 15px;">
+            Elegí tu próximo viaje y preparate para disfrutar.
+        </p>
+
+        <a href="{% url 'cruceros' %}" class="boton">
+            Ver cruceros
+        </a>
+    </div>
+
+</section>
 
 {% endblock %}

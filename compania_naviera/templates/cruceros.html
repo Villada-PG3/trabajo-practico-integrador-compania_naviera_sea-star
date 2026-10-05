@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block title %}SEA STAR - Cruceros{% endblock %}
+
+{% block content %}
+
+<h1 style="text-align: center; color: #003b5c; margin-bottom: 30px;">
+    Nuestros Cruceros
+</h1>
+
+<div style="
+    display: flex;
+    flex-wrap: wrap;
+    gap: 25px;
+    justify-content: center;
+">
+
+    {% for viaje in viajes %}
+
+    <div style="
+        background: white;
+        width: 350px;
+        padding: 25px;
+        border-radius: 10px;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    ">
+
+        <h2 style="color: #003b5c;">
+            {{ viaje.navio.nombre }}
+        </h2>
+
+        <p>
+            <strong>Fecha:</strong>
+            {{ viaje.fecha }}
+        </p>
+
+        <p>
+            <strong>Duración:</strong>
+            {{ viaje.duracion }} días
+        </p>
+
+        <p>
+            <strong>Itinerario:</strong>
+            {{ viaje.itinerario.nombre }}
+        </p>
+
+        <p>
+            <strong>Categoría:</strong>
+            {{ viaje.itinerario.categoria }}
+        </p>
+
+        <a href="#" class="boton">
+            Ver camarotes
+        </a>
+
+    </div>
+
+    {% empty %}
+
+    <p>No hay cruceros disponibles actualmente.</p>
+
+    {% endfor %}
+
+</div>
+
+{% endblock %}

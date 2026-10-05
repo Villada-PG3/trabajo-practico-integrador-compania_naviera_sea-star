@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %}SEA STAR - Itinerarios{% endblock %}
+
+{% block content %}
+
+<h1 style="text-align: center; color: #003b5c; margin-bottom: 30px;">
+    Nuestros Itinerarios
+</h1>
+
+<div style="
+    display: flex;
+    flex-wrap: wrap;
+    gap: 25px;
+    justify-content: center;
+">
+
+    {% for itinerario in itinerarios %}
+
+    <div style="
+        background: white;
+        width: 350px;
+        padding: 25px;
+        border-radius: 10px;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    ">
+
+        <h2 style="color: #003b5c;">
+            {{ itinerario.nombre }}
+        </h2>
+
+        <p>
+            <strong>Categoría:</strong>
+            {{ itinerario.categoria }}
+        </p>
+
+        <h3 style="margin-top: 20px;">
+            Escalas
+        </h3>
+
+        <ol>
+            {% for escala in itinerario.escala_set.all %}
+                <li>
+                    {{ escala.puerto.nombre }}
+                    - {{ escala.puerto.ciudad }},
+                    {{ escala.puerto.pais }}
+                </li>
+            {% empty %}
+                <li>No hay escalas registradas.</li>
+            {% endfor %}
+        </ol>
+
+    </div>
+
+    {% empty %}
+
+    <p>No hay itinerarios cargados actualmente.</p>
+
+    {% endfor %}
+
+</div>
+
+{% endblock %}
