@@ -1,26 +1,46 @@
 from django.contrib import admin
-from django.urls import path
-from compania_naviera import views
-
-urlpatterns = [
-    path("admin/", admin.site.urls),
-    path("", views.home, name="home"),
-]
+from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
+from django.contrib.auth.models import User
 
 from .models import (
-    Navio,
-    Cubierta,
     Camarote,
-    Tripulante,
-    Itinerario,
-    Puerto,
+    Cubierta,
     Escala,
-    Viaje,
+    Itinerario,
+    Navio,
     Pasajero,
+    Perfil,
+    Puerto,
     Reserva,
+    Tripulante,
+    Viaje,
 )
 
 
+# Configuración del Perfil dentro del Usuario de Django
+class PerfilInline(admin.StackedInline):
+    model = Perfil
+    can_delete = False
+    verbose_name_plural = 'Perfil'
+
+
+class UserAdmin(BaseUserAdmin):
+    inlines = (PerfilInline,)
+
+
+# Re-registrar Usuario con su Inline
+admin.site.unregister(User)
+admin.site.register(User, UserAdmin)
+
+
+# Registro único de Perfil
+@admin.register(Perfil)
+class PerfilAdmin(admin.ModelAdmin):
+    list_display = ('user', 'rol', 'pasajero', 'tripulante')
+    list_filter = ('rol',)
+
+
+# Registro del resto de entidades del ER
 @admin.register(Navio)
 class NavioAdmin(admin.ModelAdmin):
     list_display = (
@@ -117,4 +137,3 @@ class ReservaAdmin(admin.ModelAdmin):
         'pasajero__nombre',
         'pasajero__numero_documento',
     )
-

@@ -1,5 +1,39 @@
 from django.db import models
+from django.contrib.auth.models import User
 
+class Perfil(models.Model):
+    ROLES = [
+        ('ADMIN', 'Administrador'),
+        ('TRIPULANTE', 'Tripulante'),
+        ('PASAJERO', 'Pasajero'),
+    ]
+
+    user = models.OneToOneField(
+        User, on_delete=models.CASCADE, related_name='perfil'
+    )
+    rol = models.CharField(max_length=20, choices=ROLES, default='PASAJERO')
+
+    tripulante = models.OneToOneField(
+        'Tripulante',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='perfil_usuario',
+    )
+    pasajero = models.OneToOneField(
+        'Pasajero',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='perfil_usuario',
+    )
+
+    class Meta:
+        verbose_name = 'Perfil'
+        verbose_name_plural = 'Perfiles'
+
+    def __str__(self):
+        return f'{self.user.username} - {self.get_rol_display()}'
 
 class Navio(models.Model):
     codigo_navio = models.CharField(max_length=50, unique=True)
