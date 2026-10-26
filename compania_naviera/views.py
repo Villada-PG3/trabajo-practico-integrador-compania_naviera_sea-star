@@ -1,9 +1,6 @@
 from django.shortcuts import render
-from django.shortcuts import render
 from .models import Navio, Itinerario, Viaje
 
-def home(request):
-    return render(request, "home.html")
 
 def home(request):
     return render(request, "home.html")
