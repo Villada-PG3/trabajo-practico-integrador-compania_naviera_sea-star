@@ -560,3 +560,253 @@ body {
   font-size: 0.85rem;
   color: rgba(255, 255, 255, 0.5);
 }
+
+/* ==========================================
+   HOME - BUSCADOR Y OFERTAS
+========================================== */
+
+.search-section {
+    position: relative;
+    z-index: 5;
+    margin-top: -55px;
+}
+
+.search-panel {
+    background: white;
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: var(--shadow-lg);
+}
+
+.search-heading {
+    margin-bottom: 1.5rem;
+}
+
+.search-heading h2 {
+    color: var(--color-navy);
+    font-family: var(--font-serif);
+    font-size: 1.8rem;
+}
+
+.search-heading p,
+.search-note {
+    color: var(--color-gray-blue);
+}
+
+.search-fields {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr auto;
+    gap: 1rem;
+    align-items: end;
+}
+
+.search-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.search-field label {
+    color: var(--color-navy);
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+.search-field select {
+    width: 100%;
+    padding: 0.9rem;
+    border: 1px solid var(--color-border);
+    border-radius: 7px;
+    background: white;
+    color: var(--color-navy);
+    font: inherit;
+}
+
+.search-button {
+    min-height: 49px;
+    white-space: nowrap;
+}
+
+.search-note {
+    font-size: 0.75rem;
+    margin-top: 1rem;
+}
+
+/* TARJETAS DE OFERTAS */
+
+.offer-card {
+    background: white;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--color-border);
+    transition: var(--transition);
+}
+
+.offer-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-md);
+}
+
+.offer-image {
+    position: relative;
+    height: 220px;
+    overflow: hidden;
+}
+
+.offer-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.offer-card:hover .offer-image img {
+    transform: scale(1.06);
+}
+
+.offer-label {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    padding: 0.4rem 0.7rem;
+    border-radius: 5px;
+    background: var(--color-gold);
+    color: var(--color-navy);
+    font-size: 0.7rem;
+    font-weight: 800;
+}
+
+.offer-body {
+    padding: 1.5rem;
+}
+
+.offer-category {
+    color: var(--color-gray-blue);
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+}
+
+.offer-body h3 {
+    color: var(--color-navy);
+    font-family: var(--font-serif);
+    font-size: 1.4rem;
+    margin: 0.4rem 0;
+}
+
+.offer-body p {
+    color: var(--color-gray-blue);
+    font-size: 0.9rem;
+    min-height: 55px;
+}
+
+.offer-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1rem 0;
+    margin-top: 0.7rem;
+    border-top: 1px solid var(--color-border);
+    color: var(--color-gray-blue);
+    font-size: 0.82rem;
+}
+
+.offer-link {
+    display: block;
+    color: var(--color-navy);
+    font-weight: 700;
+    text-decoration: none;
+    margin-top: 0.5rem;
+}
+
+.offer-link:hover {
+    color: var(--color-gold-hover);
+}
+
+/* DESTINOS */
+
+.destinations-section {
+    background: #edf2f6;
+}
+
+.destinations-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr;
+    gap: 1.2rem;
+}
+
+.destination-card {
+    min-height: 300px;
+    display: flex;
+    align-items: end;
+    padding: 1.8rem;
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    color: white;
+    background-position: center;
+    background-size: cover;
+    overflow: hidden;
+    transition: var(--transition);
+    position: relative;
+}
+
+.destination-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(transparent, rgba(0,0,0,0.75));
+}
+
+.destination-card > div {
+    position: relative;
+    z-index: 1;
+}
+
+.destination-card:hover {
+    transform: translateY(-5px);
+}
+
+.destination-card span {
+    font-size: 0.7rem;
+    letter-spacing: 1.5px;
+    font-weight: 700;
+}
+
+.destination-card h3 {
+    font-family: var(--font-serif);
+    font-size: 2rem;
+}
+
+.destination-card p {
+    font-size: 0.85rem;
+}
+
+.destination-caribe {
+    background-image: url("https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?auto=format&fit=crop&w=900&q=85");
+}
+
+.destination-brasil {
+    background-image: url("https://images.unsplash.com/photo-1483729558449-99ef09a8c325?auto=format&fit=crop&w=800&q=85");
+}
+
+.destination-europa {
+    background-image: url("https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=800&q=85");
+}
+
+/* DETALLES */
+
+.fleet-note {
+    color: rgba(255,255,255,0.65);
+    font-size: 0.78rem;
+    margin-top: 1.5rem;
+}
+
+.card-ship .btn {
+    margin-top: auto;
+}
+
+.nav-contact {
+    color: var(--color-gold);
+}
+

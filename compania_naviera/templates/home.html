@@ -1,137 +1,359 @@
+
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Inicio | SEA STAR - Compañía Naviera{% endblock %}
+{% block title %}Inicio | SEA STAR - Cruceros{% endblock %}
 
 {% block content %}
-<!-- 02. HERO (Portada principal) -->
-<section class="hero">
+
+<section class="hero-section">
+    <div class="hero-content container">
+        <span class="hero-badge">EXPERIENCIAS QUE INSPIRAN</span>
+        <h1 class="hero-title">El mundo es más grande desde el mar.</h1>
+        <p class="hero-subtitle">
+            Descubrí destinos extraordinarios y viví unas vacaciones
+            inolvidables a bordo de SEA STAR.
+        </p>
+        <a href="#ofertas" class="btn btn-gold">Descubrí nuestros cruceros</a>
+    </div>
+</section>
+<section class="search-section">
     <div class="container">
-        <h1>El mar. Tu próximo destino.</h1>
-        <p>Descubrí nuevos horizontes y viví una experiencia inolvidable a bordo de SEA STAR.</p>
-        <a href="#flota" class="btn btn-gold">Descubrir nuestros cruceros</a>
+        <div class="search-panel">
+            <div class="search-heading">
+                <span class="section-tag">PLANIFICÁ TU VIAJE</span>
+                <h2>Encontrá tu próximo crucero</h2>
+                <p>Explorá las rutas y experiencias que tenemos para vos.</p>
+            </div>
+
+            <div class="search-fields">
+                <div class="search-field">
+                    <label for="destino">¿A dónde querés viajar?</label>
+                    <select id="destino">
+                        <option value="">Todos los destinos</option>
+                        <option>Brasil y Uruguay</option>
+                        <option>Caribe</option>
+                        <option>Mediterráneo</option>
+                        <option>Norte de Europa</option>
+                    </select>
+                </div>
+
+                <div class="search-field">
+                    <label for="duracion">Duración del viaje</label>
+                    <select id="duracion">
+                        <option value="">Cualquier duración</option>
+                        <option>De 3 a 5 días</option>
+                        <option>De 6 a 9 días</option>
+                        <option>10 días o más</option>
+                    </select>
+                </div>
+
+                <div class="search-field">
+                    <label for="pasajeros">Pasajeros</label>
+                    <select id="pasajeros">
+                        <option>1 pasajero</option>
+                        <option selected>2 pasajeros</option>
+                        <option>3 pasajeros</option>
+                        <option>4 pasajeros</option>
+                    </select>
+                </div>
+
+                <a href="{% url 'itinerarios' %}" class="btn btn-gold search-button">
+                    Buscar cruceros
+                </a>
+            </div>
+            <p class="search-note">
+                * Buscador visual de demostración. La búsqueda todavía no está conectada a filtros reales.
+            </p>
+        </div>
     </div>
 </section>
 
-<section class="section" id="compania">
-    <div class="container grid-2">
-        <div>
-            <img src="https://images.unsplash.com/photo-1505705694340-019e1e335916?auto=format&fit=crop&w=800&q=80" alt="Crucero SEA STAR" style="width:100%; border-radius:8px;">
+<!-- OFERTAS DESTACADAS -->
+<section class="section" id="ofertas">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-tag">DESCUBRÍ EL MUNDO</span>
+            <h2 class="section-title">Cruceros destacados</h2>
+            <p class="section-description">
+                Algunas de las experiencias que podés descubrir con SEA STAR.
+            </p>
         </div>
-        <div>
-            <h2 style="color: var(--color-navy); font-size: 2rem; margin-bottom: 1rem;">La Compañía</h2>
-            <p>En <strong>SEA STAR</strong> creemos que cada viaje es una oportunidad para descubrir nuevos destinos, disfrutar del océano y crear recuerdos inolvidables.</p>
-            <br>
-            <p>Ofrecemos atención de primer nivel, gastronomía internacional y embarcaciones de última generación.</p>
+
+        <div class="grid-3">
+            <article class="offer-card">
+                <div class="offer-image">
+                    <img src="https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?auto=format&fit=crop&w=800&q=85"
+                         alt="Playa tropical del Caribe">
+                    <span class="offer-label">DESTINO DESTACADO</span>
+                </div>
+                <div class="offer-body">
+                    <span class="offer-category">CARIBE</span>
+                    <h3>Caribe Tropical</h3>
+                    <p>Playas paradisíacas, aguas cristalinas y destinos llenos de vida.</p>
+                    <div class="offer-details">
+                        <span>☼ Playas y relax</span>
+                        <span>◷ Duración a consultar</span>
+                    </div>
+                    <a href="{% url 'itinerarios' %}" class="offer-link">
+                        Descubrir itinerario →
+                    </a>
+                </div>
+            </article>
+
+            <article class="offer-card">
+                <div class="offer-image">
+                    <img src="https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=800&q=85"
+                         alt="Costa mediterránea">
+                    <span class="offer-label">EXPERIENCIA CULTURAL</span>
+                </div>
+                <div class="offer-body">
+                    <span class="offer-category">MEDITERRÁNEO</span>
+                    <h3>Mediterráneo Imperial</h3>
+                    <p>Ciudades históricas, gastronomía y paisajes inolvidables.</p>
+                    <div class="offer-details">
+                        <span>⌖ Europa</span>
+                        <span>◷ Duración a consultar</span>
+                    </div>
+                    <a href="{% url 'itinerarios' %}" class="offer-link">
+                        Descubrir itinerario →
+                    </a>
+                </div>
+            </article>
+
+            <article class="offer-card">
+                <div class="offer-image">
+                    <img src="https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&fit=crop&w=800&q=85"
+                         alt="Paisaje de mar y montañas">
+                    <span class="offer-label">AVENTURA</span>
+                </div>
+                <div class="offer-body">
+                    <span class="offer-category">NORTE DE EUROPA</span>
+                    <h3>Fiordos y Auroras</h3>
+                    <p>Una travesía entre montañas, naturaleza y paisajes únicos.</p>
+                    <div class="offer-details">
+                        <span>❄ Naturaleza</span>
+                        <span>◷ Duración a consultar</span>
+                    </div>
+                    <a href="{% url 'itinerarios' %}" class="offer-link">
+                        Descubrir itinerario →
+                    </a>
+                </div>
+            </article>
+        </div>
+    </div>
+</section>
+<section class="section destinations-section">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-tag">INSPIRATE</span>
+            <h2 class="section-title">Un mundo de destinos</h2>
+            <p class="section-description">
+                Cada puerto es el comienzo de una nueva historia.
+            </p>
+        </div>
+
+        <div class="destinations-grid">
+            <a href="{% url 'itinerarios' %}" class="destination-card destination-caribe">
+                <div>
+                    <span>AGUAS TURQUESAS</span>
+                    <h3>El Caribe</h3>
+                    <p>Descubrir destino →</p>
+                </div>
+            </a>
+
+            <a href="{% url 'itinerarios' %}" class="destination-card destination-brasil">
+                <div>
+                    <span>COLOR Y ALEGRÍA</span>
+                    <h3>Brasil</h3>
+                    <p>Descubrir destino →</p>
+                </div>
+            </a>
+
+            <a href="{% url 'itinerarios' %}" class="destination-card destination-europa">
+                <div>
+                    <span>HISTORIA Y CULTURA</span>
+                    <h3>Europa</h3>
+                    <p>Descubrir destino →</p>
+                </div>
+            </a>
         </div>
     </div>
 </section>
 <section class="section section-dark" id="flota">
     <div class="container">
-        <div class="section-title">
-            <h2>Nuestra Flota</h2>
-            <p>Conocé nuestros tres navíos principales.</p>
+        <div class="section-header">
+            <span class="section-tag">NAVEGÁ CON NOSOTROS</span>
+            <h2 class="section-title light">Nuestra flota</h2>
+            <p class="section-description light">
+                Conocé los navíos que hacen posible cada experiencia SEA STAR.
+            </p>
         </div>
 
         <div class="grid-3">
-            <div class="card card-dark">
-                <img src="https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=600&q=80" alt="SEA STAR I">
-                <div class="card-body">
-                    <h3>SEA STAR I</h3>
-                    <p><strong>Clasificación:</strong> Super Lujo</p>
-                    <p>Capacidad para 2,400 pasajeros y 12 cubiertas.</p>
-                    <a href="{% url 'navios' %}" class="btn btn-outline" style="display:block; text-align:center;">Ver detalles</a>
+            <article class="card-ship">
+                <div class="card-ship-img">
+                    <img src="https://images.unsplash.com/photo-1548574505-5e2386962061?auto=format&fit=crop&w=800&q=85"
+                         alt="Navío de crucero SEA STAR I">
+                    <span class="card-badge">SUPER LUJO</span>
                 </div>
-            </div>
-
-            <div class="card card-dark">
-                <img src="https://images.unsplash.com/photo-1559599101-f09722fb4948?auto=format&fit=crop&w=600&q=80" alt="SEA STAR II">
-                <div class="card-body">
-                    <h3>SEA STAR II</h3>
-                    <p><strong>Clasificación:</strong> Lujoso</p>
-                    <p>Capacidad para 1,800 pasajeros y recorrido transatlántico.</p>
-                    <a href="{% url 'navios' %}" class="btn btn-outline" style="display:block; text-align:center;">Ver detalles</a>
+                <div class="card-ship-body">
+                    <h3 class="card-ship-title">SEA STAR I</h3>
+                    <p>Una experiencia de navegación pensada para disfrutar cada momento.</p>
+                    <div class="card-ship-specs">
+                        <div class="spec-item">
+                            <strong>2.400</strong>
+                            Pasajeros*
+                        </div>
+                        <div class="spec-item">
+                            <strong>12</strong>
+                            Cubiertas*
+                        </div>
+                    </div>
+                    <a href="{% url 'navios' %}" class="btn btn-outline-gold">
+                        Conocer navío
+                    </a>
                 </div>
-            </div>
+            </article>
 
-            <div class="card card-dark">
-                <img src="https://images.unsplash.com/photo-1548574505-5e2386962061?auto=format&fit=crop&w=600&q=80" alt="SEA STAR III">
-                <div class="card-body">
-                    <h3>SEA STAR III</h3>
-                    <p><strong>Clasificación:</strong> Especial</p>
-                    <p>Capacidad para 3,100 pasajeros y rutas de exploración.</p>
-                    <a href="{% url 'navios' %}" class="btn btn-outline" style="display:block; text-align:center;">Ver detalles</a>
+            <article class="card-ship">
+                <div class="card-ship-img">
+                    <img src="https://images.unsplash.com/photo-1567899378494-47b22a2ae96a?auto=format&fit=crop&w=800&q=85"
+                         alt="Navío de crucero SEA STAR II">
+                    <span class="card-badge">LUJOSO</span>
+                </div>
+                <div class="card-ship-body">
+                    <h3 class="card-ship-title">SEA STAR II</h3>
+                    <p>Confort y entretenimiento para disfrutar travesías inolvidables.</p>
+                    <div class="card-ship-specs">
+                        <div class="spec-item">
+                            <strong>1.800</strong>
+                            Pasajeros*
+                        </div>
+                        <div class="spec-item">
+                            <strong>Europa</strong>
+                            Rutas*
+                        </div>
+                    </div>
+                    <a href="{% url 'navios' %}" class="btn btn-outline-gold">
+                        Conocer navío
+                    </a>
+                </div>
+            </article>
+
+            <article class="card-ship">
+                <div class="card-ship-img">
+                    <img src="https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=800&q=85"
+                         alt="Navío de crucero SEA STAR III">
+                    <span class="card-badge">ESPECIAL</span>
+                </div>
+                <div class="card-ship-body">
+                    <h3 class="card-ship-title">SEA STAR III</h3>
+                    <p>Una propuesta para quienes buscan descubrir nuevos horizontes.</p>
+                    <div class="card-ship-specs">
+                        <div class="spec-item">
+                            <strong>3.100</strong>
+                            Pasajeros*
+                        </div>
+                        <div class="spec-item">
+                            <strong>Exploración</strong>
+                            Rutas*
+                        </div>
+                    </div>
+                    <a href="{% url 'navios' %}" class="btn btn-outline-gold">
+                        Conocer navío
+                    </a>
+                </div>
+            </article>
+        </div>
+
+        
+    </div>
+</section>
+
+<!-- COMPAÑÍA -->
+<section class="section" id="compania">
+    <div class="container about-grid">
+        <div class="about-image">
+            <img src="https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=1000&q=85"
+                 alt="Océano abierto">
+        </div>
+
+        <div class="about-card-info">
+            <span class="section-tag">SOBRE SEA STAR</span>
+            <h2 class="section-title">Mucho más que un viaje.</h2>
+            <p>
+                En <strong>SEA STAR</strong> creemos que cada viaje es una oportunidad
+                para descubrir nuevos destinos, disfrutar del océano y crear recuerdos inolvidables.
+            </p>
+            <p>
+                Nuestra propuesta combina navegación, comodidad y experiencias
+                para que cada pasajero disfrute de una aventura diferente.
+            </p>
+            <div class="about-features">
+                <div class="feature-item">
+                    <span class="feature-icon">✦</span>
+                    <p>Experiencias a bordo</p>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">✦</span>
+                    <p>Destinos únicos</p>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">✦</span>
+                    <p>Confort y descanso</p>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">✦</span>
+                    <p>Atención personalizada</p>
                 </div>
             </div>
         </div>
     </div>
 </section>
-<section class="section" id="itinerarios">
+
+<section class="section destinations-section" id="camarotes">
     <div class="container">
-        <div class="section-title">
-            <h2>Itinerarios Destacados</h2>
-            <p>Las rutas más buscadas por nuestros pasajeros.</p>
+        <div class="section-header">
+            <span class="section-tag">A BORDO</span>
+            <h2 class="section-title">Tu espacio en el mar</h2>
+            <p class="section-description">
+                Conocé las diferentes ubicaciones de nuestros camarotes.
+            </p>
         </div>
 
-        <div class="grid-3">
-            <div class="card">
-                <div class="card-body">
-                    <h3>Caribe Tropical</h3>
-                    <p><strong>Categoría:</strong> Especial</p>
-                    <p>Puertos: Miami &rarr; Cozumel &rarr; Caimán &rarr; Jamaica</p>
-                    <a href="{% url 'itinerarios' %}" class="btn btn-navy" style="display:block; text-align:center;">Ver itinerario</a>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-body">
-                    <h3>Mediterráneo Imperial</h3>
-                    <p><strong>Categoría:</strong> Super Lujo</p>
-                    <p>Puertos: Barcelona &rarr; Marsella &rarr; Roma &rarr; Atenas</p>
-                    <a href="{% url 'itinerarios' %}" class="btn btn-navy" style="display:block; text-align:center;">Ver itinerario</a>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-body">
-                    <h3>Fiordos & Auroras</h3>
-                    <p><strong>Categoría:</strong> Lujoso</p>
-                    <p>Puertos: Oslo &rarr; Bergen &rarr; Geiranger &rarr; Tromsø</p>
-                    <a href="{% url 'itinerarios' %}" class="btn btn-navy" style="display:block; text-align:center;">Ver itinerario</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<section class="section" id="camarotes" style="background-color: #E2E8F0;">
-    <div class="container">
-        <div class="section-title">
-            <h2>Camarotes y Ubicación</h2>
-            <p>Ubicaciones disponibles según la zona del barco.</p>
-        </div>
-
-        <div class="grid-3">
-            <div class="camarote-card">
+        <div class="camarotes-grid">
+            <div class="camarote-box">
+                <div class="camarote-icon">◀</div>
                 <h3>Babor</h3>
-                <p>Ubicados en la banda izquierda de la embarcación.</p>
+                <p>Ubicación en la banda izquierda de la embarcación.</p>
             </div>
-            <div class="camarote-card">
+
+            <div class="camarote-box">
+                <div class="camarote-icon">◆</div>
                 <h3>Crujía</h3>
-                <p>Ubicados en la zona central del navío.</p>
+                <p>Ubicación en la zona central del navío.</p>
             </div>
-            <div class="camarote-card">
+
+            <div class="camarote-box">
+                <div class="camarote-icon">▶</div>
                 <h3>Estribor</h3>
-                <p>Ubicados en la banda derecha de la embarcación.</p>
+                <p>Ubicación en la banda derecha de la embarcación.</p>
             </div>
         </div>
     </div>
 </section>
+
 <section class="container">
     <div class="cta-banner">
-        <h2>Tu próxima aventura comienza acá.</h2>
-        <p>Explorá nuestras salidas y planificá tus próximas vacaciones.</p>
+        <span class="hero-badge">TU PRÓXIMA AVENTURA</span>
+        <h2>El próximo destino te está esperando.</h2>
+        <p>Explorá nuestros itinerarios y empezá a imaginar tu próximo viaje.</p>
         <br>
-        <a href="#itinerarios" class="btn btn-gold">Explorar itinerarios</a>
+        <a href="{% url 'itinerarios' %}" class="btn btn-gold">
+            Explorar itinerarios
+        </a>
     </div>
 </section>
+
 {% endblock %}
