@@ -1,93 +1,137 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
+{% load static %}
 
-{% block title %}SEA STAR - Inicio{% endblock %}
+{% block title %}Inicio | SEA STAR - Compañía Naviera{% endblock %}
 
 {% block content %}
-
-<section style="text-align: center; padding: 60px 20px;">
-
-    <h1 style="font-size: 45px; color: #003b5c; margin-bottom: 20px;">
-        Bienvenido a SEA STAR
-    </h1>
-
-    <p style="font-size: 20px; color: #555; margin-bottom: 30px;">
-        Viví una experiencia única navegando por los mejores destinos.
-    </p>
-
-    <a href="{% url 'cruceros' %}" class="boton">
-        Ver nuestros cruceros
-    </a>
-
+<!-- 02. HERO (Portada principal) -->
+<section class="hero">
+    <div class="container">
+        <h1>El mar. Tu próximo destino.</h1>
+        <p>Descubrí nuevos horizontes y viví una experiencia inolvidable a bordo de SEA STAR.</p>
+        <a href="#flota" class="btn btn-gold">Descubrir nuestros cruceros</a>
+    </div>
 </section>
 
-
-<section style="
-    display: flex;
-    justify-content: center;
-    gap: 25px;
-    flex-wrap: wrap;
-    margin-top: 30px;
-">
-
-    <div style="
-        background: white;
-        width: 300px;
-        padding: 30px;
-        border-radius: 10px;
-        text-align: center;
-        box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-    ">
-        <h2 style="color: #003b5c;"> Nuestros Navíos</h2>
-
-        <p style="margin-top: 15px;">
-            Conocé nuestra flota y las características de cada embarcación.
-        </p>
-
-        <a href="{% url 'navios' %}" class="boton">
-            Ver navíos
-        </a>
+<section class="section" id="compania">
+    <div class="container grid-2">
+        <div>
+            <img src="https://images.unsplash.com/photo-1505705694340-019e1e335916?auto=format&fit=crop&w=800&q=80" alt="Crucero SEA STAR" style="width:100%; border-radius:8px;">
+        </div>
+        <div>
+            <h2 style="color: var(--color-navy); font-size: 2rem; margin-bottom: 1rem;">La Compañía</h2>
+            <p>En <strong>SEA STAR</strong> creemos que cada viaje es una oportunidad para descubrir nuevos destinos, disfrutar del océano y crear recuerdos inolvidables.</p>
+            <br>
+            <p>Ofrecemos atención de primer nivel, gastronomía internacional y embarcaciones de última generación.</p>
+        </div>
     </div>
-
-
-    <div style="
-        background: white;
-        width: 300px;
-        padding: 30px;
-        border-radius: 10px;
-        text-align: center;
-        box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-    ">
-        <h2 style="color: #003b5c;"> Itinerarios</h2>
-
-        <p style="margin-top: 15px;">
-            Descubrí los destinos y puertos que podés visitar.
-        </p>
-
-        <a href="{% url 'itinerarios' %}" class="boton">
-            Ver itinerarios
-        </a>
-    </div>
-
-
-    <div style="
-        background: white;
-        width: 300px;
-        padding: 30px;
-        border-radius: 10px;
-        text-align: center;
-        box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-    ">
-        <h2 style="color: #003b5c;"> Cruceros</h2>
-
-        <p style="margin-top: 15px;">
-            Elegí tu próximo viaje y preparate para disfrutar.
-        </p>
-
-        <a href="{% url 'cruceros' %}" class="boton">
-            Ver cruceros
-        </a>
-    </div>
-
 </section>
+<section class="section section-dark" id="flota">
+    <div class="container">
+        <div class="section-title">
+            <h2>Nuestra Flota</h2>
+            <p>Conocé nuestros tres navíos principales.</p>
+        </div>
 
+        <div class="grid-3">
+            <div class="card card-dark">
+                <img src="https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=600&q=80" alt="SEA STAR I">
+                <div class="card-body">
+                    <h3>SEA STAR I</h3>
+                    <p><strong>Clasificación:</strong> Super Lujo</p>
+                    <p>Capacidad para 2,400 pasajeros y 12 cubiertas.</p>
+                    <a href="{% url 'navios' %}" class="btn btn-outline" style="display:block; text-align:center;">Ver detalles</a>
+                </div>
+            </div>
+
+            <div class="card card-dark">
+                <img src="https://images.unsplash.com/photo-1559599101-f09722fb4948?auto=format&fit=crop&w=600&q=80" alt="SEA STAR II">
+                <div class="card-body">
+                    <h3>SEA STAR II</h3>
+                    <p><strong>Clasificación:</strong> Lujoso</p>
+                    <p>Capacidad para 1,800 pasajeros y recorrido transatlántico.</p>
+                    <a href="{% url 'navios' %}" class="btn btn-outline" style="display:block; text-align:center;">Ver detalles</a>
+                </div>
+            </div>
+
+            <div class="card card-dark">
+                <img src="https://images.unsplash.com/photo-1548574505-5e2386962061?auto=format&fit=crop&w=600&q=80" alt="SEA STAR III">
+                <div class="card-body">
+                    <h3>SEA STAR III</h3>
+                    <p><strong>Clasificación:</strong> Especial</p>
+                    <p>Capacidad para 3,100 pasajeros y rutas de exploración.</p>
+                    <a href="{% url 'navios' %}" class="btn btn-outline" style="display:block; text-align:center;">Ver detalles</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="section" id="itinerarios">
+    <div class="container">
+        <div class="section-title">
+            <h2>Itinerarios Destacados</h2>
+            <p>Las rutas más buscadas por nuestros pasajeros.</p>
+        </div>
+
+        <div class="grid-3">
+            <div class="card">
+                <div class="card-body">
+                    <h3>Caribe Tropical</h3>
+                    <p><strong>Categoría:</strong> Especial</p>
+                    <p>Puertos: Miami &rarr; Cozumel &rarr; Caimán &rarr; Jamaica</p>
+                    <a href="{% url 'itinerarios' %}" class="btn btn-navy" style="display:block; text-align:center;">Ver itinerario</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-body">
+                    <h3>Mediterráneo Imperial</h3>
+                    <p><strong>Categoría:</strong> Super Lujo</p>
+                    <p>Puertos: Barcelona &rarr; Marsella &rarr; Roma &rarr; Atenas</p>
+                    <a href="{% url 'itinerarios' %}" class="btn btn-navy" style="display:block; text-align:center;">Ver itinerario</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-body">
+                    <h3>Fiordos & Auroras</h3>
+                    <p><strong>Categoría:</strong> Lujoso</p>
+                    <p>Puertos: Oslo &rarr; Bergen &rarr; Geiranger &rarr; Tromsø</p>
+                    <a href="{% url 'itinerarios' %}" class="btn btn-navy" style="display:block; text-align:center;">Ver itinerario</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="section" id="camarotes" style="background-color: #E2E8F0;">
+    <div class="container">
+        <div class="section-title">
+            <h2>Camarotes y Ubicación</h2>
+            <p>Ubicaciones disponibles según la zona del barco.</p>
+        </div>
+
+        <div class="grid-3">
+            <div class="camarote-card">
+                <h3>Babor</h3>
+                <p>Ubicados en la banda izquierda de la embarcación.</p>
+            </div>
+            <div class="camarote-card">
+                <h3>Crujía</h3>
+                <p>Ubicados en la zona central del navío.</p>
+            </div>
+            <div class="camarote-card">
+                <h3>Estribor</h3>
+                <p>Ubicados en la banda derecha de la embarcación.</p>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="container">
+    <div class="cta-banner">
+        <h2>Tu próxima aventura comienza acá.</h2>
+        <p>Explorá nuestras salidas y planificá tus próximas vacaciones.</p>
+        <br>
+        <a href="#itinerarios" class="btn btn-gold">Explorar itinerarios</a>
+    </div>
+</section>
 {% endblock %}
