@@ -75,16 +75,7 @@ class Puerto(models.Model):
 
 
 class Itinerario(models.Model):
-    CATEGORIAS = [
-        ('Especial', 'Especial'),
-        ('Super Lujo', 'Super Lujo'),
-        ('Lujoso', 'Lujoso'),
-        ('Común', 'Común'),
-    ]
-
     nombre = models.CharField(max_length=100)
-    categoria = models.CharField(max_length=20, choices=CATEGORIAS)
-
     def __str__(self):
         return self.nombre
 
@@ -106,7 +97,13 @@ class Viaje(models.Model):
     itinerario = models.ForeignKey(Itinerario, on_delete=models.CASCADE)
     fecha = models.DateField()
     duracion = models.IntegerField()
-
+    CATEGORIAS = [
+            ('Especial', 'Especial'),
+            ('Super Lujo', 'Super Lujo'),
+            ('Lujoso', 'Lujoso'),
+            ('Común', 'Común'),
+        ]
+    categoria = models.CharField(max_length=20, choices=CATEGORIAS)
     def __str__(self):
         return f"{self.navio} - {self.fecha}"
 
