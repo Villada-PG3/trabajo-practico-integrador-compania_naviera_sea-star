@@ -1,53 +1,119 @@
-from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
-from django.contrib.auth.models import User
 
-from .models import (
-    Camarote,
-    Cubierta,
-    Escala,
-    Itinerario,
-    Navio,
-    Pasajero,
-    Perfil,
-    Puerto,
-    Reserva,
-    Tripulante,
-    Viaje,
-)
+from django.contrib import admin, messages
+
+from .models import Reserva, Ticket, Notificacion
+
+@admin.register(Reserva)
+class ReservaAdmin(admin.ModelAdmin):
+
+    list_display = (
+        'id',
+        'pasajero',
+        'viaje',
+        'camarote',
+        'estado',
+        'fecha_solicitud'
+    )
+
+    list_filter = ('estado', 'viaje')
+    search_fields = (
+        'pasajero__nombre',
+        'pasajero__numero_documento'
+    )
+
+    actions = [
+        'aprobar_reservas',
+        'rechazar_reservas'
+    ]
+
+    @admin.action(description="Aprobar reservas y emitir tickets")
+    def aprobar_reservas(self, request, queryset):
+
+        for reserva in queryset:
+
+            if reserva.estado == 'CANCELADA':
+                continue
+
+            reserva.estado = 'CONFIRMADA'
+            reserva.save()
+
+            ticket, creado = Ticket.objects.get_or_create(
+                reserva=reserva
+            )
+
+            if creado:
+                Notificacion.objects.create(
+                    pasajero=reserva.pasajero,
+                    mensaje=(
+                        f'Tu reserva para el viaje {reserva.viaje} '
+                        f'fue confirmada. Tu código de ticket es '
+                        f'{ticket.codigo}.'
+                    )
+                )
+
+        self.message_user(
+            request,
+            'Reservas aprobadas y tickets emitidos.',
+            messages.SUCCESS
+        )
+
+    @admin.action(description="Rechazar reservas")
+    def rechazar_reservas(self, request, queryset):
+
+        for reserva in queryset:
+
+            if reserva.estado == 'PENDIENTE':
+
+                reserva.estado = 'CANCELADA'
+                reserva.save()
+
+                Notificacion.objects.create(
+                    pasajero=reserva.pasajero,
+                    mensaje=(
+                        f'Tu solicitud para el viaje '
+                        f'{reserva.viaje} fue rechazada.'
+                    )
+                )
+
+        self.message_user(
+            request,
+            'Reservas rechazadas.',
+            messages.WARNING
+        )
+
+@admin.register(Ticket)
+class TicketAdmin(admin.ModelAdmin):
+
+    list_display = (
+        'codigo',
+        'reserva',
+        'fecha_emision'
+    )
+
+    search_fields = (
+        'codigo',
+        'reserva__pasajero__nombre'
+    )
+
+    readonly_fields = (
+        'codigo',
+        'fecha_emision'
+    )
 
 
-# Configuración para editar el Perfil directamente dentro del Usuario de Django
-class PerfilInline(admin.StackedInline):
-    model = Perfil
-    can_delete = False
-    verbose_name_plural = 'Perfil de Rol'
+# ==========================================
+# ADMINISTRAR NOTIFICACIONES
+# ==========================================
 
+@admin.register(Notificacion)
+class NotificacionAdmin(admin.ModelAdmin):
 
-class UserAdmin(BaseUserAdmin):
-    inlines = (PerfilInline,)
+    list_display = (
+        'pasajero',
+        'mensaje',
+        'fecha',
+        'leida'
+    )
 
-
-# Re-registrar Usuario con su Inline de Perfil
-admin.site.unregister(User)
-admin.site.register(User, UserAdmin)
-
-
-# Registro del modelo Perfil
-@admin.register(Perfil)
-class PerfilAdmin(admin.ModelAdmin):
-    list_display = ('user', 'rol', 'pasajero', 'tripulante')
-    list_filter = ('rol',)
-
-
-# Registro del resto de modelos del negocio
-admin.site.register(Navio)
-admin.site.register(Cubierta)
-admin.site.register(Camarote)
-admin.site.register(Tripulante)
-admin.site.register(Puerto)
-admin.site.register(Itinerario)
-admin.site.register(Escala)
-admin.site.register(Viaje)
-admin.site.register(Pasajero)
-admin.site.register(Reserva)
+    list_filter = ('leida', 'fecha')
+    search_fields = ('pasajero__nombre', 'mensaje')

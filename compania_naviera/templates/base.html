@@ -25,6 +25,18 @@
 
             <nav>
                 <ul class="nav-menu">
+                {% if user.is_authenticated %}
+                    <li>
+                        <a class="nav-link" href="{% url 'mi_cuenta' %}">Mi cuenta</a>
+                    </li>
+                    <li>
+                        <a class="nav-link" href="{% url 'logout' %}">Cerrar sesión</a>
+                    </li>
+                    {% else %}
+                    <li>
+                        <a class="nav-link" href="{% url 'login' %}">Iniciar sesión</a>
+                    </li>
+                {% endif %}
                     <li><a class="nav-link" href="{% url 'home' %}">Inicio</a></li>
                     <li><a class="nav-link" href="{% url 'home' %}#flota">Nuestra flota</a></li>
                     <li><a class="nav-link" href="{% url 'itinerarios' %}">Itinerarios</a></li>

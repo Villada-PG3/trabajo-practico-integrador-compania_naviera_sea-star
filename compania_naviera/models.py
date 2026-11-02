@@ -1,6 +1,7 @@
 from django.db import models
-
-
+from django.db.models import Q
+from django.contrib.auth.models import User
+import uuid
 
 class Navio(models.Model):
     codigo = models.CharField(max_length=20, unique=True)
@@ -76,6 +77,7 @@ class Puerto(models.Model):
 
 class Itinerario(models.Model):
     nombre = models.CharField(max_length=100)
+
     def __str__(self):
         return self.nombre
 
@@ -91,23 +93,27 @@ class Escala(models.Model):
     def __str__(self):
         return f"{self.itinerario} - Escala {self.numero_escala}"
 
-
 class Viaje(models.Model):
+
+    CATEGORIAS = [
+        ('Especial', 'Especial'),
+        ('Super Lujo', 'Super Lujo'),
+        ('Lujoso', 'Lujoso'),
+        ('Común', 'Común'),
+    ]
+
     navio = models.ForeignKey(Navio, on_delete=models.CASCADE)
     itinerario = models.ForeignKey(Itinerario, on_delete=models.CASCADE)
     fecha = models.DateField()
     duracion = models.IntegerField()
-    CATEGORIAS = [
-            ('Especial', 'Especial'),
-            ('Super Lujo', 'Super Lujo'),
-            ('Lujoso', 'Lujoso'),
-            ('Común', 'Común'),
-        ]
-    categoria = models.CharField(max_length=20, choices=CATEGORIAS)
+
+    categoria = models.CharField(
+        max_length=50,
+        choices=CATEGORIAS
+    )
+
     def __str__(self):
         return f"{self.navio} - {self.fecha}"
-
-
 class Pasajero(models.Model):
     tipo_documento = models.CharField(max_length=20)
     numero_documento = models.CharField(max_length=30)
@@ -118,11 +124,104 @@ class Pasajero(models.Model):
     def __str__(self):
         return self.nombre
 
+class Perfil(models.Model):
+    usuario = models.OneToOneField(
+        User,
+        on_delete=models.CASCADE
+    )
+    pasajero = models.OneToOneField(
+        Pasajero,
+        on_delete=models.CASCADE
+    )
+
+    def __str__(self):
+        return self.usuario.username
+
+
 
 class Reserva(models.Model):
-    pasajero = models.ForeignKey(Pasajero, on_delete=models.CASCADE)
-    viaje = models.ForeignKey(Viaje, on_delete=models.CASCADE)
-    camarote = models.ForeignKey(Camarote, on_delete=models.CASCADE)
+
+    ESTADOS = [
+        ('PENDIENTE', 'Pendiente'),
+        ('CONFIRMADA', 'Confirmada'),
+        ('CANCELADA', 'Cancelada'),
+    ]
+
+    pasajero = models.ForeignKey(
+        Pasajero,
+        on_delete=models.CASCADE
+    )
+
+    viaje = models.ForeignKey(
+        Viaje,
+        on_delete=models.CASCADE
+    )
+
+    camarote = models.ForeignKey(
+        Camarote,
+        on_delete=models.CASCADE
+    )
+
+    estado = models.CharField(
+        max_length=20,
+        choices=ESTADOS,
+        default='PENDIENTE'
+    )
+
+    fecha_solicitud = models.DateTimeField(
+        auto_now_add=True
+    )
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=['viaje', 'camarote'],
+                condition=Q(estado__in=['PENDIENTE', 'CONFIRMADA']),
+                name='camarote_unico_por_viaje'
+            )
+        ]
 
     def __str__(self):
         return f"{self.pasajero} - {self.viaje}"
+
+
+class Ticket(models.Model):
+
+    reserva = models.OneToOneField(
+        Reserva,
+        on_delete=models.CASCADE
+    )
+
+    codigo = models.UUIDField(
+        default=uuid.uuid4,
+        unique=True,
+        editable=False
+    )
+
+    fecha_emision = models.DateTimeField(
+        auto_now_add=True
+    )
+
+    def __str__(self):
+        return f"Ticket {self.codigo}"
+
+
+class Notificacion(models.Model):
+
+    pasajero = models.ForeignKey(
+        Pasajero,
+        on_delete=models.CASCADE
+    )
+
+    mensaje = models.TextField()
+
+    fecha = models.DateTimeField(
+        auto_now_add=True
+    )
+
+    leida = models.BooleanField(
+        default=False
+    )
+
+    def __str__(self):
+        return f"Notificación para {self.pasajero}"

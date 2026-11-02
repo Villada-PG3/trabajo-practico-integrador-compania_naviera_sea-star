@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+{% load static %}
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Mi cuenta SEA STAR</title>
+</head>
+<body>
+
+    <h1>Bienvenido {{ perfil.pasajero.nombre }}</h1>
+
+    <a href="{% url 'logout' %}">Cerrar sesión</a>
+
+    <hr>
+
+    <h2>Mis reservas</h2>
+
+    {% for reserva in reservas %}
+        <div>
+            <h3>Reserva #{{ reserva.id }}</h3>
+            <p>Viaje: {{ reserva.viaje }}</p>
+            <p>Camarote: {{ reserva.camarote }}</p>
+            <p>Estado: {{ reserva.get_estado_display }}</p>
+        </div>
+    {% empty %}
+        <p>No tenés reservas todavía.</p>
+    {% endfor %}
+
+    <a href="{% url 'reservar' %}">
+        Solicitar un viaje
+    </a>
+
+    <hr>
+
+    <h2>Mis tickets</h2>
+
+    {% for ticket in tickets %}
+        <div>
+            <h3>Ticket {{ ticket.codigo }}</h3>
+
+            <p>Navío:
+                {{ ticket.reserva.viaje.navio }}
+            </p>
+
+            <p>Itinerario:
+                {{ ticket.reserva.viaje.itinerario }}
+            </p>
+
+            <p>Fecha:
+                {{ ticket.reserva.viaje.fecha }}
+            </p>
+
+            <p>Duración:
+                {{ ticket.reserva.viaje.duracion }} días
+            </p>
+
+            <p>Camarote:
+                {{ ticket.reserva.camarote }}
+            </p>
+
+            <h4>Escalas</h4>
+
+            {% for escala in ticket.reserva.viaje.itinerario.escala_set.all %}
+                <p>
+                    {{ escala.numero_escala }} -
+                    {{ escala.puerto.nombre }},
+                    {{ escala.puerto.ciudad }}
+                </p>
+            {% empty %}
+                <p>Sin escalas registradas.</p>
+            {% endfor %}
+        </div>
+
+        <hr>
+
+    {% empty %}
+        <p>Todavía no tenés tickets emitidos.</p>
+    {% endfor %}
+
+    <hr>
+
+    <h2>Notificaciones</h2>
+
+    {% for notificacion in notificaciones %}
+
+        <div>
+            <p>{{ notificacion.mensaje }}</p>
+
+            <small>{{ notificacion.fecha }}</small>
+
+            {% if notificacion.leida %}
+                <p>Leída</p>
+            {% else %}
+                <a href="{% url 'leer_notificacion' notificacion.id %}">
+                    Marcar como leída
+                </a>
+            {% endif %}
+        </div>
+
+        <hr>
+
+    {% empty %}
+        <p>No tenés notificaciones.</p>
+    {% endfor %}
+
+</body>
+</html>

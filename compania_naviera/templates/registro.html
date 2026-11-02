@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'registro.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="registro-section">
+    <div class="registro-container">
+
+        <div class="registro-header">
+            <h1>Crear cuenta</h1>
+            <p>Unite a SEA STAR y comenzá a planificar tu próximo viaje.</p>
+        </div>
+
+        <form method="POST" class="registro-form">
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+                <div class="form-error-general">
+                    {{ form.non_field_errors }}
+                </div>
+            {% endif %}
+
+            {% for field in form %}
+                <div class="form-group">
+
+                    <label for="{{ field.id_for_label }}">
+                        {{ field.label }}
+                    </label>
+
+                    {{ field }}
+
+                    {% if field.errors %}
+                        <div class="field-error">
+                            {{ field.errors }}
+                        </div>
+                    {% endif %}
+
+                </div>
+            {% endfor %}
+
+            <button type="submit" class="registro-button">
+                Crear mi cuenta
+            </button>
+        </form>
+
+        <div class="registro-login">
+            <p>¿Ya tenés una cuenta?</p>
+            <a href="{% url 'login' %}">Iniciá sesión</a>
+        </div>
+
+    </div>
+</section>
+
+{% endblock %}
