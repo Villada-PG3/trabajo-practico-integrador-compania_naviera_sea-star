@@ -1,119 +1,66 @@
-
-from django.contrib import admin, messages
-
-from .models import Reserva, Ticket, Notificacion
-
-@admin.register(Reserva)
-class ReservaAdmin(admin.ModelAdmin):
-
-    list_display = (
-        'id',
-        'pasajero',
-        'viaje',
-        'camarote',
-        'estado',
-        'fecha_solicitud'
-    )
-
-    list_filter = ('estado', 'viaje')
-    search_fields = (
-        'pasajero__nombre',
-        'pasajero__numero_documento'
-    )
-
-    actions = [
-        'aprobar_reservas',
-        'rechazar_reservas'
-    ]
-
-    @admin.action(description="Aprobar reservas y emitir tickets")
-    def aprobar_reservas(self, request, queryset):
-
-        for reserva in queryset:
-
-            if reserva.estado == 'CANCELADA':
-                continue
-
-            reserva.estado = 'CONFIRMADA'
-            reserva.save()
-
-            ticket, creado = Ticket.objects.get_or_create(
-                reserva=reserva
-            )
-
-            if creado:
-                Notificacion.objects.create(
-                    pasajero=reserva.pasajero,
-                    mensaje=(
-                        f'Tu reserva para el viaje {reserva.viaje} '
-                        f'fue confirmada. Tu código de ticket es '
-                        f'{ticket.codigo}.'
-                    )
-                )
-
-        self.message_user(
-            request,
-            'Reservas aprobadas y tickets emitidos.',
-            messages.SUCCESS
-        )
-
-    @admin.action(description="Rechazar reservas")
-    def rechazar_reservas(self, request, queryset):
-
-        for reserva in queryset:
-
-            if reserva.estado == 'PENDIENTE':
-
-                reserva.estado = 'CANCELADA'
-                reserva.save()
-
-                Notificacion.objects.create(
-                    pasajero=reserva.pasajero,
-                    mensaje=(
-                        f'Tu solicitud para el viaje '
-                        f'{reserva.viaje} fue rechazada.'
-                    )
-                )
-
-        self.message_user(
-            request,
-            'Reservas rechazadas.',
-            messages.WARNING
-        )
-
-@admin.register(Ticket)
-class TicketAdmin(admin.ModelAdmin):
-
-    list_display = (
-        'codigo',
-        'reserva',
-        'fecha_emision'
-    )
-
-    search_fields = (
-        'codigo',
-        'reserva__pasajero__nombre'
-    )
-
-    readonly_fields = (
-        'codigo',
-        'fecha_emision'
-    )
+from django.contrib import admin
+from .models import (
+    Navio, Cubierta, Camarote, Tripulante, Puerto, Itinerario,
+    Escala, Viaje, Pasajero, Perfil,
+)
 
 
-# ==========================================
-# ADMINISTRAR NOTIFICACIONES
-# ==========================================
+@admin.register(Navio)
+class NavioAdmin(admin.ModelAdmin):
+    list_display = ("codigo", "nombre", "clasificacion", "max_pasajeros")
+    search_fields = ("codigo", "nombre")
 
-@admin.register(Notificacion)
-class NotificacionAdmin(admin.ModelAdmin):
 
-    list_display = (
-        'pasajero',
-        'mensaje',
-        'fecha',
-        'leida'
-    )
+@admin.register(Cubierta)
+class CubiertaAdmin(admin.ModelAdmin):
+    list_display = ("navio", "numero", "encargado")
+    list_filter = ("navio",)
 
-    list_filter = ('leida', 'fecha')
-    search_fields = ('pasajero__nombre', 'mensaje')
+
+@admin.register(Camarote)
+class CamaroteAdmin(admin.ModelAdmin):
+    list_display = ("numero", "cubierta", "tipo", "ubicacion")
+    list_filter = ("ubicacion", "cubierta__navio")
+
+
+@admin.register(Tripulante)
+class TripulanteAdmin(admin.ModelAdmin):
+    list_display = ("legajo", "nombre", "puesto", "navio", "jefe")
+    search_fields = ("legajo", "nombre")
+
+
+@admin.register(Puerto)
+class PuertoAdmin(admin.ModelAdmin):
+    list_display = ("nombre", "ciudad", "pais")
+
+
+@admin.register(Itinerario)
+class ItinerarioAdmin(admin.ModelAdmin):
+    list_display = ("nombre", "categoria")
+    list_filter = ("categoria",)
+
+
+@admin.register(Escala)
+class EscalaAdmin(admin.ModelAdmin):
+    list_display = ("itinerario", "numero_escala", "puerto")
+
+
+@admin.register(Viaje)
+class ViajeAdmin(admin.ModelAdmin):
+    list_display = ("navio", "itinerario", "fecha", "duracion", "get_categoria")
+    list_filter = ("itinerario__categoria", "navio")
+
+    @admin.display(description="Categoría", ordering="itinerario__categoria")
+    def get_categoria(self, obj):
+        return obj.itinerario.categoria
+
+
+@admin.register(Pasajero)
+class PasajeroAdmin(admin.ModelAdmin):
+    list_display = ("nombre", "tipo_documento", "numero_documento", "pais_procedencia")
+    search_fields = ("nombre", "numero_documento")
+
+
+@admin.register(Perfil)
+class PerfilAdmin(admin.ModelAdmin):
+    list_display = ("usuario", "pasajero")

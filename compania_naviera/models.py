@@ -23,7 +23,7 @@ class Navio(models.Model):
 
 class Cubierta(models.Model):
     navio = models.ForeignKey(Navio, on_delete=models.CASCADE)
-    numero = models.CharField(max_length=10)
+    numero = models.IntegerField()
     encargado = models.CharField(max_length=100)
     descripcion = models.TextField()
 
@@ -42,7 +42,7 @@ class Camarote(models.Model):
     ]
 
     cubierta = models.ForeignKey(Cubierta, on_delete=models.CASCADE)
-    numero = models.CharField(max_length=10)
+    numero = models.IntegerField()
     tipo = models.CharField(max_length=50)
     ubicacion = models.CharField(max_length=20, choices=UBICACIONES)
 
@@ -76,8 +76,18 @@ class Puerto(models.Model):
 
 
 class Itinerario(models.Model):
-    nombre = models.CharField(max_length=100)
-
+    nombre = models.CharField(max_length=10)
+    CATEGORIAS = [
+            ('Especial', 'Especial'),
+            ('Super Lujo', 'Super Lujo'),
+            ('Lujoso', 'Lujoso'),
+            ('Común', 'Común'),
+        ]
+    categoria = models.CharField(
+            max_length=50,
+            choices=CATEGORIAS
+        )
+    
     def __str__(self):
         return self.nombre
 
@@ -95,22 +105,12 @@ class Escala(models.Model):
 
 class Viaje(models.Model):
 
-    CATEGORIAS = [
-        ('Especial', 'Especial'),
-        ('Super Lujo', 'Super Lujo'),
-        ('Lujoso', 'Lujoso'),
-        ('Común', 'Común'),
-    ]
 
     navio = models.ForeignKey(Navio, on_delete=models.CASCADE)
     itinerario = models.ForeignKey(Itinerario, on_delete=models.CASCADE)
     fecha = models.DateField()
     duracion = models.IntegerField()
 
-    categoria = models.CharField(
-        max_length=50,
-        choices=CATEGORIAS
-    )
 
     def __str__(self):
         return f"{self.navio} - {self.fecha}"
