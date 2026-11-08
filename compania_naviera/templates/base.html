@@ -1,91 +1,189 @@
-
 {% load static %}
 
+<!DOCTYPE html>
 <html lang="es">
+
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>{% block title %}SEA STAR{% endblock %}</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
+
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="{% static 'base.css' %}">
+
     {% block extra_css %}{% endblock %}
+
 </head>
 
 <body>
+
     <header class="navbar-header">
+
         <div class="container nav-container">
+
             <a href="{% url 'home' %}" class="logo">
+
                 <span class="logo-icon">✦</span>
+
                 <span class="logo-text">SEA STAR</span>
+
             </a>
 
             <nav>
+
                 <ul class="nav-menu">
-                {% if user.is_authenticated %}
+
                     <li>
-                        <a class="nav-link" href="{% url 'mi_cuenta' %}">Mi cuenta</a>
+                        <a class="nav-link" href="{% url 'home' %}">
+                            Inicio
+                        </a>
                     </li>
+
                     <li>
-                        <a class="nav-link" href="{% url 'logout' %}">Cerrar sesión</a>
+                        <a class="nav-link" href="{% url 'navios' %}">
+                            Nuestra flota
+                        </a>
                     </li>
+
+                    <li>
+                        <a class="nav-link" href="{% url 'itinerarios' %}">
+                            Itinerarios
+                        </a>
+                    </li>
+
+                    <li>
+                        <a class="nav-link" href="{% url 'cruceros' %}">
+                            Cruceros
+                        </a>
+                    </li>
+
+                    <li>
+                        <a class="nav-link nav-contact" href="{% url 'home' %}#contacto">
+                            Contacto
+                        </a>
+                    </li>
+
+                    {% if user.is_authenticated %}
+
+                        <li>
+                            <a class="nav-link" href="{% url 'mi_cuenta' %}">
+                                Mi cuenta
+                            </a>
+                        </li>
+
+                        <li>
+                            <a class="nav-link" href="{% url 'logout' %}">
+                                Cerrar sesión
+                            </a>
+                        </li>
+
                     {% else %}
-                    <li>
-                        <a class="nav-link" href="{% url 'login' %}">Iniciar sesión</a>
-                    </li>
-                {% endif %}
-                    <li><a class="nav-link" href="{% url 'home' %}">Inicio</a></li>
-                    <li><a class="nav-link" href="{% url 'home' %}#flota">Nuestra flota</a></li>
-                    <li><a class="nav-link" href="{% url 'itinerarios' %}">Itinerarios</a></li>
-                    <li><a class="nav-link" href="{% url 'cruceros' %}">Cruceros</a></li>
-                    <li><a class="nav-link nav-contact" href="{% url 'home' %}#contacto">Contacto</a></li>
+
+                        <li>
+                            <a class="nav-link" href="{% url 'login' %}">
+                                Iniciar sesión
+                            </a>
+                        </li>
+
+                        <li>
+                            <a class="nav-link" href="{% url 'registro' %}">
+                                Registrarse
+                            </a>
+                        </li>
+
+                    {% endif %}
+
                 </ul>
+
             </nav>
+
         </div>
+
     </header>
 
     <main>
+
         {% block content %}{% endblock %}
+
     </main>
 
     <footer class="site-footer" id="contacto">
+
         <div class="container">
+
             <div class="footer-grid">
+
                 <div class="footer-col">
+
                     <h4>SEA STAR</h4>
-                    <p>Descubrí el mundo desde otra perspectiva. Tu próximo viaje comienza en el mar.</p>
+
+                    <p>
+                        Descubrí el mundo desde otra perspectiva.
+                        Tu próximo viaje comienza en el mar.
+                    </p>
+
                 </div>
 
                 <div class="footer-col">
+
                     <h4>Explorá</h4>
+
                     <ul class="footer-links">
-                        <li><a href="{% url 'home' %}#flota">Nuestra flota</a></li>
+
+                        <li><a href="{% url 'navios' %}">Nuestra flota</a></li>
+
                         <li><a href="{% url 'itinerarios' %}">Itinerarios</a></li>
+
                         <li><a href="{% url 'cruceros' %}">Cruceros</a></li>
+
                     </ul>
+
                 </div>
 
                 <div class="footer-col">
+
                     <h4>La compañía</h4>
+
                     <ul class="footer-links">
+
                         <li><a href="{% url 'home' %}#compania">Quiénes somos</a></li>
+
                         <li><a href="{% url 'home' %}#camarotes">A bordo</a></li>
+
                     </ul>
+
                 </div>
 
                 <div class="footer-col">
+
                     <h4>Contacto</h4>
-                    <p>Consultá nuestros itinerarios y conocé nuestras propuestas.</p>
+
+                    <p>
+                        Consultá nuestros itinerarios y conocé nuestras propuestas.
+                    </p>
+
                 </div>
+
             </div>
 
             <div class="footer-bottom">
+
                 © 2026 SEA STAR · Proyecto académico de compañía naviera.
+
             </div>
+
         </div>
+
     </footer>
+
 </body>
+
 </html>

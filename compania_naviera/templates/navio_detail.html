@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}SEA STAR - Detalle del navío{% endblock %}
+
+{% block content %}
+
+<section class="container" style="padding: 60px 0;">
+
+    <h1 style="text-align: center; color: #003b5c;">
+        {{ titulo }}
+    </h1>
+
+    <div style="
+        background: white;
+        max-width: 700px;
+        margin: 30px auto;
+        padding: 35px;
+        border-radius: 12px;
+        box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+    ">
+
+        <h2 style="color: #003b5c;">
+            {{ navio.nombre }}
+        </h2>
+
+        <p><strong>Código:</strong> {{ navio.codigo }}</p>
+
+        <p><strong>Clasificación:</strong> {{ navio.clasificacion }}</p>
+
+        <p><strong>Altura:</strong> {{ navio.altura }} m</p>
+
+        <p><strong>Eslora:</strong> {{ navio.eslora }} m</p>
+
+        <p><strong>Manga:</strong> {{ navio.manga }} m</p>
+
+        <p><strong>Desplazamiento:</strong> {{ navio.desplazamiento }}</p>
+
+        <p><strong>Autonomía:</strong> {{ navio.autonomia }}</p>
+
+        <p><strong>Camarotes:</strong> {{ navio.cantidad_camarotes }}</p>
+
+        <p><strong>Máximo de pasajeros:</strong> {{ navio.max_pasajeros }}</p>
+
+        <p><strong>Motores:</strong> {{ navio.cantidad_motores }}</p>
+
+        <p><strong>Tripulantes:</strong> {{ navio.cantidad_tripulantes }}</p>
+
+        <a href="{% url 'navios' %}" class="boton">
+            Volver a la flota
+        </a>
+
+    </div>
+
+</section>
+
+{% endblock %}

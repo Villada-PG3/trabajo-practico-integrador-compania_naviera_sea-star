@@ -1,0 +1,149 @@
+:root {
+    --navy: #092c46;
+    --blue: #125477;
+    --cyan: #24a6c7;
+    --turquoise: #36c5b9;
+    --background: #f2f6f9;
+    --white: #ffffff;
+    --text: #263b4b;
+    --border: #dce6ed;
+}
+
+body, #container {
+    background: var(--background);
+    color: var(--text);
+    font-family: Arial, sans-serif;
+}
+
+#header {
+    background: var(--navy);
+    color: white;
+    padding: 18px 30px;
+    border-bottom: 4px solid var(--turquoise);
+}
+
+#branding #site-name a {
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.admin-subtitle {
+    display: block;
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: #8edee0;
+    margin-top: 5px;
+}
+
+#user-tools {
+    color: #d9edf5;
+}
+
+#user-tools a {
+    color: #75d9d4;
+}
+
+h1, h2, h3 {
+    color: var(--navy);
+}
+
+.module, .inline-group, fieldset {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    overflow: hidden;
+    box-shadow: 0 3px 12px rgba(8,43,69,.06);
+}
+
+.module h2, .module caption, .inline-group h2 {
+    background: var(--blue);
+    color: white;
+    padding: 13px;
+}
+
+#changelist table {
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+#changelist table thead th {
+    background: #e5f1f6;
+    color: var(--navy);
+    padding: 13px;
+}
+
+#changelist table tbody tr:nth-child(even) {
+    background: #f5f9fb;
+}
+
+#changelist table tbody tr:hover {
+    background: #e4f6f6;
+}
+
+a:link, a:visited {
+    color: var(--blue);
+}
+
+a:hover {
+    color: var(--cyan);
+}
+
+.button, input[type="submit"], input[type="button"],
+.submit-row input, a.button {
+    background: var(--blue);
+    color: white !important;
+    border: none;
+    border-radius: 6px;
+    padding: 9px 15px;
+    font-weight: bold;
+}
+
+.button:hover, input[type="submit"]:hover,
+input[type="button"]:hover, .submit-row input:hover {
+    background: var(--cyan);
+}
+
+.object-tools a {
+    background: var(--turquoise) !important;
+    color: var(--navy) !important;
+    border-radius: 6px;
+    font-weight: bold;
+}
+
+input, select, textarea {
+    border-radius: 5px !important;
+    border: 1px solid #cbd9e2 !important;
+    padding: 7px !important;
+}
+
+input:focus, select:focus, textarea:focus {
+    border-color: var(--cyan) !important;
+    outline: none;
+}
+
+#changelist-filter {
+    background: white;
+    border-left: 1px solid var(--border);
+}
+
+#changelist-filter h2 {
+    background: var(--navy);
+    color: white;
+    padding: 12px;
+}
+
+#changelist-filter h3 {
+    color: var(--blue);
+}
+
+.messagelist li {
+    border-radius: 6px;
+    padding: 12px;
+}
+
+#footer {
+    color: #668092;
+}

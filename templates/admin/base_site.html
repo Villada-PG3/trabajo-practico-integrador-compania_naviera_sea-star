@@ -1,0 +1,21 @@
+
+{% extends "admin/base.html" %}
+{% load static %}
+
+{% block title %}SEA STAR | Administración{% endblock %}
+
+{% block branding %}
+<div id="site-name">
+    <a href="{% url 'admin:index' %}">
+        ✦ SEA STAR
+        <span class="admin-subtitle">PANEL DE ADMINISTRACIÓN</span>
+    </a>
+</div>
+{% endblock %}
+
+{% block extrastyle %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'compania_naviera/admin.css' %}">
+{% endblock %}
+
+{% block nav-global %}{% endblock %}
