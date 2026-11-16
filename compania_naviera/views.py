@@ -243,6 +243,7 @@ def mi_cuenta(request):
 # SOLICITAR RESERVA
 # =====================================
 
+
 @login_required
 def solicitar_reserva(request):
 
@@ -254,6 +255,13 @@ def solicitar_reserva(request):
     if request.method == 'POST':
 
         form = ReservaForm(request.POST)
+
+        if 'actualizar_camarotes' in request.POST:
+            return render(
+                request,
+                'reserva.html',
+                {'form': form}
+            )
 
         if form.is_valid():
 
@@ -267,7 +275,6 @@ def solicitar_reserva(request):
             )
 
             try:
-
                 reserva.save()
 
                 messages.success(
@@ -278,21 +285,25 @@ def solicitar_reserva(request):
                 return redirect('mi_cuenta')
 
             except Exception:
-
                 messages.error(
                     request,
-                    'Ese camarote ya no está disponible para este viaje.'
+                    'Ese camarote ya no está disponible.'
                 )
 
     else:
 
-        form = ReservaForm()
+        viaje_id = request.GET.get('viaje')
+
+        initial = {'viaje': viaje_id} if viaje_id else None
+
+        form = ReservaForm(initial=initial)
 
     return render(
         request,
         'reserva.html',
         {'form': form}
     )
+
 
 
 # =====================================

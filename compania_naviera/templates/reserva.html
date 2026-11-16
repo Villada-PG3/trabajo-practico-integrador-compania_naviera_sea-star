@@ -1,34 +1,51 @@
+
 {% extends 'base.html' %}
-{% load static %}
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Reservar viaje</title>
-</head>
-<body>
 
-    <h1>Solicitar reserva</h1>
+{% block title %}Solicitar reserva | SEA STAR{% endblock %}
 
-    {% if messages %}
-        {% for message in messages %}
-            <p>{{ message }}</p>
-        {% endfor %}
-    {% endif %}
+{% block content %}
+
+<section class="container" style="max-width: 850px; padding: 55px 20px;">
+
+    <h1>Solicitar una reserva</h1>
+
+    <p>Elegí el viaje y un camarote disponible.</p>
 
     <form method="POST">
+
         {% csrf_token %}
 
-        {{ form.as_p }}
+        {{ form.non_field_errors }}
+
+        <div>
+            {{ form.viaje.label_tag }}
+            {{ form.viaje }}
+            {{ form.viaje.errors }}
+        </div>
+
+        <div>
+            {{ form.camarote.label_tag }}
+            {{ form.camarote }}
+            {{ form.camarote.errors }}
+        </div>
+
+        <p>Si cambiás el viaje, actualizá los camarotes.</p>
+
+        <button type="submit"
+                name="actualizar_camarotes"
+                value="1"
+                formnovalidate>
+            Actualizar camarotes
+        </button>
 
         <button type="submit">
-            Solicitar reserva
+            Enviar solicitud
         </button>
+
     </form>
 
-    <a href="{% url 'mi_cuenta' %}">
-        Volver a mi cuenta
-    </a>
+    <a href="{% url 'mi_cuenta' %}">Volver a mi cuenta</a>
 
-</body>
-</html>
+</section>
+
+{% endblock %}

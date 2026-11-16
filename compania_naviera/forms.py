@@ -56,22 +56,26 @@ class RegistroPasajeroForm(UserCreationForm):
             'password1',
             'password2'
         ]
+
 class ReservaForm(forms.Form):
 
     viaje = forms.ModelChoiceField(
-        queryset=Viaje.objects.all(),
+        queryset=Viaje.objects.select_related(
+            'navio', 'itinerario'
+        ).all().order_by('fecha'),
         label="Seleccionar viaje"
     )
 
     camarote = forms.ModelChoiceField(
-        queryset=Camarote.objects.none(),
+        queryset=Camarote.objects.all().order_by('numero'),
         label="Seleccionar camarote"
     )
 
     def __init__(self, *args, **kwargs):
+
         super().__init__(*args, **kwargs)
 
-        viaje_id = self.data.get('viaje')
+        viaje_id = self.data.get('viaje') or self.initial.get('viaje')
 
         if viaje_id:
             try:
@@ -85,11 +89,42 @@ class ReservaForm(forms.Form):
                 self.fields['camarote'].queryset = (
                     Camarote.objects.filter(
                         cubierta__navio=viaje.navio
-                    ).exclude(pk__in=ocupados)
+                    ).exclude(
+                        pk__in=ocupados
+                    ).order_by('numero')
                 )
 
-            except (Viaje.DoesNotExist, ValueError):
-                pass
+            except (Viaje.DoesNotExist, ValueError, TypeError):
+                self.fields['camarote'].queryset = Camarote.objects.none()
+
+    def clean(self):
+
+        cleaned_data = super().clean()
+
+        viaje = cleaned_data.get('viaje')
+        camarote = cleaned_data.get('camarote')
+
+        if viaje and camarote:
+
+            if camarote.cubierta.navio_id != viaje.navio_id:
+
+                self.add_error(
+                    'camarote',
+                    'El camarote no pertenece al navío de este viaje.'
+                )
+
+            elif Reserva.objects.filter(
+                viaje=viaje,
+                camarote=camarote,
+                estado__in=['PENDIENTE', 'CONFIRMADA']
+            ).exists():
+
+                self.add_error(
+                    'camarote',
+                    'Ese camarote ya no está disponible.'
+                )
+
+        return cleaned_data
 
 
 class RegistroTripulanteForm(forms.Form):
