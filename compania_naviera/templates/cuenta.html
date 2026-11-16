@@ -1,13 +1,16 @@
+
 {% extends 'base.html' %}
 {% load static %}
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Mi cuenta SEA STAR</title>
-</head>
-<body>
+
+{% block title %}Mi cuenta | SEA STAR{% endblock %}
+
+{% block content %}
+
+<main class="container">
 
     <h1>Bienvenido {{ perfil.pasajero.nombre }}</h1>
+
+    <p>Esta es tu cuenta de pasajero de SEA STAR.</p>
 
     <a href="{% url 'logout' %}">Cerrar sesión</a>
 
@@ -16,14 +19,23 @@
     <h2>Mis reservas</h2>
 
     {% for reserva in reservas %}
+
         <div>
             <h3>Reserva #{{ reserva.id }}</h3>
+
             <p>Viaje: {{ reserva.viaje }}</p>
+
             <p>Camarote: {{ reserva.camarote }}</p>
+
             <p>Estado: {{ reserva.get_estado_display }}</p>
+
+            <p>Fecha de solicitud: {{ reserva.fecha_solicitud }}</p>
         </div>
+
     {% empty %}
+
         <p>No tenés reservas todavía.</p>
+
     {% endfor %}
 
     <a href="{% url 'reservar' %}">
@@ -35,46 +47,59 @@
     <h2>Mis tickets</h2>
 
     {% for ticket in tickets %}
+
         <div>
             <h3>Ticket {{ ticket.codigo }}</h3>
 
-            <p>Navío:
+            <p>
+                Navío:
                 {{ ticket.reserva.viaje.navio }}
             </p>
 
-            <p>Itinerario:
+            <p>
+                Itinerario:
                 {{ ticket.reserva.viaje.itinerario }}
             </p>
 
-            <p>Fecha:
+            <p>
+                Fecha:
                 {{ ticket.reserva.viaje.fecha }}
             </p>
 
-            <p>Duración:
+            <p>
+                Duración:
                 {{ ticket.reserva.viaje.duracion }} días
             </p>
 
-            <p>Camarote:
+            <p>
+                Camarote:
                 {{ ticket.reserva.camarote }}
             </p>
 
             <h4>Escalas</h4>
 
             {% for escala in ticket.reserva.viaje.itinerario.escala_set.all %}
+
                 <p>
                     {{ escala.numero_escala }} -
                     {{ escala.puerto.nombre }},
                     {{ escala.puerto.ciudad }}
                 </p>
+
             {% empty %}
+
                 <p>Sin escalas registradas.</p>
+
             {% endfor %}
+
         </div>
 
         <hr>
 
     {% empty %}
+
         <p>Todavía no tenés tickets emitidos.</p>
+
     {% endfor %}
 
     <hr>
@@ -89,19 +114,27 @@
             <small>{{ notificacion.fecha }}</small>
 
             {% if notificacion.leida %}
+
                 <p>Leída</p>
+
             {% else %}
+
                 <a href="{% url 'leer_notificacion' notificacion.id %}">
                     Marcar como leída
                 </a>
+
             {% endif %}
+
         </div>
 
         <hr>
 
     {% empty %}
+
         <p>No tenés notificaciones.</p>
+
     {% endfor %}
 
-</body>
-</html>
+</main>
+
+{% endblock %}
