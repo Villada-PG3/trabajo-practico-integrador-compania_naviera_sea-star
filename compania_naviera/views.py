@@ -252,57 +252,112 @@ def solicitar_reserva(request):
         usuario=request.user
     )
 
-    if request.method == 'POST':
+    viajes = Viaje.objects.select_related(
+        'navio',
+        'itinerario'
+    ).order_by('fecha')
 
-        form = ReservaForm(request.POST)
+    viaje_id = request.GET.get('viaje') or request.POST.get('viaje_id')
 
-        if 'actualizar_camarotes' in request.POST:
-            return render(
-                request,
-                'reserva.html',
-                {'form': form}
+    viaje = None
+    camarotes = []
+    camarote_seleccionado = None
+
+    if viaje_id:
+        viaje = get_object_or_404(
+            Viaje.objects.select_related('navio', 'itinerario'),
+            id=viaje_id
+        )
+
+        # Buscar todos los camarotes del navío del viaje
+        camarotes = list(
+            Camarote.objects.filter(
+                cubierta__navio=viaje.navio
+            ).select_related(
+                'cubierta'
+            ).order_by(
+                'cubierta__numero',
+                'numero'
+            )
+        )
+
+        # Obtener los camarotes que ya tienen reservas activas
+        ocupados = Reserva.objects.filter(
+            viaje=viaje,
+            estado__in=['PENDIENTE', 'CONFIRMADA']
+        ).values_list(
+            'camarote_id',
+            flat=True
+        )
+
+        ocupados = set(ocupados)
+
+        for camarote in camarotes:
+            camarote.ocupado = camarote.id in ocupados
+
+        if request.method == 'POST':
+
+            camarote_id = request.POST.get('camarote_id')
+
+            camarote_seleccionado = next(
+                (
+                    c for c in camarotes
+                    if str(c.id) == str(camarote_id)
+                ),
+                None
             )
 
-        if form.is_valid():
+            if camarote_seleccionado is None:
 
-            viaje = form.cleaned_data['viaje']
-            camarote = form.cleaned_data['camarote']
-
-            reserva = Reserva(
-                pasajero=perfil.pasajero,
-                viaje=viaje,
-                camarote=camarote
-            )
-
-            try:
-                reserva.save()
-
-                messages.success(
+                messages.error(
                     request,
-                    'Tu solicitud fue enviada al administrador.'
+                    'Seleccioná un camarote válido.'
                 )
 
-                return redirect('mi_cuenta')
+            elif camarote_seleccionado.ocupado:
 
-            except Exception:
                 messages.error(
                     request,
                     'Ese camarote ya no está disponible.'
                 )
 
-    else:
+            else:
 
-        viaje_id = request.GET.get('viaje')
+                try:
+                    with transaction.atomic():
 
-        initial = {'viaje': viaje_id} if viaje_id else None
+                        Reserva.objects.create(
+                            pasajero=perfil.pasajero,
+                            viaje=viaje,
+                            camarote=camarote_seleccionado,
+                            estado='PENDIENTE'
+                        )
 
-        form = ReservaForm(initial=initial)
+                    messages.success(
+                        request,
+                        'Tu solicitud fue enviada al administrador.'
+                    )
+
+                    return redirect('mi_cuenta')
+
+                except IntegrityError:
+
+                    messages.error(
+                        request,
+                        'Otro pasajero acaba de reservar ese camarote.'
+                    )
 
     return render(
         request,
         'reserva.html',
-        {'form': form}
+        {
+            'viajes': viajes,
+            'viaje': viaje,
+            'camarotes': camarotes,
+            'camarote_seleccionado': camarote_seleccionado
+        }
     )
+
 
 
 
