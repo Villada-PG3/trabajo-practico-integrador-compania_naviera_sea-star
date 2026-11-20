@@ -1,7 +1,9 @@
+
 from django.db import models
 from django.db.models import Q
 from django.contrib.auth.models import User
 import uuid
+
 
 class Navio(models.Model):
     codigo = models.CharField(max_length=20, unique=True)
@@ -16,6 +18,11 @@ class Navio(models.Model):
     cantidad_motores = models.IntegerField()
     cantidad_tripulantes = models.IntegerField()
     clasificacion = models.CharField(max_length=50)
+    imagen = models.ImageField(
+        upload_to='navios/',
+        blank=True,
+        null=True
+    )
 
     def __str__(self):
         return self.nombre
@@ -45,6 +52,11 @@ class Camarote(models.Model):
     numero = models.IntegerField()
     tipo = models.CharField(max_length=50)
     ubicacion = models.CharField(max_length=20, choices=UBICACIONES)
+    imagen = models.ImageField(
+        upload_to='camarotes/',
+        blank=True,
+        null=True
+    )
 
     def __str__(self):
         return f"Camarote {self.numero} - {self.cubierta}"
@@ -70,6 +82,11 @@ class Puerto(models.Model):
     nombre = models.CharField(max_length=100)
     ciudad = models.CharField(max_length=100)
     pais = models.CharField(max_length=100)
+    imagen = models.ImageField(
+        upload_to='destinos/',
+        blank=True,
+        null=True
+    )
 
     def __str__(self):
         return f"{self.nombre} - {self.ciudad}"
@@ -77,17 +94,19 @@ class Puerto(models.Model):
 
 class Itinerario(models.Model):
     nombre = models.CharField(max_length=10)
+
     CATEGORIAS = [
-            ('Especial', 'Especial'),
-            ('Super Lujo', 'Super Lujo'),
-            ('Lujoso', 'Lujoso'),
-            ('Común', 'Común'),
-        ]
+        ('Especial', 'Especial'),
+        ('Super Lujo', 'Super Lujo'),
+        ('Lujoso', 'Lujoso'),
+        ('Común', 'Común'),
+    ]
+
     categoria = models.CharField(
-            max_length=50,
-            choices=CATEGORIAS
-        )
-    
+        max_length=50,
+        choices=CATEGORIAS
+    )
+
     def __str__(self):
         return self.nombre
 
@@ -103,17 +122,40 @@ class Escala(models.Model):
     def __str__(self):
         return f"{self.itinerario} - Escala {self.numero_escala}"
 
+
 class Viaje(models.Model):
-
-
     navio = models.ForeignKey(Navio, on_delete=models.CASCADE)
     itinerario = models.ForeignKey(Itinerario, on_delete=models.CASCADE)
     fecha = models.DateField()
     duracion = models.IntegerField()
-
+    imagen = models.ImageField(
+        upload_to='viajes/',
+        blank=True,
+        null=True
+    )
 
     def __str__(self):
         return f"{self.navio} - {self.fecha}"
+
+
+class Instalacion(models.Model):
+    navio = models.ForeignKey(
+        Navio,
+        on_delete=models.CASCADE,
+        related_name='instalaciones'
+    )
+    nombre = models.CharField(max_length=100)
+    descripcion = models.TextField()
+    imagen = models.ImageField(
+        upload_to='instalaciones/',
+        blank=True,
+        null=True
+    )
+
+    def __str__(self):
+        return f"{self.nombre} - {self.navio.nombre}"
+
+
 class Pasajero(models.Model):
     tipo_documento = models.CharField(max_length=20)
     numero_documento = models.CharField(max_length=30)
@@ -123,6 +165,7 @@ class Pasajero(models.Model):
 
     def __str__(self):
         return self.nombre
+
 
 class Perfil(models.Model):
     usuario = models.OneToOneField(
@@ -138,9 +181,7 @@ class Perfil(models.Model):
         return self.usuario.username
 
 
-
 class Reserva(models.Model):
-
     ESTADOS = [
         ('PENDIENTE', 'Pendiente'),
         ('CONFIRMADA', 'Confirmada'),
@@ -186,7 +227,6 @@ class Reserva(models.Model):
 
 
 class Ticket(models.Model):
-
     reserva = models.OneToOneField(
         Reserva,
         on_delete=models.CASCADE
@@ -207,21 +247,14 @@ class Ticket(models.Model):
 
 
 class Notificacion(models.Model):
-
     pasajero = models.ForeignKey(
         Pasajero,
         on_delete=models.CASCADE
     )
 
     mensaje = models.TextField()
-
-    fecha = models.DateTimeField(
-        auto_now_add=True
-    )
-
-    leida = models.BooleanField(
-        default=False
-    )
+    fecha = models.DateTimeField(auto_now_add=True)
+    leida = models.BooleanField(default=False)
 
     def __str__(self):
         return f"Notificación para {self.pasajero}"
