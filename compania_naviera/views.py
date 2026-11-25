@@ -1,4 +1,6 @@
 
+from sqlite3 import IntegrityError
+
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
@@ -243,7 +245,6 @@ def mi_cuenta(request):
 # SOLICITAR RESERVA
 # =====================================
 
-
 @login_required
 def solicitar_reserva(request):
 
@@ -264,33 +265,34 @@ def solicitar_reserva(request):
     camarote_seleccionado = None
 
     if viaje_id:
+
         viaje = get_object_or_404(
             Viaje.objects.select_related('navio', 'itinerario'),
             id=viaje_id
         )
 
-        # Buscar todos los camarotes del navío del viaje
         camarotes = list(
             Camarote.objects.filter(
                 cubierta__navio=viaje.navio
             ).select_related(
-                'cubierta'
+                'cubierta',
+                'cubierta__navio'
             ).order_by(
                 'cubierta__numero',
+                'ubicacion',
                 'numero'
             )
         )
 
-        # Obtener los camarotes que ya tienen reservas activas
-        ocupados = Reserva.objects.filter(
-            viaje=viaje,
-            estado__in=['PENDIENTE', 'CONFIRMADA']
-        ).values_list(
-            'camarote_id',
-            flat=True
+        ocupados = set(
+            Reserva.objects.filter(
+                viaje=viaje,
+                estado__in=['PENDIENTE', 'CONFIRMADA']
+            ).values_list(
+                'camarote_id',
+                flat=True
+            )
         )
-
-        ocupados = set(ocupados)
 
         for camarote in camarotes:
             camarote.ocupado = camarote.id in ocupados
@@ -322,16 +324,14 @@ def solicitar_reserva(request):
                 )
 
             else:
-
                 try:
-                    with transaction.atomic():
 
-                        Reserva.objects.create(
-                            pasajero=perfil.pasajero,
-                            viaje=viaje,
-                            camarote=camarote_seleccionado,
-                            estado='PENDIENTE'
-                        )
+                    Reserva.objects.create(
+                        pasajero=perfil.pasajero,
+                        viaje=viaje,
+                        camarote=camarote_seleccionado,
+                        estado='PENDIENTE'
+                    )
 
                     messages.success(
                         request,
@@ -347,9 +347,11 @@ def solicitar_reserva(request):
                         'Otro pasajero acaba de reservar ese camarote.'
                     )
 
+                    camarote_seleccionado.ocupado = True
+
     return render(
         request,
-        'reserva.html',
+        'camarotes.html',
         {
             'viajes': viajes,
             'viaje': viaje,
@@ -357,7 +359,6 @@ def solicitar_reserva(request):
             'camarote_seleccionado': camarote_seleccionado
         }
     )
-
 
 
 

@@ -1,0 +1,95 @@
+/* Página de selección de camarotes */
+
+.reserva-contenedor {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 20px;
+    color: #172b45;
+}
+
+.reserva-titulo {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.reserva-titulo h1 {
+    margin-bottom: 8px;
+    font-size: 32px;
+    font-weight: 700;
+}
+
+.reserva-titulo p {
+    color: #64748b;
+}
+
+.selector-viaje {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 14px;
+    padding: 22px;
+    margin-bottom: 30px;
+    background: #f3f6fa;
+    border-radius: 12px;
+}
+
+.selector-viaje h2 {
+    flex-basis: 100%;
+    margin: 0;
+    font-size: 20px;
+}
+
+.selector-viaje select {
+    flex: 1;
+    min-width: 220px;
+    padding: 12px;
+    border: 1px solid #ccd5e0;
+    border-radius: 8px;
+    background: white;
+}
+
+.boton-principal {
+    padding: 12px 24px;
+    border: 0;
+    border-radius: 8px;
+    background: #102b4e;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+}
+
+.boton-principal:hover:not(:disabled) {
+    background: #1d4777;
+    transform: translateY(-1px);
+}
+
+.boton-principal:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+.datos-viaje h2 {
+    margin-bottom: 10px;
+    font-size: 23px;
+}
+
+.datos-viaje p {
+    color: #52647b;
+}
+
+.separador {
+    margin: 0 10px;
+    color: #a0aaba;
+}
+
+.mensajes-reserva {
+    margin-bottom: 20px;
+}
+
+.mensaje-reserva {
+    padding: 12px 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    background: #e5edf7;
+}

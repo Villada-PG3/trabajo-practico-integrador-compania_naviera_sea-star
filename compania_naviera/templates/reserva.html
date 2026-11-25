@@ -1,221 +1,29 @@
-
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
-
-<style>
-.reserva-contenedor {
-    max-width: 1100px;
-    margin: 40px auto;
-    padding: 20px;
-    color: #172b45;
-}
-
-.reserva-titulo {
-    text-align: center;
-    margin-bottom: 30px;
-}
-
-.reserva-titulo h1 {
-    font-size: 32px;
-    font-weight: bold;
-}
-
-.selector-viaje {
-    background: #f3f6fa;
-    padding: 20px;
-    border-radius: 12px;
-    margin-bottom: 30px;
-}
-
-.selector-viaje select {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #ccd5e0;
-    border-radius: 8px;
-    margin: 12px 0;
-}
-
-.boton-principal {
-    background: #102b4e;
-    color: white;
-    padding: 12px 25px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-}
-
-.boton-principal:hover {
-    background: #1d4777;
-}
-
-.referencias {
-    display: flex;
-    gap: 20px;
-    flex-wrap: wrap;
-    margin: 20px 0;
-}
-
-.referencia {
-    display: flex;
-    align-items: center;
-    gap: 7px;
-}
-
-.color-camarote {
-    width: 17px;
-    height: 17px;
-    border-radius: 4px;
-}
-
-.disponible-color { background: #16a36a; }
-.ocupado-color { background: #dc4545; }
-.seleccionado-color { background: #2878d0; }
-
-.cubierta-plano {
-    background: #f2f5f9;
-    border: 2px solid #dce3ec;
-    border-radius: 18px;
-    padding: 25px;
-    margin-bottom: 25px;
-}
-
-.cubierta-titulo {
-    text-align: center;
-    margin-bottom: 25px;
-}
-
-.cubierta-titulo h3 {
-    font-weight: bold;
-}
-
-.mapa-camarotes {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 15px;
-}
-
-.zona-titulo {
-    text-align: center;
-    font-size: 13px;
-    font-weight: bold;
-    color: #52647b;
-    margin-bottom: 12px;
-}
-
-.zona-camarotes {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.camarote-opcion {
-    position: relative;
-    display: block;
-    cursor: pointer;
-}
-
-.camarote-opcion input {
-    position: absolute;
-    opacity: 0;
-}
-
-.camarote-caja {
-    background: #16a36a;
-    color: white;
-    border-radius: 8px;
-    padding: 15px 5px;
-    text-align: center;
-    font-weight: bold;
-    transition: 0.2s;
-    border: 3px solid transparent;
-}
-
-.camarote-opcion:not(.ocupado):hover .camarote-caja {
-    background: #11794e;
-    transform: scale(1.06);
-}
-
-.camarote-opcion input:checked + .camarote-caja {
-    background: #2878d0;
-    border-color: #103d70;
-}
-
-.camarote-opcion.ocupado {
-    cursor: not-allowed;
-}
-
-.camarote-opcion.ocupado .camarote-caja {
-    background: #dc4545;
-    opacity: 0.75;
-}
-
-.info-camarote {
-    visibility: hidden;
-    opacity: 0;
-    position: absolute;
-    bottom: 110%;
-    left: 50%;
-    transform: translateX(-50%);
-    background: #102b4e;
-    color: white;
-    padding: 10px;
-    border-radius: 7px;
-    width: 180px;
-    font-size: 12px;
-    text-align: center;
-    z-index: 5;
-    pointer-events: none;
-    transition: 0.2s;
-}
-
-.camarote-opcion:hover .info-camarote {
-    visibility: visible;
-    opacity: 1;
-}
-
-.confirmar-reserva {
-    text-align: center;
-    margin-top: 30px;
-}
-
-.mensaje-reserva {
-    padding: 12px;
-    background: #e5edf7;
-    border-radius: 8px;
-    margin-bottom: 15px;
-}
-
-@media (max-width: 600px) {
-    .mapa-camarotes {
-        grid-template-columns: 1fr;
-    }
-}
-</style>
-
+<link rel="stylesheet" href="{% static 'css/camarotes.css' %}">
 
 <div class="reserva-contenedor">
 
-    <div class="reserva-titulo">
+    <header class="reserva-titulo">
         <h1>Reservá tu camarote</h1>
         <p>Elegí tu próximo destino con SEA STAR</p>
-    </div>
-
+    </header>
 
     {% if messages %}
-        {% for message in messages %}
-            <div class="mensaje-reserva">
-                {{ message }}
-            </div>
-        {% endfor %}
+        <div class="mensajes-reserva">
+            {% for message in messages %}
+                <div class="mensaje-reserva {{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
     {% endif %}
 
-
     <!-- SELECCIONAR VIAJE -->
-
     <form method="GET" class="selector-viaje">
-
-        <h3>1. Seleccioná tu crucero</h3>
+        <h2>1. Seleccioná tu crucero</h2>
 
         <select name="viaje" required>
             <option value="">Elegí un viaje</option>
@@ -228,29 +36,26 @@
                     {{ v.fecha|date:"d/m/Y" }}
                 </option>
             {% endfor %}
-
         </select>
 
         <button type="submit" class="boton-principal">
             Ver camarotes
         </button>
-
     </form>
-
 
     {% if viaje %}
 
-        <h2>2. Elegí tu camarote</h2>
+        <section class="datos-viaje">
+            <h2>2. Elegí tu camarote</h2>
+            <p>
+                <strong>Navío:</strong> {{ viaje.navio.nombre }}
+                |
+                <strong>Fecha:</strong> {{ viaje.fecha|date:"d/m/Y" }}
+            </p>
+        </section>
 
-        <p>
-            Navío: <strong>{{ viaje.navio.nombre }}</strong>
-            <br>
-            Fecha: {{ viaje.fecha|date:"d/m/Y" }}
-        </p>
-
-
+        <!-- REFERENCIAS DE COLORES -->
         <div class="referencias">
-
             <div class="referencia">
                 <span class="color-camarote disponible-color"></span>
                 Disponible
@@ -265,192 +70,278 @@
                 <span class="color-camarote seleccionado-color"></span>
                 Seleccionado
             </div>
-
         </div>
 
-
-        <form method="POST">
-
+        <form method="POST" id="form-reserva">
             {% csrf_token %}
 
-            <input type="hidden" name="viaje_id"
-                   value="{{ viaje.id }}">
+            <input type="hidden" name="viaje_id" value="{{ viaje.id }}">
 
+            <div class="reserva-layout">
 
-            {% regroup camarotes by cubierta as camarotes_por_cubierta %}
+                <!-- MAPA DE CAMAROTES -->
+                <div class="mapa-contenedor">
 
+                    {% regroup camarotes by cubierta as camarotes_por_cubierta %}
 
-            {% for grupo in camarotes_por_cubierta %}
+                    {% for grupo in camarotes_por_cubierta %}
 
-                <div class="cubierta-plano">
+                        <section class="cubierta-plano">
 
-                    <div class="cubierta-titulo">
-                        <h3>Cubierta {{ grupo.grouper.numero }}</h3>
-                        <p>{{ grupo.grouper.descripcion }}</p>
-                    </div>
+                            <header class="cubierta-titulo">
+                                <h3>Cubierta {{ grupo.grouper.numero }}</h3>
 
+                                {% if grupo.grouper.descripcion %}
+                                    <p>{{ grupo.grouper.descripcion }}</p>
+                                {% endif %}
+                            </header>
 
-                    <div class="mapa-camarotes">
+                            <div class="mapa-camarotes">
 
-                        {% for ubicacion in "Babor,Crujía,Estribor"|cut:" "|make_list %}
-                        {% endfor %}
+                                <!-- BABOR -->
+                                <div class="zona">
+                                    <h4 class="zona-titulo">BABOR</h4>
 
-                        <div>
-                            <div class="zona-titulo">BABOR</div>
+                                    <div class="zona-camarotes">
+                                        {% for c in grupo.list %}
+                                            {% if c.ubicacion == 'Babor' %}
 
-                            <div class="zona-camarotes">
+                                                <label class="camarote-opcion {% if c.ocupado %}ocupado{% endif %}">
 
-                                {% for c in grupo.list %}
-                                    {% if c.ubicacion == 'Babor' %}
+                                                    <input
+                                                        type="radio"
+                                                        name="camarote_id"
+                                                        value="{{ c.id }}"
+                                                        {% if c.ocupado %}disabled{% endif %}
+                                                        data-numero="{{ c.numero }}"
+                                                        data-tipo="{{ c.tipo|escape }}"
+                                                        data-ubicacion="{{ c.ubicacion|escape }}"
+                                                        data-cubierta="{{ grupo.grouper.numero }}"
+                                                        data-precio="{{ c.precio|default:'0' }}"
+                                                        data-imagen="{% if c.imagen %}{{ c.imagen.url }}{% endif %}"
+                                                    >
 
-                                        <label class="camarote-opcion {% if c.ocupado %}ocupado{% endif %}">
+                                                    <span class="camarote-caja">
+                                                        {{ c.numero }}
+                                                    </span>
 
-                                            <input type="radio"
-                                                   name="camarote_id"
-                                                   value="{{ c.id }}"
-                                                   {% if c.ocupado %}disabled{% endif %}
-                                                   required>
+                                                </label>
 
-                                            <div class="camarote-caja">
-                                                {{ c.numero }}
-                                            </div>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                </div>
 
-                                            <span class="info-camarote">
-                                                Camarote {{ c.numero }}
-                                                <br>
-                                                Tipo: {{ c.tipo }}
-                                                <br>
-                                                Ubicación: {{ c.ubicacion }}
-                                                <br>
-                                                {% if c.ocupado %}
-                                                    OCUPADO
-                                                {% else %}
-                                                    DISPONIBLE
-                                                {% endif %}
-                                            </span>
+                                <!-- CRUJÍA -->
+                                <div class="zona zona-central">
+                                    <h4 class="zona-titulo">CRUJÍA</h4>
 
-                                        </label>
+                                    <div class="zona-camarotes">
+                                        {% for c in grupo.list %}
+                                            {% if c.ubicacion == 'Crujía' %}
 
-                                    {% endif %}
-                                {% endfor %}
+                                                <label class="camarote-opcion {% if c.ocupado %}ocupado{% endif %}">
 
-                            </div>
-                        </div>
+                                                    <input
+                                                        type="radio"
+                                                        name="camarote_id"
+                                                        value="{{ c.id }}"
+                                                        {% if c.ocupado %}disabled{% endif %}
+                                                        data-numero="{{ c.numero }}"
+                                                        data-tipo="{{ c.tipo|escape }}"
+                                                        data-ubicacion="{{ c.ubicacion|escape }}"
+                                                        data-cubierta="{{ grupo.grouper.numero }}"
+                                                        data-precio="{{ c.precio|default:'0' }}"
+                                                        data-imagen="{% if c.imagen %}{{ c.imagen.url }}{% endif %}"
+                                                    >
 
+                                                    <span class="camarote-caja">
+                                                        {{ c.numero }}
+                                                    </span>
 
-                        <div>
-                            <div class="zona-titulo">CRUJÍA</div>
+                                                </label>
 
-                            <div class="zona-camarotes">
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                </div>
 
-                                {% for c in grupo.list %}
-                                    {% if c.ubicacion == 'Crujía' %}
+                                <!-- ESTRIBOR -->
+                                <div class="zona">
+                                    <h4 class="zona-titulo">ESTRIBOR</h4>
 
-                                        <label class="camarote-opcion {% if c.ocupado %}ocupado{% endif %}">
+                                    <div class="zona-camarotes">
+                                        {% for c in grupo.list %}
+                                            {% if c.ubicacion == 'Estribor' %}
 
-                                            <input type="radio"
-                                                   name="camarote_id"
-                                                   value="{{ c.id }}"
-                                                   {% if c.ocupado %}disabled{% endif %}
-                                                   required>
+                                                <label class="camarote-opcion {% if c.ocupado %}ocupado{% endif %}">
 
-                                            <div class="camarote-caja">
-                                                {{ c.numero }}
-                                            </div>
+                                                    <input
+                                                        type="radio"
+                                                        name="camarote_id"
+                                                        value="{{ c.id }}"
+                                                        {% if c.ocupado %}disabled{% endif %}
+                                                        data-numero="{{ c.numero }}"
+                                                        data-tipo="{{ c.tipo|escape }}"
+                                                        data-ubicacion="{{ c.ubicacion|escape }}"
+                                                        data-cubierta="{{ grupo.grouper.numero }}"
+                                                        data-precio="{{ c.precio|default:'0' }}"
+                                                        data-imagen="{% if c.imagen %}{{ c.imagen.url }}{% endif %}"
+                                                    >
 
-                                            <span class="info-camarote">
-                                                Camarote {{ c.numero }}
-                                                <br>
-                                                Tipo: {{ c.tipo }}
-                                                <br>
-                                                Ubicación: {{ c.ubicacion }}
-                                                <br>
-                                                {% if c.ocupado %}
-                                                    OCUPADO
-                                                {% else %}
-                                                    DISPONIBLE
-                                                {% endif %}
-                                            </span>
+                                                    <span class="camarote-caja">
+                                                        {{ c.numero }}
+                                                    </span>
 
-                                        </label>
+                                                </label>
 
-                                    {% endif %}
-                                {% endfor %}
-
-                            </div>
-                        </div>
-
-
-                        <div>
-                            <div class="zona-titulo">ESTRIBOR</div>
-
-                            <div class="zona-camarotes">
-
-                                {% for c in grupo.list %}
-                                    {% if c.ubicacion == 'Estribor' %}
-
-                                        <label class="camarote-opcion {% if c.ocupado %}ocupado{% endif %}">
-
-                                            <input type="radio"
-                                                   name="camarote_id"
-                                                   value="{{ c.id }}"
-                                                   {% if c.ocupado %}disabled{% endif %}
-                                                   required>
-
-                                            <div class="camarote-caja">
-                                                {{ c.numero }}
-                                            </div>
-
-                                            <span class="info-camarote">
-                                                Camarote {{ c.numero }}
-                                                <br>
-                                                Tipo: {{ c.tipo }}
-                                                <br>
-                                                Ubicación: {{ c.ubicacion }}
-                                                <br>
-                                                {% if c.ocupado %}
-                                                    OCUPADO
-                                                {% else %}
-                                                    DISPONIBLE
-                                                {% endif %}
-                                            </span>
-
-                                        </label>
-
-                                    {% endif %}
-                                {% endfor %}
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                </div>
 
                             </div>
-                        </div>
+                        </section>
 
-                    </div>
+                    {% empty %}
+                        <p class="sin-camarotes">
+                            No hay camarotes cargados para este navío.
+                        </p>
+                    {% endfor %}
 
                 </div>
 
-            {% empty %}
+                <!-- INFORMACIÓN DEL CAMAROTE -->
+                <aside class="panel-info">
 
-                <p>No hay camarotes cargados para este navío.</p>
+                    <h3>Información del camarote</h3>
 
-            {% endfor %}
+                    <p class="ayuda-seleccion" id="ayuda-seleccion">
+                        Seleccioná un camarote disponible para ver sus detalles.
+                    </p>
 
+                    <div id="detalle-camarote" hidden>
 
-            {% if camarotes %}
+                        <div class="imagen-camarote-contenedor" id="contenedor-imagen" hidden>
+                            <img id="imagen-camarote" src="" alt="Imagen del camarote">
+                        </div>
 
-                <div class="confirmar-reserva">
+                        <dl class="datos-camarote">
 
-                    <button type="submit" class="boton-principal">
+                            <div>
+                                <dt>Número</dt>
+                                <dd id="detalle-numero">-</dd>
+                            </div>
+
+                            <div>
+                                <dt>Tipo</dt>
+                                <dd id="detalle-tipo">-</dd>
+                            </div>
+
+                            <div>
+                                <dt>Ubicación</dt>
+                                <dd id="detalle-ubicacion">-</dd>
+                            </div>
+
+                            <div>
+                                <dt>Cubierta</dt>
+                                <dd id="detalle-cubierta">-</dd>
+                            </div>
+
+                            <div>
+                                <dt>Precio</dt>
+                                <dd id="detalle-precio">-</dd>
+                            </div>
+
+                        </dl>
+                    </div>
+
+                    <button
+                        type="submit"
+                        class="boton-principal boton-reservar"
+                        id="boton-reservar"
+                        disabled
+                    >
                         Solicitar reserva
                     </button>
 
-                </div>
+                </aside>
 
-            {% endif %}
-
+            </div>
         </form>
 
     {% endif %}
 
 </div>
 
-{% endblock %}
+<!-- ACTUALIZAR INFORMACIÓN AL SELECCIONAR -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
 
+    const opciones = document.querySelectorAll(
+        '.camarote-opcion input[type="radio"]'
+    );
+
+    const panel = document.querySelector('.panel-info');
+
+    if (!panel) {
+        return;
+    }
+
+    const ayuda = document.getElementById('ayuda-seleccion');
+    const detalle = document.getElementById('detalle-camarote');
+    const boton = document.getElementById('boton-reservar');
+
+    const contenedorImagen = document.getElementById('contenedor-imagen');
+    const imagen = document.getElementById('imagen-camarote');
+
+    opciones.forEach(function (opcion) {
+
+        opcion.addEventListener('change', function () {
+
+            document.querySelectorAll('.camarote-opcion').forEach(function (elemento) {
+                elemento.classList.remove('seleccionado');
+            });
+
+            opcion.closest('.camarote-opcion').classList.add('seleccionado');
+
+            document.getElementById('detalle-numero').textContent =
+                opcion.dataset.numero;
+
+            document.getElementById('detalle-tipo').textContent =
+                opcion.dataset.tipo;
+
+            document.getElementById('detalle-ubicacion').textContent =
+                opcion.dataset.ubicacion;
+
+            document.getElementById('detalle-cubierta').textContent =
+                opcion.dataset.cubierta;
+
+            const precio = Number(opcion.dataset.precio);
+
+            document.getElementById('detalle-precio').textContent =
+                precio.toLocaleString('es-AR', {
+                    style: 'currency',
+                    currency: 'ARS'
+                });
+
+            if (opcion.dataset.imagen) {
+                imagen.src = opcion.dataset.imagen;
+                contenedorImagen.hidden = false;
+            } else {
+                imagen.src = '';
+                contenedorImagen.hidden = true;
+            }
+
+            ayuda.hidden = true;
+            detalle.hidden = false;
+            boton.disabled = false;
+
+        });
+
+    });
+
+});
+</script>
+
+{% endblock %}
