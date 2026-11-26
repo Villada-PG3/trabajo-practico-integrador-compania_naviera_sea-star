@@ -2,7 +2,7 @@
 from django.contrib import admin
 from .models import (
     Navio, Cubierta, Camarote, Tripulante, Puerto,
-    Itinerario, Escala, Viaje, Pasajero, Perfil,
+    Itinerario, Escala, Viaje, Instalacion, Pasajero, Perfil,
     Reserva, Ticket, Notificacion
 )
 
@@ -47,6 +47,16 @@ class CamaroteAdmin(admin.ModelAdmin):
     list_per_page = 20
 
 
+# INSTALACIONES
+
+@admin.register(Instalacion)
+class InstalacionAdmin(admin.ModelAdmin):
+    list_display = ("nombre", "navio", "cubierta")
+    list_filter = ("navio",)
+    search_fields = ("nombre", "navio__nombre")
+    list_per_page = 20
+
+
 # TRIPULANTES
 
 @admin.register(Tripulante)
@@ -61,7 +71,7 @@ class TripulanteAdmin(admin.ModelAdmin):
 
 @admin.register(Puerto)
 class PuertoAdmin(admin.ModelAdmin):
-    list_display = ("nombre", "ciudad", "pais")
+    list_display = ("nombre", "ciudad", "pais", "latitud", "longitud")
     list_filter = ("pais",)
     search_fields = ("nombre", "ciudad", "pais")
     ordering = ("pais", "ciudad")

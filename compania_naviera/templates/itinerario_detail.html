@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Itinerario {{ itinerario.nombre }} | SEA STAR{% endblock %}
+
+{% block extra_css %}
+<!-- Leaflet: librería para mostrar mapas (usa los mapas de OpenStreetMap) -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+{% endblock %}
+
+{% block content %}
+
+<section class="page-header">
+    <div class="container">
+        <span class="section-tag">{{ itinerario.categoria|upper }}</span>
+        <h1>Itinerario {{ itinerario.nombre }}</h1>
+        <p>Recorré las paradas y la ruta del barco.</p>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+
+        <!-- MAPA DE LA RUTA -->
+        {% if paradas %}
+            <div id="mapa-ruta" class="mapa-ruta"></div>
+        {% else %}
+            <p class="aviso">Los puertos de este itinerario todavía no tienen coordenadas cargadas.</p>
+        {% endif %}
+
+        <!-- PARADAS CON SUS FOTOS -->
+        <div class="section-header" style="margin-top: 3rem;">
+            <span class="section-tag">PARADAS</span>
+            <h2 class="section-title">Destinos del recorrido</h2>
+        </div>
+
+        <div class="photo-grid">
+            {% for escala in escalas %}
+                <article class="photo-card">
+                    {% if escala.puerto.imagen %}
+                        <img src="{{ escala.puerto.imagen.url }}" alt="{{ escala.puerto.ciudad }}">
+                    {% else %}
+                        <div class="photo-placeholder">Sin foto</div>
+                    {% endif %}
+                    <div class="photo-card-body">
+                        <span class="photo-card-tag">Escala {{ escala.numero_escala }}</span>
+                        <h3>{{ escala.puerto.ciudad }}</h3>
+                        <p>{{ escala.puerto.nombre }} · {{ escala.puerto.pais }}</p>
+                    </div>
+                </article>
+            {% empty %}
+                <p>Este itinerario no tiene escalas registradas.</p>
+            {% endfor %}
+        </div>
+
+        <!-- VIAJES QUE HACEN ESTE ITINERARIO -->
+        {% if viajes %}
+            <div class="section-header" style="margin-top: 3rem;">
+                <span class="section-tag">PRÓXIMAS SALIDAS</span>
+                <h2 class="section-title">Cruceros con esta ruta</h2>
+            </div>
+
+            <div class="tabla-contenedor">
+                <table class="tabla">
+                    <thead>
+                        <tr><th>Navío</th><th>Fecha</th><th>Duración</th><th></th></tr>
+                    </thead>
+                    <tbody>
+                        {% for viaje in viajes %}
+                            <tr>
+                                <td>{{ viaje.navio.nombre }}</td>
+                                <td>{{ viaje.fecha|date:"d/m/Y" }}</td>
+                                <td>{{ viaje.duracion }} días</td>
+                                <td><a href="{% url 'reservar' %}?viaje={{ viaje.pk }}" class="offer-link">Reservar →</a></td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% endif %}
+
+        <div class="acciones-centro">
+            <a href="{% url 'itinerarios' %}" class="btn btn-navy">Volver a itinerarios</a>
+        </div>
+
+    </div>
+</section>
+
+<!-- Datos de las paradas que vienen de la vista (Python → JSON) -->
+{{ paradas|json_script:"paradas-data" }}
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="{% static 'mapa_ruta.js' %}"></script>
+
+{% endblock %}

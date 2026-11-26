@@ -1,72 +1,66 @@
 {% extends "base.html" %}
 
-{% block title %}SEA STAR - Navíos{% endblock %}
+{% block title %}Nuestra flota | SEA STAR{% endblock %}
 
 {% block content %}
 
-<section class="container" style="padding: 60px 0;">
+<section class="page-header">
+    <div class="container">
+        <span class="section-tag">NAVEGÁ CON NOSOTROS</span>
+        <h1>Nuestra flota</h1>
+        <p>Conocé nuestros navíos, sus camarotes y sus instalaciones.</p>
+    </div>
+</section>
 
-    <h1 style="text-align: center; color: #003b5c;">
-        Nuestra Flota
-    </h1>
+<section class="section section-dark">
+    <div class="container">
 
-    <p style="text-align: center; margin-bottom: 40px;">
-        Conocé nuestros navíos y sus características.
-    </p>
+        <div class="grid-3">
 
-    <div style="
-        display: flex;
-        flex-wrap: wrap;
-        gap: 25px;
-        justify-content: center;
-    ">
+            {% for navio in navios %}
 
-        {% for navio in navios %}
+                <article class="card-ship">
 
-            <div style="
-                background: white;
-                width: 350px;
-                padding: 25px;
-                border-radius: 12px;
-                box-shadow: 0 3px 15px rgba(0,0,0,0.1);
-            ">
+                    <div class="card-ship-img">
+                        {% if navio.imagen %}
+                            <img src="{{ navio.imagen.url }}" alt="{{ navio.nombre }}">
+                        {% else %}
+                            <div class="photo-placeholder">Sin foto</div>
+                        {% endif %}
+                        <span class="card-badge">{{ navio.clasificacion|upper }}</span>
+                    </div>
 
-                <h2 style="color: #003b5c;">
-                    {{ navio.nombre }}
-                </h2>
+                    <div class="card-ship-body">
+                        <h3 class="card-ship-title">{{ navio.nombre }}</h3>
+                        <p>Código {{ navio.codigo }}</p>
 
-                <p>
-                    <strong>Código:</strong>
-                    {{ navio.codigo }}
-                </p>
+                        <div class="card-ship-specs">
+                            <div class="spec-item">
+                                <strong>{{ navio.max_pasajeros }}</strong>
+                                Pasajeros
+                            </div>
+                            <div class="spec-item">
+                                <strong>{{ navio.cantidad_camarotes }}</strong>
+                                Camarotes
+                            </div>
+                        </div>
 
-                <p>
-                    <strong>Clasificación:</strong>
-                    {{ navio.clasificacion }}
-                </p>
+                        <a href="{% url 'navio_detail' navio.pk %}" class="btn btn-outline-gold">
+                            Ver navío y plano
+                        </a>
+                    </div>
 
-                <p>
-                    <strong>Capacidad:</strong>
-                    {{ navio.max_pasajeros }} pasajeros
-                </p>
+                </article>
 
-                <a href="{% url 'navio_detail' navio.pk %}"
-                   class="boton">
+            {% empty %}
 
-                    Ver detalles
+                <p class="section-description light">No hay navíos cargados actualmente.</p>
 
-                </a>
+            {% endfor %}
 
-            </div>
-
-        {% empty %}
-
-            <p>No hay navíos cargados actualmente.</p>
-
-        {% endfor %}
+        </div>
 
     </div>
-
 </section>
 
 {% endblock %}

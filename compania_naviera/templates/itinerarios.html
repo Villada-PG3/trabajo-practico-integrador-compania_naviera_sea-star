@@ -1,63 +1,68 @@
 {% extends "base.html" %}
 
-{% block title %}SEA STAR - Itinerarios{% endblock %}
+{% block title %}Itinerarios | SEA STAR{% endblock %}
 
 {% block content %}
 
-<h1 style="text-align: center; color: #003b5c; margin-bottom: 30px;">
-    Nuestros Itinerarios
-</h1>
+<section class="page-header">
+    <div class="container">
+        <span class="section-tag">RUTAS</span>
+        <h1>Nuestros itinerarios</h1>
+        <p>Cada itinerario recorre distintos puertos. Entrá a uno para ver la ruta en el mapa.</p>
+    </div>
+</section>
 
-<div style="
-    display: flex;
-    flex-wrap: wrap;
-    gap: 25px;
-    justify-content: center;
-">
+<section class="section">
+    <div class="container">
 
-    {% for itinerario in itinerarios %}
+        <div class="grid-3">
 
-    <div style="
-        background: white;
-        width: 350px;
-        padding: 25px;
-        border-radius: 10px;
-        box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-    ">
+            {% for itinerario in itinerarios %}
 
-        <h2 style="color: #003b5c;">
-            {{ itinerario.nombre }}
-        </h2>
+                <article class="card-itinerary">
 
-        <p>
-            <strong>Categoría:</strong>
-            {{ itinerario.categoria }}
-        </p>
+                    <!-- Foto de la primera parada -->
+                    {% with primera=itinerario.escala_set.all.0 %}
+                        {% if primera.puerto.imagen %}
+                            <img class="card-itinerary-img" src="{{ primera.puerto.imagen.url }}" alt="{{ primera.puerto.ciudad }}">
+                        {% endif %}
+                    {% endwith %}
 
-        <h3 style="margin-top: 20px;">
-            Escalas
-        </h3>
+                    <div class="card-itinerary-header">
+                        <h3>{{ itinerario.nombre }}</h3>
+                        <span class="card-badge-inline">{{ itinerario.categoria }}</span>
+                    </div>
 
-        <ol>
-            {% for escala in itinerario.escala_set.all %}
-                <li>
-                    {{ escala.puerto.nombre }}
-                    - {{ escala.puerto.ciudad }},
-                    {{ escala.puerto.pais }}
-                </li>
+                    <div class="card-itinerary-body">
+
+                        <ol class="route-timeline">
+                            {% for escala in itinerario.escala_set.all %}
+                                <li>
+                                    <strong>{{ escala.puerto.ciudad }}</strong>,
+                                    {{ escala.puerto.pais }}
+                                </li>
+                            {% empty %}
+                                <li>No hay escalas registradas.</li>
+                            {% endfor %}
+                        </ol>
+
+                        <a href="{% url 'itinerario_detail' itinerario.pk %}" class="btn btn-navy btn-block">
+                            Ver ruta en el mapa
+                        </a>
+
+                    </div>
+
+                </article>
+
             {% empty %}
-                <li>No hay escalas registradas.</li>
+
+                <p>No hay itinerarios cargados actualmente.</p>
+
             {% endfor %}
-        </ol>
+
+        </div>
 
     </div>
-
-    {% empty %}
-
-    <p>No hay itinerarios cargados actualmente.</p>
-
-    {% endfor %}
-
-</div>
+</section>
 
 {% endblock %}

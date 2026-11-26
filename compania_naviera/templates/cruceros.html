@@ -1,52 +1,74 @@
-
 {% extends 'base.html' %}
 
-{% block title %}SEA STAR - Cruceros{% endblock %}
+{% block title %}Cruceros | SEA STAR{% endblock %}
 
 {% block content %}
 
-<section class="container" style="padding: 60px 20px;">
+<section class="page-header">
+    <div class="container">
+        <span class="section-tag">PRÓXIMAS SALIDAS</span>
+        <h1>Nuestros cruceros</h1>
+        <p>Elegí tu viaje y reservá tu camarote.</p>
+    </div>
+</section>
 
-    <h1>Nuestros Cruceros</h1>
+<section class="section">
+    <div class="container">
 
-    <div style="display: flex; flex-wrap: wrap; gap: 25px;">
+        <div class="grid-3">
 
-        {% for viaje in viajes %}
+            {% for viaje in viajes %}
 
-        <div style="background: white; width: 350px; padding: 25px; border-radius: 10px;">
+                <article class="offer-card">
 
-            <h2>{{ viaje.navio.nombre }}</h2>
+                    <div class="offer-image">
+                        {% if viaje.imagen %}
+                            <img src="{{ viaje.imagen.url }}" alt="{{ viaje.navio.nombre }}">
+                        {% elif viaje.navio.imagen %}
+                            <img src="{{ viaje.navio.imagen.url }}" alt="{{ viaje.navio.nombre }}">
+                        {% else %}
+                            <div class="photo-placeholder">Sin foto</div>
+                        {% endif %}
+                        <span class="offer-label">{{ viaje.itinerario.categoria|upper }}</span>
+                    </div>
 
-            <p><strong>Fecha:</strong> {{ viaje.fecha }}</p>
+                    <div class="offer-body">
+                        <span class="offer-category">ITINERARIO {{ viaje.itinerario.nombre }}</span>
+                        <h3>{{ viaje.navio.nombre }}</h3>
 
-            <p><strong>Duración:</strong> {{ viaje.duracion }} días</p>
+                        <div class="offer-details">
+                            <span>◷ {{ viaje.fecha|date:"d/m/Y" }}</span>
+                            <span>☼ {{ viaje.duracion }} días</span>
+                        </div>
 
-            <p><strong>Itinerario:</strong> {{ viaje.itinerario.nombre }}</p>
+                        <div class="card-acciones">
+                            <a href="{% url 'itinerario_detail' viaje.itinerario.pk %}" class="offer-link">
+                                Ver ruta →
+                            </a>
 
-            {% if user.is_authenticated %}
+                            {% if user.is_authenticated %}
+                                <a href="{% url 'reservar' %}?viaje={{ viaje.pk }}" class="btn btn-gold">
+                                    Reservar
+                                </a>
+                            {% else %}
+                                <a href="{% url 'login' %}" class="btn btn-outline-navy">
+                                    Iniciá sesión para reservar
+                                </a>
+                            {% endif %}
+                        </div>
+                    </div>
 
-                <a href="{% url 'reservar' %}?viaje={{ viaje.pk }}" class="boton">
-                    Reservar este viaje
-                </a>
+                </article>
 
-            {% else %}
+            {% empty %}
 
-                <a href="{% url 'login' %}" class="boton">
-                    Iniciá sesión para reservar
-                </a>
+                <p>No hay cruceros disponibles actualmente. Primero deben cargarse viajes desde el administrador.</p>
 
-            {% endif %}
+            {% endfor %}
 
         </div>
 
-        {% empty %}
-
-        <p>No hay cruceros disponibles actualmente. Primero deben cargarse viajes desde el administrador.</p>
-
-        {% endfor %}
-
     </div>
-
 </section>
 
 {% endblock %}

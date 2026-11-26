@@ -1,6 +1,5 @@
 
-from sqlite3 import IntegrityError
-
+from django.db import IntegrityError
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
@@ -17,12 +16,66 @@ from .models import (
     Navio,
     Itinerario,
     Camarote,
+    Cubierta,
 )
 
 from .forms import (
     RegistroPasajeroForm,
     ReservaForm
 )
+
+
+# =====================================
+# PLANO DEL NAVIO
+# =====================================
+
+def armar_plano(navio, ocupados=None):
+    """
+    Arma la información para dibujar el plano del navío:
+    una lista de cubiertas, cada una con sus camarotes separados
+    por ubicación (Babor, Crujía, Estribor) y sus instalaciones.
+    'ocupados' es un conjunto con los id de camarotes ya reservados.
+    """
+
+    if ocupados is None:
+        ocupados = set()
+
+    cubiertas = Cubierta.objects.filter(
+        navio=navio
+    ).prefetch_related(
+        'camarote_set',
+        'instalaciones'
+    ).order_by('numero')
+
+    plano = []
+
+    for cubierta in cubiertas:
+
+        camarotes = sorted(
+            cubierta.camarote_set.all(),
+            key=lambda c: c.numero
+        )
+
+        for camarote in camarotes:
+            camarote.ocupado = camarote.id in ocupados
+
+        zonas = []
+
+        for ubicacion, nombre in Camarote.UBICACIONES:
+            zonas.append({
+                'nombre': nombre,
+                'camarotes': [
+                    c for c in camarotes if c.ubicacion == ubicacion
+                ],
+            })
+
+        plano.append({
+            'cubierta': cubierta,
+            'zonas': zonas,
+            'instalaciones': cubierta.instalaciones.all(),
+        })
+
+    return plano
 
 
 # =====================================
@@ -56,6 +109,24 @@ class NavioDetailView(DetailView):
 
         context['titulo'] = 'Detalles del navío'
 
+        context['plano'] = armar_plano(self.object)
+
+        context['instalaciones'] = self.object.instalaciones.all()
+
+        # Un camarote de ejemplo por cada tipo, para mostrar sus fotos
+        tipos = {}
+
+        for camarote in Camarote.objects.filter(
+            cubierta__navio=self.object
+        ).order_by('numero'):
+
+            if camarote.tipo not in tipos or (
+                camarote.imagen and not tipos[camarote.tipo].imagen
+            ):
+                tipos[camarote.tipo] = camarote
+
+        context['tipos_camarote'] = tipos.values()
+
         return context
 
 
@@ -69,7 +140,52 @@ class ItinerarioListView(ListView):
 
     def get_queryset(self):
 
-        return Itinerario.objects.all().order_by('nombre')
+        return Itinerario.objects.prefetch_related(
+            'escala_set__puerto'
+        ).order_by('nombre')
+
+
+# DETALLE DE UN ITINERARIO (MAPA DE LA RUTA)
+
+class ItinerarioDetailView(DetailView):
+
+    model = Itinerario
+    template_name = 'itinerario_detail.html'
+    context_object_name = 'itinerario'
+
+    def get_context_data(self, **kwargs):
+
+        context = super().get_context_data(**kwargs)
+
+        escalas = self.object.escala_set.select_related('puerto')
+
+        # Datos de cada parada que usa el mapa (JavaScript)
+        paradas = []
+
+        for escala in escalas:
+
+            puerto = escala.puerto
+
+            if puerto.latitud is None or puerto.longitud is None:
+                continue
+
+            paradas.append({
+                'escala': escala.numero_escala,
+                'nombre': puerto.nombre,
+                'ciudad': puerto.ciudad,
+                'pais': puerto.pais,
+                'lat': float(puerto.latitud),
+                'lng': float(puerto.longitud),
+                'imagen': puerto.imagen.url if puerto.imagen else '',
+            })
+
+        context['escalas'] = escalas
+        context['paradas'] = paradas
+        context['viajes'] = self.object.viaje_set.select_related(
+            'navio'
+        ).order_by('fecha')
+
+        return context
 
 
 # LISTAR CRUCEROS
@@ -94,7 +210,13 @@ class CruceroListView(ListView):
 
 def home(request):
 
-    return render(request, 'home.html')
+    navios = Navio.objects.all().order_by('nombre')
+
+    return render(
+        request,
+        'home.html',
+        {'navios': navios}
+    )
 
 
 # =====================================
@@ -261,7 +383,7 @@ def solicitar_reserva(request):
     viaje_id = request.GET.get('viaje') or request.POST.get('viaje_id')
 
     viaje = None
-    camarotes = []
+    plano = []
     camarote_seleccionado = None
 
     if viaje_id:
@@ -269,19 +391,6 @@ def solicitar_reserva(request):
         viaje = get_object_or_404(
             Viaje.objects.select_related('navio', 'itinerario'),
             id=viaje_id
-        )
-
-        camarotes = list(
-            Camarote.objects.filter(
-                cubierta__navio=viaje.navio
-            ).select_related(
-                'cubierta',
-                'cubierta__navio'
-            ).order_by(
-                'cubierta__numero',
-                'ubicacion',
-                'numero'
-            )
         )
 
         ocupados = set(
@@ -294,8 +403,15 @@ def solicitar_reserva(request):
             )
         )
 
-        for camarote in camarotes:
-            camarote.ocupado = camarote.id in ocupados
+        plano = armar_plano(viaje.navio, ocupados)
+
+        # Lista plana de todos los camarotes del navío
+        camarotes = [
+            c
+            for cubierta in plano
+            for zona in cubierta['zonas']
+            for c in zona['camarotes']
+        ]
 
         if request.method == 'POST':
 
@@ -351,11 +467,11 @@ def solicitar_reserva(request):
 
     return render(
         request,
-        'camarotes.html',
+        'reserva.html',
         {
             'viajes': viajes,
             'viaje': viaje,
-            'camarotes': camarotes,
+            'plano': plano,
             'camarote_seleccionado': camarote_seleccionado
         }
     )

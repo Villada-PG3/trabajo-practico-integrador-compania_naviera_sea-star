@@ -1,0 +1,122 @@
+{% comment %}
+    Plano interactivo del navío.
+    Se usa en navio_detail.html (solo para ver) y en reserva.html (para elegir).
+    Recibe:
+      - plano: lista de cubiertas armada por armar_plano() en views.py
+      - seleccionable: True si se puede elegir un camarote para reservar
+{% endcomment %}
+
+<div class="referencias">
+    <span class="referencia"><span class="color-camarote disponible-color"></span> Disponible</span>
+    {% if seleccionable %}
+        <span class="referencia"><span class="color-camarote ocupado-color"></span> Reservado</span>
+    {% endif %}
+    <span class="referencia"><span class="color-camarote seleccionado-color"></span> Seleccionado</span>
+    <span class="referencia"><span class="color-camarote instalacion-color"></span> Instalación</span>
+</div>
+
+<div class="reserva-layout">
+
+    <!-- PLANO: una cubierta debajo de la otra, la proa apunta a la derecha -->
+    <div class="mapa-contenedor">
+
+        {% for item in plano %}
+
+            <section class="cubierta-plano">
+
+                <header class="cubierta-titulo">
+                    <h3>Cubierta {{ item.cubierta.numero }}</h3>
+                    <p>{{ item.cubierta.descripcion }}</p>
+                </header>
+
+                <div class="casco">
+
+                    <span class="casco-etiqueta popa">POPA</span>
+                    <span class="casco-etiqueta proa">PROA</span>
+
+                    {% for zona in item.zonas %}
+
+                        <div class="zona">
+
+                            <h4 class="zona-titulo">{{ zona.nombre }}</h4>
+
+                            <div class="zona-camarotes">
+
+                                {% for c in zona.camarotes %}
+
+                                    <label
+                                        class="camarote-opcion elemento-mapa {% if c.ocupado %}ocupado{% endif %}"
+                                        data-titulo="Camarote {{ c.numero }}"
+                                        data-descripcion="{{ c.tipo }} · {{ c.ubicacion }} · Cubierta {{ item.cubierta.numero }}{% if c.ocupado %} · Ya reservado{% endif %}"
+                                        data-imagen="{% if c.imagen %}{{ c.imagen.url }}{% endif %}"
+                                        title="{{ c.tipo }}{% if c.ocupado %} (reservado){% endif %}"
+                                    >
+                                        <input
+                                            type="radio"
+                                            name="camarote_id"
+                                            value="{{ c.id }}"
+                                            {% if c.ocupado or not seleccionable %}disabled{% endif %}
+                                        >
+                                        <span class="camarote-caja">{{ c.numero }}</span>
+                                    </label>
+
+                                {% endfor %}
+
+                                {% if zona.nombre == 'Crujía' %}
+                                    {% for inst in item.instalaciones %}
+                                        <button
+                                            type="button"
+                                            class="instalacion-opcion elemento-mapa"
+                                            data-titulo="{{ inst.nombre }}"
+                                            data-descripcion="{{ inst.descripcion }}"
+                                            data-imagen="{% if inst.imagen %}{{ inst.imagen.url }}{% endif %}"
+                                        >
+                                            {{ inst.nombre }}
+                                        </button>
+                                    {% endfor %}
+                                {% endif %}
+
+                            </div>
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+            </section>
+
+        {% empty %}
+
+            <p class="sin-camarotes">Este navío todavía no tiene cubiertas cargadas.</p>
+
+        {% endfor %}
+
+    </div>
+
+    <!-- PANEL CON LA FOTO Y LOS DATOS DE LO QUE SE ELIGIÓ -->
+    <aside class="panel-info" id="panel-info">
+
+        <h3>Información</h3>
+
+        <p class="ayuda-seleccion" id="ayuda-seleccion">
+            Hacé clic en un camarote o en una instalación del plano para ver su foto.
+        </p>
+
+        <div id="detalle" hidden>
+            <div class="imagen-camarote-contenedor" id="contenedor-imagen" hidden>
+                <img id="detalle-imagen" src="" alt="">
+            </div>
+            <h4 id="detalle-titulo"></h4>
+            <p id="detalle-descripcion"></p>
+        </div>
+
+        {% if seleccionable %}
+            <button type="submit" class="boton-principal boton-reservar" id="boton-reservar" disabled>
+                Solicitar reserva
+            </button>
+        {% endif %}
+
+    </aside>
+
+</div>

@@ -191,83 +191,37 @@
         </div>
 
         <div class="grid-3">
-            <article class="card-ship">
-                <div class="card-ship-img">
-                    <img src="https://images.unsplash.com/photo-1548574505-5e2386962061?auto=format&fit=crop&w=800&q=85"
-                         alt="Navío de crucero SEA STAR I">
-                    <span class="card-badge">SUPER LUJO</span>
-                </div>
-                <div class="card-ship-body">
-                    <h3 class="card-ship-title">SEA STAR I</h3>
-                    <p>Una experiencia de navegación pensada para disfrutar cada momento.</p>
-                    <div class="card-ship-specs">
-                        <div class="spec-item">
-                            <strong>2.400</strong>
-                            Pasajeros*
-                        </div>
-                        <div class="spec-item">
-                            <strong>12</strong>
-                            Cubiertas*
-                        </div>
+            {% for navio in navios %}
+                <article class="card-ship">
+                    <div class="card-ship-img">
+                        {% if navio.imagen %}
+                            <img src="{{ navio.imagen.url }}" alt="{{ navio.nombre }}">
+                        {% else %}
+                            <div class="photo-placeholder">Sin foto</div>
+                        {% endif %}
+                        <span class="card-badge">{{ navio.clasificacion|upper }}</span>
                     </div>
-                    <a href="{% url 'navios' %}" class="btn btn-outline-gold">
-                        Conocer navío
-                    </a>
-                </div>
-            </article>
-
-            <article class="card-ship">
-                <div class="card-ship-img">
-                    <img src="https://images.unsplash.com/photo-1567899378494-47b22a2ae96a?auto=format&fit=crop&w=800&q=85"
-                         alt="Navío de crucero SEA STAR II">
-                    <span class="card-badge">LUJOSO</span>
-                </div>
-                <div class="card-ship-body">
-                    <h3 class="card-ship-title">SEA STAR II</h3>
-                    <p>Confort y entretenimiento para disfrutar travesías inolvidables.</p>
-                    <div class="card-ship-specs">
-                        <div class="spec-item">
-                            <strong>1.800</strong>
-                            Pasajeros*
+                    <div class="card-ship-body">
+                        <h3 class="card-ship-title">{{ navio.nombre }}</h3>
+                        <div class="card-ship-specs">
+                            <div class="spec-item">
+                                <strong>{{ navio.max_pasajeros }}</strong>
+                                Pasajeros
+                            </div>
+                            <div class="spec-item">
+                                <strong>{{ navio.cantidad_camarotes }}</strong>
+                                Camarotes
+                            </div>
                         </div>
-                        <div class="spec-item">
-                            <strong>Europa</strong>
-                            Rutas*
-                        </div>
+                        <a href="{% url 'navio_detail' navio.pk %}" class="btn btn-outline-gold">
+                            Conocer navío
+                        </a>
                     </div>
-                    <a href="{% url 'navios' %}" class="btn btn-outline-gold">
-                        Conocer navío
-                    </a>
-                </div>
-            </article>
-
-            <article class="card-ship">
-                <div class="card-ship-img">
-                    <img src="https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=800&q=85"
-                         alt="Navío de crucero SEA STAR III">
-                    <span class="card-badge">ESPECIAL</span>
-                </div>
-                <div class="card-ship-body">
-                    <h3 class="card-ship-title">SEA STAR III</h3>
-                    <p>Una propuesta para quienes buscan descubrir nuevos horizontes.</p>
-                    <div class="card-ship-specs">
-                        <div class="spec-item">
-                            <strong>3.100</strong>
-                            Pasajeros*
-                        </div>
-                        <div class="spec-item">
-                            <strong>Exploración</strong>
-                            Rutas*
-                        </div>
-                    </div>
-                    <a href="{% url 'navios' %}" class="btn btn-outline-gold">
-                        Conocer navío
-                    </a>
-                </div>
-            </article>
+                </article>
+            {% empty %}
+                <p class="section-description light">Todavía no hay navíos cargados.</p>
+            {% endfor %}
         </div>
-
-        
     </div>
 </section>
 <section class="section" id="compania">

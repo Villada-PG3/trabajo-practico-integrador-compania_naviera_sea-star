@@ -1,81 +1,71 @@
-/* Página de selección de camarotes */
+/* ==========================================================================
+   Plano interactivo del navío y página de reserva
+   (usa las variables de color definidas en base.css)
+   ========================================================================== */
 
 .reserva-contenedor {
-    max-width: 1200px;
-    margin: 40px auto;
-    padding: 20px;
-    color: #172b45;
+    padding: 2.5rem 0 4rem;
 }
 
-.reserva-titulo {
-    text-align: center;
-    margin-bottom: 30px;
-}
-
-.reserva-titulo h1 {
-    margin-bottom: 8px;
-    font-size: 32px;
-    font-weight: 700;
-}
-
-.reserva-titulo p {
-    color: #64748b;
-}
+/* --- Paso 1: elegir viaje --- */
 
 .selector-viaje {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     gap: 14px;
-    padding: 22px;
-    margin-bottom: 30px;
-    background: #f3f6fa;
-    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    background: var(--color-white);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
 }
 
-.selector-viaje h2 {
+.selector-viaje h2,
+.datos-viaje h2 {
     flex-basis: 100%;
-    margin: 0;
-    font-size: 20px;
+    font-size: 1.3rem;
+    color: var(--color-navy);
 }
 
 .selector-viaje select {
     flex: 1;
     min-width: 220px;
     padding: 12px;
-    border: 1px solid #ccd5e0;
-    border-radius: 8px;
-    background: white;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    background: var(--color-white);
+    font-family: inherit;
 }
 
 .boton-principal {
     padding: 12px 24px;
     border: 0;
-    border-radius: 8px;
-    background: #102b4e;
-    color: white;
+    border-radius: var(--radius-sm);
+    background: var(--color-navy);
+    color: var(--color-white);
+    font-family: inherit;
     font-weight: 600;
     cursor: pointer;
-    transition: background 0.2s, transform 0.2s;
+    transition: var(--transition);
 }
 
 .boton-principal:hover:not(:disabled) {
-    background: #1d4777;
+    background: var(--color-deep-blue);
     transform: translateY(-1px);
 }
 
 .boton-principal:disabled {
     cursor: not-allowed;
-    opacity: 0.5;
+    opacity: 0.45;
 }
 
-.datos-viaje h2 {
-    margin-bottom: 10px;
-    font-size: 23px;
+.datos-viaje {
+    margin-bottom: 1rem;
 }
 
 .datos-viaje p {
-    color: #52647b;
+    color: var(--color-gray-blue);
 }
 
 .separador {
@@ -83,13 +73,254 @@
     color: #a0aaba;
 }
 
-.mensajes-reserva {
-    margin-bottom: 20px;
+.nota {
+    font-size: 0.85rem;
+    margin-top: 0.3rem;
 }
 
-.mensaje-reserva {
-    padding: 12px 15px;
-    margin-bottom: 10px;
-    border-radius: 8px;
-    background: #e5edf7;
+/* --- Referencias de colores --- */
+
+.referencias {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+    color: var(--color-gray-blue);
+}
+
+.referencia {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.color-camarote {
+    width: 18px;
+    height: 18px;
+    border-radius: 4px;
+    display: inline-block;
+}
+
+.disponible-color   { background: #DCEFE3; border: 2px solid #3E9B63; }
+.ocupado-color      { background: #CBD2DA; border: 2px solid #94A3B8; }
+.seleccionado-color { background: var(--color-gold); border: 2px solid var(--color-navy); }
+.instalacion-color  { background: #E6EEF7; border: 2px solid var(--color-deep-blue); }
+
+/* --- Plano + panel lateral --- */
+
+.reserva-layout {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 2rem;
+    align-items: start;
+}
+
+.mapa-contenedor {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.cubierta-plano {
+    background: var(--color-white);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    padding: 1.2rem 1.5rem 1.5rem;
+}
+
+.cubierta-titulo {
+    margin-bottom: 1rem;
+}
+
+.cubierta-titulo h3 {
+    font-family: var(--font-serif);
+    color: var(--color-navy);
+}
+
+.cubierta-titulo p {
+    font-size: 0.85rem;
+    color: var(--color-gray-blue);
+}
+
+/* El casco: rectángulo con la proa redondeada a la derecha */
+.casco {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    padding: 1.8rem 5rem 1.8rem 1.5rem;
+    background: #F7FAFC;
+    border: 3px solid var(--color-deep-blue);
+    border-radius: 18px 50% 50% 18px / 18px 50% 50% 18px;
+}
+
+.casco-etiqueta {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%) rotate(-90deg);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: var(--color-gray-blue);
+}
+
+.casco-etiqueta.popa { left: -12px; }
+.casco-etiqueta.proa { right: 16px; transform: translateY(-50%) rotate(90deg); }
+
+.zona {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.zona-titulo {
+    width: 70px;
+    flex-shrink: 0;
+    font-size: 0.7rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--color-gray-blue);
+}
+
+.zona-camarotes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    min-height: 44px;
+    align-items: center;
+}
+
+/* --- Camarotes --- */
+
+.camarote-opcion {
+    cursor: pointer;
+}
+
+.camarote-opcion input {
+    display: none;
+}
+
+.camarote-caja {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 52px;
+    height: 44px;
+    border-radius: var(--radius-sm);
+    background: #DCEFE3;
+    border: 2px solid #3E9B63;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #1F5135;
+    transition: var(--transition);
+}
+
+.camarote-opcion:hover .camarote-caja {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+}
+
+.camarote-opcion.ocupado .camarote-caja {
+    background: #CBD2DA;
+    border-color: #94A3B8;
+    color: #64748B;
+    text-decoration: line-through;
+}
+
+.camarote-opcion.seleccionado .camarote-caja {
+    background: var(--color-gold);
+    border-color: var(--color-navy);
+    color: var(--color-navy);
+}
+
+/* --- Instalaciones dentro del plano --- */
+
+.instalacion-opcion {
+    height: 44px;
+    padding: 0 0.9rem;
+    border-radius: var(--radius-sm);
+    background: #E6EEF7;
+    border: 2px solid var(--color-deep-blue);
+    color: var(--color-deep-blue);
+    font-family: inherit;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.instalacion-opcion:hover {
+    transform: translateY(-2px);
+}
+
+.instalacion-opcion.seleccionado {
+    background: var(--color-gold);
+    border-color: var(--color-navy);
+    color: var(--color-navy);
+}
+
+/* --- Panel de información --- */
+
+.panel-info {
+    position: sticky;
+    top: 100px;
+    background: var(--color-white);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+    padding: 1.5rem;
+    border-top: 4px solid var(--color-gold);
+}
+
+.panel-info h3 {
+    font-family: var(--font-serif);
+    color: var(--color-navy);
+    margin-bottom: 0.8rem;
+}
+
+.ayuda-seleccion {
+    font-size: 0.9rem;
+    color: var(--color-gray-blue);
+}
+
+.imagen-camarote-contenedor img {
+    width: 100%;
+    height: 190px;
+    object-fit: cover;
+    border-radius: var(--radius-sm);
+    margin-bottom: 0.8rem;
+}
+
+#detalle-titulo {
+    color: var(--color-navy);
+    font-size: 1.1rem;
+}
+
+#detalle-descripcion {
+    font-size: 0.9rem;
+    color: var(--color-gray-blue);
+}
+
+.boton-reservar {
+    width: 100%;
+    margin-top: 1.2rem;
+}
+
+.sin-camarotes {
+    color: var(--color-gray-blue);
+}
+
+@media (max-width: 900px) {
+    .reserva-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .panel-info {
+        position: static;
+    }
+
+    .casco {
+        padding-right: 3rem;
+        border-radius: 18px 90px 90px 18px;
+    }
 }

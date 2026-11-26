@@ -25,6 +25,12 @@ urlpatterns = [
         name='itinerarios'
     ),
 
+    path(
+        'itinerarios/<int:pk>/',
+        views.ItinerarioDetailView.as_view(),
+        name='itinerario_detail'
+    ),
+
     # CRUCEROS
     path(
         'cruceros/',

@@ -1,140 +1,123 @@
-
 {% extends 'base.html' %}
-{% load static %}
 
 {% block title %}Mi cuenta | SEA STAR{% endblock %}
 
 {% block content %}
 
-<main class="container">
+<section class="page-header">
+    <div class="container">
+        <span class="section-tag">MI CUENTA</span>
+        <h1>Bienvenido, {{ perfil.pasajero.nombre }}</h1>
+        <p>Desde acá podés ver tus reservas, tus tickets y tus notificaciones.</p>
+    </div>
+</section>
 
-    <h1>Bienvenido {{ perfil.pasajero.nombre }}</h1>
+<section class="section">
+    <div class="container">
 
-    <p>Esta es tu cuenta de pasajero de SEA STAR.</p>
+        {% if messages %}
+            <div class="mensajes">
+                {% for message in messages %}
+                    <div class="mensaje {{ message.tags }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
 
-    <a href="{% url 'logout' %}">Cerrar sesión</a>
+        <!-- RESERVAS -->
+        <div class="cuenta-bloque">
 
-    <hr>
+            <div class="cuenta-bloque-header">
+                <h2>Mis reservas</h2>
+                <a href="{% url 'reservar' %}" class="btn btn-gold">Solicitar un viaje</a>
+            </div>
 
-    <h2>Mis reservas</h2>
-
-    {% for reserva in reservas %}
-
-        <div>
-            <h3>Reserva #{{ reserva.id }}</h3>
-
-            <p>Viaje: {{ reserva.viaje }}</p>
-
-            <p>Camarote: {{ reserva.camarote }}</p>
-
-            <p>Estado: {{ reserva.get_estado_display }}</p>
-
-            <p>Fecha de solicitud: {{ reserva.fecha_solicitud }}</p>
-        </div>
-
-    {% empty %}
-
-        <p>No tenés reservas todavía.</p>
-
-    {% endfor %}
-
-    <a href="{% url 'reservar' %}">
-        Solicitar un viaje
-    </a>
-
-    <hr>
-
-    <h2>Mis tickets</h2>
-
-    {% for ticket in tickets %}
-
-        <div>
-            <h3>Ticket {{ ticket.codigo }}</h3>
-
-            <p>
-                Navío:
-                {{ ticket.reserva.viaje.navio }}
-            </p>
-
-            <p>
-                Itinerario:
-                {{ ticket.reserva.viaje.itinerario }}
-            </p>
-
-            <p>
-                Fecha:
-                {{ ticket.reserva.viaje.fecha }}
-            </p>
-
-            <p>
-                Duración:
-                {{ ticket.reserva.viaje.duracion }} días
-            </p>
-
-            <p>
-                Camarote:
-                {{ ticket.reserva.camarote }}
-            </p>
-
-            <h4>Escalas</h4>
-
-            {% for escala in ticket.reserva.viaje.itinerario.escala_set.all %}
-
-                <p>
-                    {{ escala.numero_escala }} -
-                    {{ escala.puerto.nombre }},
-                    {{ escala.puerto.ciudad }}
-                </p>
-
-            {% empty %}
-
-                <p>Sin escalas registradas.</p>
-
-            {% endfor %}
-
-        </div>
-
-        <hr>
-
-    {% empty %}
-
-        <p>Todavía no tenés tickets emitidos.</p>
-
-    {% endfor %}
-
-    <hr>
-
-    <h2>Notificaciones</h2>
-
-    {% for notificacion in notificaciones %}
-
-        <div>
-            <p>{{ notificacion.mensaje }}</p>
-
-            <small>{{ notificacion.fecha }}</small>
-
-            {% if notificacion.leida %}
-
-                <p>Leída</p>
-
+            {% if reservas %}
+                <div class="tabla-contenedor">
+                    <table class="tabla">
+                        <thead>
+                            <tr>
+                                <th>#</th><th>Viaje</th><th>Camarote</th><th>Estado</th><th>Solicitada</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for reserva in reservas %}
+                                <tr>
+                                    <td>{{ reserva.id }}</td>
+                                    <td>{{ reserva.viaje }}</td>
+                                    <td>{{ reserva.camarote }}</td>
+                                    <td><span class="estado estado-{{ reserva.estado|lower }}">{{ reserva.get_estado_display }}</span></td>
+                                    <td>{{ reserva.fecha_solicitud|date:"d/m/Y H:i" }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             {% else %}
-
-                <a href="{% url 'leer_notificacion' notificacion.id %}">
-                    Marcar como leída
-                </a>
-
+                <p class="vacio">No tenés reservas todavía.</p>
             {% endif %}
 
         </div>
 
-        <hr>
+        <!-- TICKETS -->
+        <div class="cuenta-bloque">
 
-    {% empty %}
+            <div class="cuenta-bloque-header">
+                <h2>Mis tickets</h2>
+            </div>
 
-        <p>No tenés notificaciones.</p>
+            <div class="grid-3">
+                {% for ticket in tickets %}
+                    <article class="ticket">
+                        <span class="section-tag">TICKET</span>
+                        <h3>{{ ticket.reserva.viaje.navio }}</h3>
+                        <p><strong>Itinerario:</strong> {{ ticket.reserva.viaje.itinerario }}</p>
+                        <p><strong>Fecha:</strong> {{ ticket.reserva.viaje.fecha|date:"d/m/Y" }}</p>
+                        <p><strong>Duración:</strong> {{ ticket.reserva.viaje.duracion }} días</p>
+                        <p><strong>Camarote:</strong> {{ ticket.reserva.camarote }}</p>
 
-    {% endfor %}
+                        <ol class="route-timeline">
+                            {% for escala in ticket.reserva.viaje.itinerario.escala_set.all %}
+                                <li>{{ escala.puerto.ciudad }}</li>
+                            {% empty %}
+                                <li>Sin escalas registradas.</li>
+                            {% endfor %}
+                        </ol>
 
-</main>
+                        <small class="ticket-codigo">{{ ticket.codigo }}</small>
+                    </article>
+                {% empty %}
+                    <p class="vacio">Todavía no tenés tickets emitidos.</p>
+                {% endfor %}
+            </div>
+
+        </div>
+
+        <!-- NOTIFICACIONES -->
+        <div class="cuenta-bloque">
+
+            <div class="cuenta-bloque-header">
+                <h2>Notificaciones</h2>
+            </div>
+
+            {% for notificacion in notificaciones %}
+                <div class="notificacion {% if not notificacion.leida %}no-leida{% endif %}">
+                    <div>
+                        <p>{{ notificacion.mensaje }}</p>
+                        <small>{{ notificacion.fecha|date:"d/m/Y H:i" }}</small>
+                    </div>
+                    {% if notificacion.leida %}
+                        <span class="estado estado-leida">Leída</span>
+                    {% else %}
+                        <a href="{% url 'leer_notificacion' notificacion.id %}" class="offer-link">Marcar como leída</a>
+                    {% endif %}
+                </div>
+            {% empty %}
+                <p class="vacio">No tenés notificaciones.</p>
+            {% endfor %}
+
+        </div>
+
+    </div>
+</section>
 
 {% endblock %}

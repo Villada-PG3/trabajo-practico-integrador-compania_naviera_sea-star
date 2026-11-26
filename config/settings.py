@@ -120,6 +120,13 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 
+# ARCHIVOS SUBIDOS (IMÁGENES)
+
+MEDIA_URL = 'media/'
+
+MEDIA_ROOT = BASE_DIR / 'media'
+
+
 # CONFIGURACIÓN DE EMAIL
 
 MAILERS = {

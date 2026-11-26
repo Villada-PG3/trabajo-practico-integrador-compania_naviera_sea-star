@@ -88,6 +88,20 @@ class Puerto(models.Model):
         null=True
     )
 
+    # Coordenadas para ubicar el puerto en el mapa de la ruta
+    latitud = models.DecimalField(
+        max_digits=9,
+        decimal_places=6,
+        blank=True,
+        null=True
+    )
+    longitud = models.DecimalField(
+        max_digits=9,
+        decimal_places=6,
+        blank=True,
+        null=True
+    )
+
     def __str__(self):
         return f"{self.nombre} - {self.ciudad}"
 
@@ -118,6 +132,7 @@ class Escala(models.Model):
 
     class Meta:
         unique_together = ('itinerario', 'numero_escala')
+        ordering = ['numero_escala']
 
     def __str__(self):
         return f"{self.itinerario} - Escala {self.numero_escala}"
@@ -143,6 +158,14 @@ class Instalacion(models.Model):
         Navio,
         on_delete=models.CASCADE,
         related_name='instalaciones'
+    )
+    # Cubierta donde está la instalación (para mostrarla en el plano)
+    cubierta = models.ForeignKey(
+        Cubierta,
+        on_delete=models.SET_NULL,
+        related_name='instalaciones',
+        blank=True,
+        null=True
     )
     nombre = models.CharField(max_length=100)
     descripcion = models.TextField()

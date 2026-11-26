@@ -1,0 +1,1686 @@
+[
+  {
+    "model": "compania_naviera.navio",
+    "pk": 3,
+    "fields": {
+      "codigo": "SS-03",
+      "nombre": "Sea Star III",
+      "altura": "68",
+      "eslora": "345",
+      "manga": "41",
+      "desplazamiento": "186000",
+      "autonomia": "12000.00",
+      "cantidad_camarotes": 32,
+      "max_pasajeros": 3100,
+      "cantidad_motores": 4,
+      "cantidad_tripulantes": 1550,
+      "clasificacion": "Especial",
+      "imagen": "navios/sea_star_3.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.navio",
+    "pk": 2,
+    "fields": {
+      "codigo": "SS-02",
+      "nombre": "Sea Star II",
+      "altura": "55",
+      "eslora": "290",
+      "manga": "34",
+      "desplazamiento": "108000",
+      "autonomia": "12000.00",
+      "cantidad_camarotes": 32,
+      "max_pasajeros": 1800,
+      "cantidad_motores": 4,
+      "cantidad_tripulantes": 900,
+      "clasificacion": "Lujoso",
+      "imagen": "navios/sea_star_2.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.navio",
+    "pk": 1,
+    "fields": {
+      "codigo": "SS-01",
+      "nombre": "Sea Star I",
+      "altura": "62",
+      "eslora": "330",
+      "manga": "38",
+      "desplazamiento": "144000",
+      "autonomia": "12000.00",
+      "cantidad_camarotes": 32,
+      "max_pasajeros": 2400,
+      "cantidad_motores": 4,
+      "cantidad_tripulantes": 1200,
+      "clasificacion": "Super Lujo",
+      "imagen": "navios/sea_star_1.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.cubierta",
+    "pk": 1,
+    "fields": {
+      "navio": 1,
+      "numero": 1,
+      "encargado": "Laura Gómez",
+      "descripcion": "Cubierta principal: recepción y restaurante"
+    }
+  },
+  {
+    "model": "compania_naviera.camarote",
+    "pk": 1,
+    "fields": {
+      "cubierta": 1,
+      "numero": 101,
+      "tipo": "Exterior",
+      "ubicacion": "Babor",
+      "imagen": "camarotes/exterior.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.camarote",
+    "pk": 2,
+    "fields": {
+      "cubierta": 1,
+      "numero": 102,
+      "tipo": "Exterior",
+      "ubicacion": "Babor",
+      "imagen": "camarotes/exterior.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.camarote",
+    "pk": 3,
+    "fields": {
+      "cubierta": 1,
+      "numero": 103,
+      "tipo": "Exterior",
+      "ubicacion": "Babor",
+      "imagen": "camarotes/exterior.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.camarote",
+    "pk": 4,
+    "fields": {
+      "cubierta": 1,
+      "numero": 104,
+      "tipo": "Exterior",
+      "ubicacion": "Babor",
+      "imagen": "camarotes/exterior.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.camarote",
+    "pk": 5,
+    "fields": {
+      "cubierta": 1,
+      "numero": 105,
+      "tipo": "Exterior",
+      "ubicacion": "Babor",
+      "imagen": "camarotes/exterior.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.camarote",
+    "pk": 6,
+    "fields": {
+      "cubierta": 1,
+      "numero": 106,
+      "tipo": "Interior",
+      "ubicacion": "Crujía",
+      "imagen": "camarotes/interior.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.camarote",
+    "pk": 7,
+    "fields": {
+      "cubierta": 1,
+      "numero": 107,
+      "tipo": "Interior",
+      "ubicacion": "Crujía",
+      "imagen": "camarotes/interior.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.camarote",
+    "pk": 8,
+    "fields": {
+      "cubierta": 1,
+      "numero": 108,
+      "tipo": "Interior",
+      "ubicacion": "Crujía",
+      "imagen": "camarotes/interior.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.camarote",
+    "pk": 9,
+    "fields": {
+      "cubierta": 1,
+      "numero": 109,
+      "tipo": "Exterior",
+      "ubicacion": "Estribor",
+      "imagen": "camarotes/exterior.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.camarote",
+    "pk": 10,
+    "fields": {
+      "cubierta": 1,
+      "numero": 110,
+      "tipo": "Exterior",
+      "ubicacion": "Estribor",
+      "imagen": "camarotes/exterior.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.camarote",
+    "pk": 11,
+    "fields": {
+      "cubierta": 1,
+      "numero": 111,
+      "tipo": "Exterior",
+      "ubicacion": "Estribor",
+      "imagen": "camarotes/exterior.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.camarote",
+    "pk": 12,
+    "fields": {
+      "cubierta": 1,
+      "numero": 112,
+      "tipo": "Exterior",
+      "ubicacion": "Estribor",
+      "imagen": "camarotes/exterior.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.camarote",
+    "pk": 13,
+    "fields": {
+      "cubierta": 1,
+      "numero": 113,
+      "tipo": "Exterior",
+      "ubicacion": "Estribor",
+      "imagen": "camarotes/exterior.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.cubierta",
+    "pk": 2,
+    "fields": {
+      "navio": 1,
+      "numero": 2,
+      "encargado": "Martín Ruiz",
+      "descripcion": "Cubierta intermedia: camarotes con balcón, teatro y gimnasio"
+    }
+  },
+  {
+    "model": "compania_naviera.camarote",
+    "pk": 14,
+    "fields": {
+      "cubierta": 2,
+      "numero": 201,
+      "tipo": "Balcón",
+      "ubicacion": "Babor",
+      "imagen": "camarotes/balcon.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.camarote",
+    "pk": 15,
+    "fields": {
+      "cubierta": 2,
+      "numero": 202,
+      "tipo": "Balcón",
+      "ubicacion": "Babor",
+      "imagen": "camarotes/balcon.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.camarote",
+    "pk": 16,
+    "fields": {
+      "cubierta": 2,
+      "numero": 203,
+      "tipo": "Balcón",
+      "ubicacion": "Babor",
+      "imagen": "camarotes/balcon.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.camarote",
+    "pk": 17,
+    "fields": {
+      "cubierta": 2,
+      "numero": 204,
+      "tipo": "Balcón",
+      "ubicacion": "Babor",
+      "imagen": "camarotes/balcon.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.camarote",
+    "pk": 18,
+    "fields": {
+      "cubierta": 2,
+      "numero": 205,
+      "tipo": "Balcón",
+      "ubicacion": "Babor",
+      "imagen": "camarotes/balcon.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.camarote",
+    "pk": 19,
+    "fields": {
+      "cubierta": 2,
+      "numero": 206,
+      "tipo": "Interior",
+      "ubicacion": "Crujía",
+      "imagen": "camarotes/interior.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.camarote",
+    "pk": 20,
+    "fields": {
+      "cubierta": 2,
+      "numero": 207,
+      "tipo": "Interior",
+      "ubicacion": "Crujía",
+      "imagen": "camarotes/interior.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.camarote",
+    "pk": 21,
+    "fields": {
+      "cubierta": 2,
+      "numero": 208,
+      "tipo": "Interior",
+      "ubicacion": "Crujía",
+      "imagen": "camarotes/interior.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.camarote",
+    "pk": 22,
+    "fields": {
+      "cubierta": 2,
+      "numero": 209,
+      "tipo": "Balcón",
+      "ubicacion": "Estribor",
+      "imagen": "camarotes/balcon.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.camarote",
+    "pk": 23,
+    "fields": {
+      "cubierta": 2,
+      "numero": 210,
+      "tipo": "Balcón",
+      "ubicacion": "Estribor",
+      "imagen": "camarotes/balcon.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.camarote",
+    "pk": 24,
+    "fields": {
+      "cubierta": 2,
+      "numero": 211,
+      "tipo": "Balcón",
+      "ubicacion": "Estribor",
+      "imagen": "camarotes/balcon.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.camarote",
+    "pk": 25,
+    "fields": {
+      "cubierta": 2,
+      "numero": 212,
+      "tipo": "Balcón",
+      "ubicacion": "Estribor",
+      "imagen": "camarotes/balcon.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.camarote",
+    "pk": 26,
+    "fields": {
+      "cubierta": 2,
+      "numero": 213,
+      "tipo": "Balcón",
+      "ubicacion": "Estribor",
+      "imagen": "camarotes/balcon.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.cubierta",
+    "pk": 3,
+    "fields": {
+      "navio": 1,
+      "numero": 3,
+      "encargado": "Sofía Pérez",
+      "descripcion": "Cubierta superior: suites, piscina y spa"
+    }
+  },
+  {
+    "model": "compania_naviera.camarote",
+    "pk": 27,
+    "fields": {
+      "cubierta": 3,
+      "numero": 301,
+      "tipo": "Suite",
+      "ubicacion": "Babor",
+      "imagen": "camarotes/suite.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.camarote",
+    "pk": 28,
+    "fields": {
+      "cubierta": 3,
+      "numero": 302,
+      "tipo": "Suite",
+      "ubicacion": "Babor",
+      "imagen": "camarotes/suite.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.camarote",
+    "pk": 29,
+    "fields": {
+      "cubierta": 3,
+      "numero": 303,
+      "tipo": "Suite",
+      "ubicacion": "Babor",
+      "imagen": "camarotes/suite.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.camarote",
+    "pk": 30,
+    "fields": {
+      "cubierta": 3,
+      "numero": 304,
+      "tipo": "Suite",
+      "ubicacion": "Estribor",
+      "imagen": "camarotes/suite.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.camarote",
+    "pk": 31,
+    "fields": {
+      "cubierta": 3,
+      "numero": 305,
+      "tipo": "Suite",
+      "ubicacion": "Estribor",
+      "imagen": "camarotes/suite.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.camarote",
+    "pk": 32,
+    "fields": {
+      "cubierta": 3,
+      "numero": 306,
+      "tipo": "Suite",
+      "ubicacion": "Estribor",
+      "imagen": "camarotes/suite.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.instalacion",
+    "pk": 1,
+    "fields": {
+      "navio": 1,
+      "cubierta": 1,
+      "nombre": "Restaurante principal",
+      "descripcion": "Cocina internacional con vista al mar, abierto desayuno, almuerzo y cena.",
+      "imagen": "instalaciones/restaurante.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.instalacion",
+    "pk": 2,
+    "fields": {
+      "navio": 1,
+      "cubierta": 2,
+      "nombre": "Teatro",
+      "descripcion": "Shows en vivo, musicales y espectáculos todas las noches.",
+      "imagen": "instalaciones/teatro.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.instalacion",
+    "pk": 3,
+    "fields": {
+      "navio": 1,
+      "cubierta": 2,
+      "nombre": "Gimnasio",
+      "descripcion": "Equipamiento completo y clases grupales.",
+      "imagen": "instalaciones/gimnasio.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.instalacion",
+    "pk": 4,
+    "fields": {
+      "navio": 1,
+      "cubierta": 3,
+      "nombre": "Piscina",
+      "descripcion": "Piscina exterior con solárium y bar.",
+      "imagen": "instalaciones/piscina.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.instalacion",
+    "pk": 5,
+    "fields": {
+      "navio": 1,
+      "cubierta": 3,
+      "nombre": "Spa",
+      "descripcion": "Masajes, sauna y tratamientos de relajación.",
+      "imagen": "instalaciones/spa.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.cubierta",
+    "pk": 4,
+    "fields": {
+      "navio": 2,
+      "numero": 1,
+      "encargado": "Laura Gómez",
+      "descripcion": "Cubierta principal: recepción y restaurante"
+    }
+  },
+  {
+    "model": "compania_naviera.camarote",
+    "pk": 33,
+    "fields": {
+      "cubierta": 4,
+      "numero": 101,
+      "tipo": "Exterior",
+      "ubicacion": "Babor",
+      "imagen": "camarotes/exterior.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.camarote",
+    "pk": 34,
+    "fields": {
+      "cubierta": 4,
+      "numero": 102,
+      "tipo": "Exterior",
+      "ubicacion": "Babor",
+      "imagen": "camarotes/exterior.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.camarote",
+    "pk": 35,
+    "fields": {
+      "cubierta": 4,
+      "numero": 103,
+      "tipo": "Exterior",
+      "ubicacion": "Babor",
+      "imagen": "camarotes/exterior.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.camarote",
+    "pk": 36,
+    "fields": {
+      "cubierta": 4,
+      "numero": 104,
+      "tipo": "Exterior",
+      "ubicacion": "Babor",
+      "imagen": "camarotes/exterior.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.camarote",
+    "pk": 37,
+    "fields": {
+      "cubierta": 4,
+      "numero": 105,
+      "tipo": "Exterior",
+      "ubicacion": "Babor",
+      "imagen": "camarotes/exterior.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.camarote",
+    "pk": 38,
+    "fields": {
+      "cubierta": 4,
+      "numero": 106,
+      "tipo": "Interior",
+      "ubicacion": "Crujía",
+      "imagen": "camarotes/interior.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.camarote",
+    "pk": 39,
+    "fields": {
+      "cubierta": 4,
+      "numero": 107,
+      "tipo": "Interior",
+      "ubicacion": "Crujía",
+      "imagen": "camarotes/interior.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.camarote",
+    "pk": 40,
+    "fields": {
+      "cubierta": 4,
+      "numero": 108,
+      "tipo": "Interior",
+      "ubicacion": "Crujía",
+      "imagen": "camarotes/interior.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.camarote",
+    "pk": 41,
+    "fields": {
+      "cubierta": 4,
+      "numero": 109,
+      "tipo": "Exterior",
+      "ubicacion": "Estribor",
+      "imagen": "camarotes/exterior.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.camarote",
+    "pk": 42,
+    "fields": {
+      "cubierta": 4,
+      "numero": 110,
+      "tipo": "Exterior",
+      "ubicacion": "Estribor",
+      "imagen": "camarotes/exterior.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.camarote",
+    "pk": 43,
+    "fields": {
+      "cubierta": 4,
+      "numero": 111,
+      "tipo": "Exterior",
+      "ubicacion": "Estribor",
+      "imagen": "camarotes/exterior.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.camarote",
+    "pk": 44,
+    "fields": {
+      "cubierta": 4,
+      "numero": 112,
+      "tipo": "Exterior",
+      "ubicacion": "Estribor",
+      "imagen": "camarotes/exterior.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.camarote",
+    "pk": 45,
+    "fields": {
+      "cubierta": 4,
+      "numero": 113,
+      "tipo": "Exterior",
+      "ubicacion": "Estribor",
+      "imagen": "camarotes/exterior.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.cubierta",
+    "pk": 5,
+    "fields": {
+      "navio": 2,
+      "numero": 2,
+      "encargado": "Martín Ruiz",
+      "descripcion": "Cubierta intermedia: camarotes con balcón, teatro y gimnasio"
+    }
+  },
+  {
+    "model": "compania_naviera.camarote",
+    "pk": 46,
+    "fields": {
+      "cubierta": 5,
+      "numero": 201,
+      "tipo": "Balcón",
+      "ubicacion": "Babor",
+      "imagen": "camarotes/balcon.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.camarote",
+    "pk": 47,
+    "fields": {
+      "cubierta": 5,
+      "numero": 202,
+      "tipo": "Balcón",
+      "ubicacion": "Babor",
+      "imagen": "camarotes/balcon.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.camarote",
+    "pk": 48,
+    "fields": {
+      "cubierta": 5,
+      "numero": 203,
+      "tipo": "Balcón",
+      "ubicacion": "Babor",
+      "imagen": "camarotes/balcon.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.camarote",
+    "pk": 49,
+    "fields": {
+      "cubierta": 5,
+      "numero": 204,
+      "tipo": "Balcón",
+      "ubicacion": "Babor",
+      "imagen": "camarotes/balcon.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.camarote",
+    "pk": 50,
+    "fields": {
+      "cubierta": 5,
+      "numero": 205,
+      "tipo": "Balcón",
+      "ubicacion": "Babor",
+      "imagen": "camarotes/balcon.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.camarote",
+    "pk": 51,
+    "fields": {
+      "cubierta": 5,
+      "numero": 206,
+      "tipo": "Interior",
+      "ubicacion": "Crujía",
+      "imagen": "camarotes/interior.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.camarote",
+    "pk": 52,
+    "fields": {
+      "cubierta": 5,
+      "numero": 207,
+      "tipo": "Interior",
+      "ubicacion": "Crujía",
+      "imagen": "camarotes/interior.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.camarote",
+    "pk": 53,
+    "fields": {
+      "cubierta": 5,
+      "numero": 208,
+      "tipo": "Interior",
+      "ubicacion": "Crujía",
+      "imagen": "camarotes/interior.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.camarote",
+    "pk": 54,
+    "fields": {
+      "cubierta": 5,
+      "numero": 209,
+      "tipo": "Balcón",
+      "ubicacion": "Estribor",
+      "imagen": "camarotes/balcon.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.camarote",
+    "pk": 55,
+    "fields": {
+      "cubierta": 5,
+      "numero": 210,
+      "tipo": "Balcón",
+      "ubicacion": "Estribor",
+      "imagen": "camarotes/balcon.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.camarote",
+    "pk": 56,
+    "fields": {
+      "cubierta": 5,
+      "numero": 211,
+      "tipo": "Balcón",
+      "ubicacion": "Estribor",
+      "imagen": "camarotes/balcon.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.camarote",
+    "pk": 57,
+    "fields": {
+      "cubierta": 5,
+      "numero": 212,
+      "tipo": "Balcón",
+      "ubicacion": "Estribor",
+      "imagen": "camarotes/balcon.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.camarote",
+    "pk": 58,
+    "fields": {
+      "cubierta": 5,
+      "numero": 213,
+      "tipo": "Balcón",
+      "ubicacion": "Estribor",
+      "imagen": "camarotes/balcon.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.cubierta",
+    "pk": 6,
+    "fields": {
+      "navio": 2,
+      "numero": 3,
+      "encargado": "Sofía Pérez",
+      "descripcion": "Cubierta superior: suites, piscina y spa"
+    }
+  },
+  {
+    "model": "compania_naviera.camarote",
+    "pk": 59,
+    "fields": {
+      "cubierta": 6,
+      "numero": 301,
+      "tipo": "Suite",
+      "ubicacion": "Babor",
+      "imagen": "camarotes/suite.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.camarote",
+    "pk": 60,
+    "fields": {
+      "cubierta": 6,
+      "numero": 302,
+      "tipo": "Suite",
+      "ubicacion": "Babor",
+      "imagen": "camarotes/suite.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.camarote",
+    "pk": 61,
+    "fields": {
+      "cubierta": 6,
+      "numero": 303,
+      "tipo": "Suite",
+      "ubicacion": "Babor",
+      "imagen": "camarotes/suite.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.camarote",
+    "pk": 62,
+    "fields": {
+      "cubierta": 6,
+      "numero": 304,
+      "tipo": "Suite",
+      "ubicacion": "Estribor",
+      "imagen": "camarotes/suite.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.camarote",
+    "pk": 63,
+    "fields": {
+      "cubierta": 6,
+      "numero": 305,
+      "tipo": "Suite",
+      "ubicacion": "Estribor",
+      "imagen": "camarotes/suite.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.camarote",
+    "pk": 64,
+    "fields": {
+      "cubierta": 6,
+      "numero": 306,
+      "tipo": "Suite",
+      "ubicacion": "Estribor",
+      "imagen": "camarotes/suite.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.instalacion",
+    "pk": 6,
+    "fields": {
+      "navio": 2,
+      "cubierta": 4,
+      "nombre": "Restaurante principal",
+      "descripcion": "Cocina internacional con vista al mar, abierto desayuno, almuerzo y cena.",
+      "imagen": "instalaciones/restaurante.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.instalacion",
+    "pk": 7,
+    "fields": {
+      "navio": 2,
+      "cubierta": 5,
+      "nombre": "Teatro",
+      "descripcion": "Shows en vivo, musicales y espectáculos todas las noches.",
+      "imagen": "instalaciones/teatro.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.instalacion",
+    "pk": 8,
+    "fields": {
+      "navio": 2,
+      "cubierta": 5,
+      "nombre": "Gimnasio",
+      "descripcion": "Equipamiento completo y clases grupales.",
+      "imagen": "instalaciones/gimnasio.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.instalacion",
+    "pk": 9,
+    "fields": {
+      "navio": 2,
+      "cubierta": 6,
+      "nombre": "Piscina",
+      "descripcion": "Piscina exterior con solárium y bar.",
+      "imagen": "instalaciones/piscina.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.instalacion",
+    "pk": 10,
+    "fields": {
+      "navio": 2,
+      "cubierta": 6,
+      "nombre": "Spa",
+      "descripcion": "Masajes, sauna y tratamientos de relajación.",
+      "imagen": "instalaciones/spa.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.cubierta",
+    "pk": 7,
+    "fields": {
+      "navio": 3,
+      "numero": 1,
+      "encargado": "Laura Gómez",
+      "descripcion": "Cubierta principal: recepción y restaurante"
+    }
+  },
+  {
+    "model": "compania_naviera.camarote",
+    "pk": 65,
+    "fields": {
+      "cubierta": 7,
+      "numero": 101,
+      "tipo": "Exterior",
+      "ubicacion": "Babor",
+      "imagen": "camarotes/exterior.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.camarote",
+    "pk": 66,
+    "fields": {
+      "cubierta": 7,
+      "numero": 102,
+      "tipo": "Exterior",
+      "ubicacion": "Babor",
+      "imagen": "camarotes/exterior.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.camarote",
+    "pk": 67,
+    "fields": {
+      "cubierta": 7,
+      "numero": 103,
+      "tipo": "Exterior",
+      "ubicacion": "Babor",
+      "imagen": "camarotes/exterior.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.camarote",
+    "pk": 68,
+    "fields": {
+      "cubierta": 7,
+      "numero": 104,
+      "tipo": "Exterior",
+      "ubicacion": "Babor",
+      "imagen": "camarotes/exterior.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.camarote",
+    "pk": 69,
+    "fields": {
+      "cubierta": 7,
+      "numero": 105,
+      "tipo": "Exterior",
+      "ubicacion": "Babor",
+      "imagen": "camarotes/exterior.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.camarote",
+    "pk": 70,
+    "fields": {
+      "cubierta": 7,
+      "numero": 106,
+      "tipo": "Interior",
+      "ubicacion": "Crujía",
+      "imagen": "camarotes/interior.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.camarote",
+    "pk": 71,
+    "fields": {
+      "cubierta": 7,
+      "numero": 107,
+      "tipo": "Interior",
+      "ubicacion": "Crujía",
+      "imagen": "camarotes/interior.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.camarote",
+    "pk": 72,
+    "fields": {
+      "cubierta": 7,
+      "numero": 108,
+      "tipo": "Interior",
+      "ubicacion": "Crujía",
+      "imagen": "camarotes/interior.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.camarote",
+    "pk": 73,
+    "fields": {
+      "cubierta": 7,
+      "numero": 109,
+      "tipo": "Exterior",
+      "ubicacion": "Estribor",
+      "imagen": "camarotes/exterior.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.camarote",
+    "pk": 74,
+    "fields": {
+      "cubierta": 7,
+      "numero": 110,
+      "tipo": "Exterior",
+      "ubicacion": "Estribor",
+      "imagen": "camarotes/exterior.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.camarote",
+    "pk": 75,
+    "fields": {
+      "cubierta": 7,
+      "numero": 111,
+      "tipo": "Exterior",
+      "ubicacion": "Estribor",
+      "imagen": "camarotes/exterior.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.camarote",
+    "pk": 76,
+    "fields": {
+      "cubierta": 7,
+      "numero": 112,
+      "tipo": "Exterior",
+      "ubicacion": "Estribor",
+      "imagen": "camarotes/exterior.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.camarote",
+    "pk": 77,
+    "fields": {
+      "cubierta": 7,
+      "numero": 113,
+      "tipo": "Exterior",
+      "ubicacion": "Estribor",
+      "imagen": "camarotes/exterior.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.cubierta",
+    "pk": 8,
+    "fields": {
+      "navio": 3,
+      "numero": 2,
+      "encargado": "Martín Ruiz",
+      "descripcion": "Cubierta intermedia: camarotes con balcón, teatro y gimnasio"
+    }
+  },
+  {
+    "model": "compania_naviera.camarote",
+    "pk": 78,
+    "fields": {
+      "cubierta": 8,
+      "numero": 201,
+      "tipo": "Balcón",
+      "ubicacion": "Babor",
+      "imagen": "camarotes/balcon.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.camarote",
+    "pk": 79,
+    "fields": {
+      "cubierta": 8,
+      "numero": 202,
+      "tipo": "Balcón",
+      "ubicacion": "Babor",
+      "imagen": "camarotes/balcon.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.camarote",
+    "pk": 80,
+    "fields": {
+      "cubierta": 8,
+      "numero": 203,
+      "tipo": "Balcón",
+      "ubicacion": "Babor",
+      "imagen": "camarotes/balcon.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.camarote",
+    "pk": 81,
+    "fields": {
+      "cubierta": 8,
+      "numero": 204,
+      "tipo": "Balcón",
+      "ubicacion": "Babor",
+      "imagen": "camarotes/balcon.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.camarote",
+    "pk": 82,
+    "fields": {
+      "cubierta": 8,
+      "numero": 205,
+      "tipo": "Balcón",
+      "ubicacion": "Babor",
+      "imagen": "camarotes/balcon.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.camarote",
+    "pk": 83,
+    "fields": {
+      "cubierta": 8,
+      "numero": 206,
+      "tipo": "Interior",
+      "ubicacion": "Crujía",
+      "imagen": "camarotes/interior.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.camarote",
+    "pk": 84,
+    "fields": {
+      "cubierta": 8,
+      "numero": 207,
+      "tipo": "Interior",
+      "ubicacion": "Crujía",
+      "imagen": "camarotes/interior.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.camarote",
+    "pk": 85,
+    "fields": {
+      "cubierta": 8,
+      "numero": 208,
+      "tipo": "Interior",
+      "ubicacion": "Crujía",
+      "imagen": "camarotes/interior.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.camarote",
+    "pk": 86,
+    "fields": {
+      "cubierta": 8,
+      "numero": 209,
+      "tipo": "Balcón",
+      "ubicacion": "Estribor",
+      "imagen": "camarotes/balcon.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.camarote",
+    "pk": 87,
+    "fields": {
+      "cubierta": 8,
+      "numero": 210,
+      "tipo": "Balcón",
+      "ubicacion": "Estribor",
+      "imagen": "camarotes/balcon.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.camarote",
+    "pk": 88,
+    "fields": {
+      "cubierta": 8,
+      "numero": 211,
+      "tipo": "Balcón",
+      "ubicacion": "Estribor",
+      "imagen": "camarotes/balcon.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.camarote",
+    "pk": 89,
+    "fields": {
+      "cubierta": 8,
+      "numero": 212,
+      "tipo": "Balcón",
+      "ubicacion": "Estribor",
+      "imagen": "camarotes/balcon.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.camarote",
+    "pk": 90,
+    "fields": {
+      "cubierta": 8,
+      "numero": 213,
+      "tipo": "Balcón",
+      "ubicacion": "Estribor",
+      "imagen": "camarotes/balcon.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.cubierta",
+    "pk": 9,
+    "fields": {
+      "navio": 3,
+      "numero": 3,
+      "encargado": "Sofía Pérez",
+      "descripcion": "Cubierta superior: suites, piscina y spa"
+    }
+  },
+  {
+    "model": "compania_naviera.camarote",
+    "pk": 91,
+    "fields": {
+      "cubierta": 9,
+      "numero": 301,
+      "tipo": "Suite",
+      "ubicacion": "Babor",
+      "imagen": "camarotes/suite.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.camarote",
+    "pk": 92,
+    "fields": {
+      "cubierta": 9,
+      "numero": 302,
+      "tipo": "Suite",
+      "ubicacion": "Babor",
+      "imagen": "camarotes/suite.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.camarote",
+    "pk": 93,
+    "fields": {
+      "cubierta": 9,
+      "numero": 303,
+      "tipo": "Suite",
+      "ubicacion": "Babor",
+      "imagen": "camarotes/suite.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.camarote",
+    "pk": 94,
+    "fields": {
+      "cubierta": 9,
+      "numero": 304,
+      "tipo": "Suite",
+      "ubicacion": "Estribor",
+      "imagen": "camarotes/suite.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.camarote",
+    "pk": 95,
+    "fields": {
+      "cubierta": 9,
+      "numero": 305,
+      "tipo": "Suite",
+      "ubicacion": "Estribor",
+      "imagen": "camarotes/suite.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.camarote",
+    "pk": 96,
+    "fields": {
+      "cubierta": 9,
+      "numero": 306,
+      "tipo": "Suite",
+      "ubicacion": "Estribor",
+      "imagen": "camarotes/suite.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.instalacion",
+    "pk": 11,
+    "fields": {
+      "navio": 3,
+      "cubierta": 7,
+      "nombre": "Restaurante principal",
+      "descripcion": "Cocina internacional con vista al mar, abierto desayuno, almuerzo y cena.",
+      "imagen": "instalaciones/restaurante.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.instalacion",
+    "pk": 12,
+    "fields": {
+      "navio": 3,
+      "cubierta": 8,
+      "nombre": "Teatro",
+      "descripcion": "Shows en vivo, musicales y espectáculos todas las noches.",
+      "imagen": "instalaciones/teatro.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.instalacion",
+    "pk": 13,
+    "fields": {
+      "navio": 3,
+      "cubierta": 8,
+      "nombre": "Gimnasio",
+      "descripcion": "Equipamiento completo y clases grupales.",
+      "imagen": "instalaciones/gimnasio.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.instalacion",
+    "pk": 14,
+    "fields": {
+      "navio": 3,
+      "cubierta": 9,
+      "nombre": "Piscina",
+      "descripcion": "Piscina exterior con solárium y bar.",
+      "imagen": "instalaciones/piscina.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.instalacion",
+    "pk": 15,
+    "fields": {
+      "navio": 3,
+      "cubierta": 9,
+      "nombre": "Spa",
+      "descripcion": "Masajes, sauna y tratamientos de relajación.",
+      "imagen": "instalaciones/spa.jpg"
+    }
+  },
+  {
+    "model": "compania_naviera.puerto",
+    "pk": 1,
+    "fields": {
+      "nombre": "Puerto de Buenos Aires",
+      "ciudad": "Buenos Aires",
+      "pais": "Argentina",
+      "imagen": "destinos/buenos_aires.jpg",
+      "latitud": "-34.599700",
+      "longitud": "-58.371200"
+    }
+  },
+  {
+    "model": "compania_naviera.puerto",
+    "pk": 2,
+    "fields": {
+      "nombre": "Puerto de Río de Janeiro",
+      "ciudad": "Río de Janeiro",
+      "pais": "Brasil",
+      "imagen": "destinos/rio_de_janeiro.jpg",
+      "latitud": "-22.896000",
+      "longitud": "-43.181000"
+    }
+  },
+  {
+    "model": "compania_naviera.puerto",
+    "pk": 3,
+    "fields": {
+      "nombre": "Puerto de Barcelona",
+      "ciudad": "Barcelona",
+      "pais": "España",
+      "imagen": "destinos/barcelona.jpg",
+      "latitud": "41.352000",
+      "longitud": "2.170000"
+    }
+  },
+  {
+    "model": "compania_naviera.puerto",
+    "pk": 4,
+    "fields": {
+      "nombre": "Puerto de Civitavecchia",
+      "ciudad": "Roma",
+      "pais": "Italia",
+      "imagen": "destinos/roma.jpg",
+      "latitud": "42.093000",
+      "longitud": "11.790000"
+    }
+  },
+  {
+    "model": "compania_naviera.puerto",
+    "pk": 5,
+    "fields": {
+      "nombre": "Puerto de Athinios",
+      "ciudad": "Santorini",
+      "pais": "Grecia",
+      "imagen": "destinos/santorini.jpg",
+      "latitud": "36.417000",
+      "longitud": "25.432000"
+    }
+  },
+  {
+    "model": "compania_naviera.puerto",
+    "pk": 6,
+    "fields": {
+      "nombre": "Terminal de cruceros",
+      "ciudad": "Venecia",
+      "pais": "Italia",
+      "imagen": "destinos/venecia.jpg",
+      "latitud": "45.437000",
+      "longitud": "12.321000"
+    }
+  },
+  {
+    "model": "compania_naviera.puerto",
+    "pk": 7,
+    "fields": {
+      "nombre": "Terminal marítima",
+      "ciudad": "Cancún",
+      "pais": "México",
+      "imagen": "destinos/cancun.jpg",
+      "latitud": "21.161900",
+      "longitud": "-86.851500"
+    }
+  },
+  {
+    "model": "compania_naviera.puerto",
+    "pk": 8,
+    "fields": {
+      "nombre": "Prince George Wharf",
+      "ciudad": "Nassau",
+      "pais": "Bahamas",
+      "imagen": "destinos/nassau.jpg",
+      "latitud": "25.078000",
+      "longitud": "-77.343000"
+    }
+  },
+  {
+    "model": "compania_naviera.itinerario",
+    "pk": 1,
+    "fields": {
+      "nombre": "SUD-01",
+      "categoria": "Común"
+    }
+  },
+  {
+    "model": "compania_naviera.escala",
+    "pk": 1,
+    "fields": {
+      "itinerario": 1,
+      "puerto": 1,
+      "numero_escala": 1
+    }
+  },
+  {
+    "model": "compania_naviera.escala",
+    "pk": 2,
+    "fields": {
+      "itinerario": 1,
+      "puerto": 2,
+      "numero_escala": 2
+    }
+  },
+  {
+    "model": "compania_naviera.escala",
+    "pk": 3,
+    "fields": {
+      "itinerario": 1,
+      "puerto": 1,
+      "numero_escala": 3
+    }
+  },
+  {
+    "model": "compania_naviera.itinerario",
+    "pk": 2,
+    "fields": {
+      "nombre": "MED-01",
+      "categoria": "Super Lujo"
+    }
+  },
+  {
+    "model": "compania_naviera.escala",
+    "pk": 4,
+    "fields": {
+      "itinerario": 2,
+      "puerto": 3,
+      "numero_escala": 1
+    }
+  },
+  {
+    "model": "compania_naviera.escala",
+    "pk": 5,
+    "fields": {
+      "itinerario": 2,
+      "puerto": 4,
+      "numero_escala": 2
+    }
+  },
+  {
+    "model": "compania_naviera.escala",
+    "pk": 6,
+    "fields": {
+      "itinerario": 2,
+      "puerto": 5,
+      "numero_escala": 3
+    }
+  },
+  {
+    "model": "compania_naviera.escala",
+    "pk": 7,
+    "fields": {
+      "itinerario": 2,
+      "puerto": 6,
+      "numero_escala": 4
+    }
+  },
+  {
+    "model": "compania_naviera.itinerario",
+    "pk": 3,
+    "fields": {
+      "nombre": "CAR-01",
+      "categoria": "Lujoso"
+    }
+  },
+  {
+    "model": "compania_naviera.escala",
+    "pk": 8,
+    "fields": {
+      "itinerario": 3,
+      "puerto": 7,
+      "numero_escala": 1
+    }
+  },
+  {
+    "model": "compania_naviera.escala",
+    "pk": 9,
+    "fields": {
+      "itinerario": 3,
+      "puerto": 8,
+      "numero_escala": 2
+    }
+  },
+  {
+    "model": "compania_naviera.escala",
+    "pk": 10,
+    "fields": {
+      "itinerario": 3,
+      "puerto": 7,
+      "numero_escala": 3
+    }
+  },
+  {
+    "model": "compania_naviera.viaje",
+    "pk": 1,
+    "fields": {
+      "navio": 2,
+      "itinerario": 1,
+      "fecha": "2027-01-10",
+      "duracion": 8
+    }
+  },
+  {
+    "model": "compania_naviera.viaje",
+    "pk": 2,
+    "fields": {
+      "navio": 1,
+      "itinerario": 2,
+      "fecha": "2027-06-05",
+      "duracion": 12
+    }
+  },
+  {
+    "model": "compania_naviera.viaje",
+    "pk": 3,
+    "fields": {
+      "navio": 3,
+      "itinerario": 3,
+      "fecha": "2027-02-15",
+      "duracion": 7
+    }
+  },
+  {
+    "model": "compania_naviera.viaje",
+    "pk": 4,
+    "fields": {
+      "navio": 1,
+      "itinerario": 3,
+      "fecha": "2027-03-20",
+      "duracion": 7
+    }
+  },
+  {
+    "model": "compania_naviera.pasajero",
+    "pk": 1,
+    "fields": {
+      "tipo_documento": "DNI",
+      "numero_documento": "30111222",
+      "nombre": "Pasajero de ejemplo",
+      "pais_procedencia": "Argentina",
+      "ciudad_procedencia": "Córdoba"
+    }
+  },
+  {
+    "model": "compania_naviera.reserva",
+    "pk": 1,
+    "fields": {
+      "pasajero": 1,
+      "viaje": 2,
+      "camarote": 1,
+      "estado": "CONFIRMADA",
+      "fecha_solicitud": "2026-11-20T12:00:00Z"
+    }
+  },
+  {
+    "model": "compania_naviera.reserva",
+    "pk": 2,
+    "fields": {
+      "pasajero": 1,
+      "viaje": 2,
+      "camarote": 3,
+      "estado": "CONFIRMADA",
+      "fecha_solicitud": "2026-11-20T12:00:00Z"
+    }
+  },
+  {
+    "model": "compania_naviera.reserva",
+    "pk": 3,
+    "fields": {
+      "pasajero": 1,
+      "viaje": 2,
+      "camarote": 15,
+      "estado": "PENDIENTE",
+      "fecha_solicitud": "2026-11-20T12:00:00Z"
+    }
+  },
+  {
+    "model": "compania_naviera.reserva",
+    "pk": 4,
+    "fields": {
+      "pasajero": 1,
+      "viaje": 2,
+      "camarote": 28,
+      "estado": "CONFIRMADA",
+      "fecha_solicitud": "2026-11-20T12:00:00Z"
+    }
+  },
+  {
+    "model": "compania_naviera.reserva",
+    "pk": 5,
+    "fields": {
+      "pasajero": 1,
+      "viaje": 4,
+      "camarote": 2,
+      "estado": "CONFIRMADA",
+      "fecha_solicitud": "2026-11-20T12:00:00Z"
+    }
+  }
+]

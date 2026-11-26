@@ -1,347 +1,74 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block title %}Reservar camarote | SEA STAR{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'camarotes.css' %}">
+{% endblock %}
+
 {% block content %}
-<link rel="stylesheet" href="{% static 'css/camarotes.css' %}">
 
-<div class="reserva-contenedor">
-
-    <header class="reserva-titulo">
+<section class="page-header">
+    <div class="container">
+        <span class="section-tag">RESERVAS</span>
         <h1>Reservá tu camarote</h1>
-        <p>Elegí tu próximo destino con SEA STAR</p>
-    </header>
+        <p>Elegí tu crucero y seleccioná tu lugar en el plano del navío.</p>
+    </div>
+</section>
+
+<div class="container reserva-contenedor">
 
     {% if messages %}
-        <div class="mensajes-reserva">
+        <div class="mensajes">
             {% for message in messages %}
-                <div class="mensaje-reserva {{ message.tags }}">
-                    {{ message }}
-                </div>
+                <div class="mensaje {{ message.tags }}">{{ message }}</div>
             {% endfor %}
         </div>
     {% endif %}
 
-    <!-- SELECCIONAR VIAJE -->
+    <!-- 1. SELECCIONAR VIAJE -->
     <form method="GET" class="selector-viaje">
         <h2>1. Seleccioná tu crucero</h2>
 
         <select name="viaje" required>
             <option value="">Elegí un viaje</option>
-
             {% for v in viajes %}
-                <option value="{{ v.id }}"
-                    {% if viaje and viaje.id == v.id %}selected{% endif %}>
-                    {{ v.navio.nombre }} -
-                    {{ v.itinerario.nombre }} -
-                    {{ v.fecha|date:"d/m/Y" }}
+                <option value="{{ v.id }}" {% if viaje and viaje.id == v.id %}selected{% endif %}>
+                    {{ v.navio.nombre }} - {{ v.itinerario.nombre }} - {{ v.fecha|date:"d/m/Y" }}
                 </option>
             {% endfor %}
         </select>
 
-        <button type="submit" class="boton-principal">
-            Ver camarotes
-        </button>
+        <button type="submit" class="boton-principal">Ver camarotes</button>
     </form>
 
+    <!-- 2. ELEGIR CAMAROTE EN EL PLANO -->
     {% if viaje %}
 
         <section class="datos-viaje">
             <h2>2. Elegí tu camarote</h2>
             <p>
                 <strong>Navío:</strong> {{ viaje.navio.nombre }}
-                |
+                <span class="separador">|</span>
+                <strong>Itinerario:</strong> {{ viaje.itinerario.nombre }}
+                <span class="separador">|</span>
                 <strong>Fecha:</strong> {{ viaje.fecha|date:"d/m/Y" }}
             </p>
+            <p class="nota">Los camarotes en gris ya están reservados para este viaje.</p>
         </section>
 
-        <!-- REFERENCIAS DE COLORES -->
-        <div class="referencias">
-            <div class="referencia">
-                <span class="color-camarote disponible-color"></span>
-                Disponible
-            </div>
-
-            <div class="referencia">
-                <span class="color-camarote ocupado-color"></span>
-                Ocupado
-            </div>
-
-            <div class="referencia">
-                <span class="color-camarote seleccionado-color"></span>
-                Seleccionado
-            </div>
-        </div>
-
-        <form method="POST" id="form-reserva">
+        <form method="POST">
             {% csrf_token %}
-
             <input type="hidden" name="viaje_id" value="{{ viaje.id }}">
 
-            <div class="reserva-layout">
-
-                <!-- MAPA DE CAMAROTES -->
-                <div class="mapa-contenedor">
-
-                    {% regroup camarotes by cubierta as camarotes_por_cubierta %}
-
-                    {% for grupo in camarotes_por_cubierta %}
-
-                        <section class="cubierta-plano">
-
-                            <header class="cubierta-titulo">
-                                <h3>Cubierta {{ grupo.grouper.numero }}</h3>
-
-                                {% if grupo.grouper.descripcion %}
-                                    <p>{{ grupo.grouper.descripcion }}</p>
-                                {% endif %}
-                            </header>
-
-                            <div class="mapa-camarotes">
-
-                                <!-- BABOR -->
-                                <div class="zona">
-                                    <h4 class="zona-titulo">BABOR</h4>
-
-                                    <div class="zona-camarotes">
-                                        {% for c in grupo.list %}
-                                            {% if c.ubicacion == 'Babor' %}
-
-                                                <label class="camarote-opcion {% if c.ocupado %}ocupado{% endif %}">
-
-                                                    <input
-                                                        type="radio"
-                                                        name="camarote_id"
-                                                        value="{{ c.id }}"
-                                                        {% if c.ocupado %}disabled{% endif %}
-                                                        data-numero="{{ c.numero }}"
-                                                        data-tipo="{{ c.tipo|escape }}"
-                                                        data-ubicacion="{{ c.ubicacion|escape }}"
-                                                        data-cubierta="{{ grupo.grouper.numero }}"
-                                                        data-precio="{{ c.precio|default:'0' }}"
-                                                        data-imagen="{% if c.imagen %}{{ c.imagen.url }}{% endif %}"
-                                                    >
-
-                                                    <span class="camarote-caja">
-                                                        {{ c.numero }}
-                                                    </span>
-
-                                                </label>
-
-                                            {% endif %}
-                                        {% endfor %}
-                                    </div>
-                                </div>
-
-                                <!-- CRUJÍA -->
-                                <div class="zona zona-central">
-                                    <h4 class="zona-titulo">CRUJÍA</h4>
-
-                                    <div class="zona-camarotes">
-                                        {% for c in grupo.list %}
-                                            {% if c.ubicacion == 'Crujía' %}
-
-                                                <label class="camarote-opcion {% if c.ocupado %}ocupado{% endif %}">
-
-                                                    <input
-                                                        type="radio"
-                                                        name="camarote_id"
-                                                        value="{{ c.id }}"
-                                                        {% if c.ocupado %}disabled{% endif %}
-                                                        data-numero="{{ c.numero }}"
-                                                        data-tipo="{{ c.tipo|escape }}"
-                                                        data-ubicacion="{{ c.ubicacion|escape }}"
-                                                        data-cubierta="{{ grupo.grouper.numero }}"
-                                                        data-precio="{{ c.precio|default:'0' }}"
-                                                        data-imagen="{% if c.imagen %}{{ c.imagen.url }}{% endif %}"
-                                                    >
-
-                                                    <span class="camarote-caja">
-                                                        {{ c.numero }}
-                                                    </span>
-
-                                                </label>
-
-                                            {% endif %}
-                                        {% endfor %}
-                                    </div>
-                                </div>
-
-                                <!-- ESTRIBOR -->
-                                <div class="zona">
-                                    <h4 class="zona-titulo">ESTRIBOR</h4>
-
-                                    <div class="zona-camarotes">
-                                        {% for c in grupo.list %}
-                                            {% if c.ubicacion == 'Estribor' %}
-
-                                                <label class="camarote-opcion {% if c.ocupado %}ocupado{% endif %}">
-
-                                                    <input
-                                                        type="radio"
-                                                        name="camarote_id"
-                                                        value="{{ c.id }}"
-                                                        {% if c.ocupado %}disabled{% endif %}
-                                                        data-numero="{{ c.numero }}"
-                                                        data-tipo="{{ c.tipo|escape }}"
-                                                        data-ubicacion="{{ c.ubicacion|escape }}"
-                                                        data-cubierta="{{ grupo.grouper.numero }}"
-                                                        data-precio="{{ c.precio|default:'0' }}"
-                                                        data-imagen="{% if c.imagen %}{{ c.imagen.url }}{% endif %}"
-                                                    >
-
-                                                    <span class="camarote-caja">
-                                                        {{ c.numero }}
-                                                    </span>
-
-                                                </label>
-
-                                            {% endif %}
-                                        {% endfor %}
-                                    </div>
-                                </div>
-
-                            </div>
-                        </section>
-
-                    {% empty %}
-                        <p class="sin-camarotes">
-                            No hay camarotes cargados para este navío.
-                        </p>
-                    {% endfor %}
-
-                </div>
-
-                <!-- INFORMACIÓN DEL CAMAROTE -->
-                <aside class="panel-info">
-
-                    <h3>Información del camarote</h3>
-
-                    <p class="ayuda-seleccion" id="ayuda-seleccion">
-                        Seleccioná un camarote disponible para ver sus detalles.
-                    </p>
-
-                    <div id="detalle-camarote" hidden>
-
-                        <div class="imagen-camarote-contenedor" id="contenedor-imagen" hidden>
-                            <img id="imagen-camarote" src="" alt="Imagen del camarote">
-                        </div>
-
-                        <dl class="datos-camarote">
-
-                            <div>
-                                <dt>Número</dt>
-                                <dd id="detalle-numero">-</dd>
-                            </div>
-
-                            <div>
-                                <dt>Tipo</dt>
-                                <dd id="detalle-tipo">-</dd>
-                            </div>
-
-                            <div>
-                                <dt>Ubicación</dt>
-                                <dd id="detalle-ubicacion">-</dd>
-                            </div>
-
-                            <div>
-                                <dt>Cubierta</dt>
-                                <dd id="detalle-cubierta">-</dd>
-                            </div>
-
-                            <div>
-                                <dt>Precio</dt>
-                                <dd id="detalle-precio">-</dd>
-                            </div>
-
-                        </dl>
-                    </div>
-
-                    <button
-                        type="submit"
-                        class="boton-principal boton-reservar"
-                        id="boton-reservar"
-                        disabled
-                    >
-                        Solicitar reserva
-                    </button>
-
-                </aside>
-
-            </div>
+            {% include 'mapa_navio.html' with plano=plano seleccionable=True %}
         </form>
 
     {% endif %}
 
 </div>
 
-<!-- ACTUALIZAR INFORMACIÓN AL SELECCIONAR -->
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-
-    const opciones = document.querySelectorAll(
-        '.camarote-opcion input[type="radio"]'
-    );
-
-    const panel = document.querySelector('.panel-info');
-
-    if (!panel) {
-        return;
-    }
-
-    const ayuda = document.getElementById('ayuda-seleccion');
-    const detalle = document.getElementById('detalle-camarote');
-    const boton = document.getElementById('boton-reservar');
-
-    const contenedorImagen = document.getElementById('contenedor-imagen');
-    const imagen = document.getElementById('imagen-camarote');
-
-    opciones.forEach(function (opcion) {
-
-        opcion.addEventListener('change', function () {
-
-            document.querySelectorAll('.camarote-opcion').forEach(function (elemento) {
-                elemento.classList.remove('seleccionado');
-            });
-
-            opcion.closest('.camarote-opcion').classList.add('seleccionado');
-
-            document.getElementById('detalle-numero').textContent =
-                opcion.dataset.numero;
-
-            document.getElementById('detalle-tipo').textContent =
-                opcion.dataset.tipo;
-
-            document.getElementById('detalle-ubicacion').textContent =
-                opcion.dataset.ubicacion;
-
-            document.getElementById('detalle-cubierta').textContent =
-                opcion.dataset.cubierta;
-
-            const precio = Number(opcion.dataset.precio);
-
-            document.getElementById('detalle-precio').textContent =
-                precio.toLocaleString('es-AR', {
-                    style: 'currency',
-                    currency: 'ARS'
-                });
-
-            if (opcion.dataset.imagen) {
-                imagen.src = opcion.dataset.imagen;
-                contenedorImagen.hidden = false;
-            } else {
-                imagen.src = '';
-                contenedorImagen.hidden = true;
-            }
-
-            ayuda.hidden = true;
-            detalle.hidden = false;
-            boton.disabled = false;
-
-        });
-
-    });
-
-});
-</script>
+<script src="{% static 'mapa_navio.js' %}"></script>
 
 {% endblock %}
