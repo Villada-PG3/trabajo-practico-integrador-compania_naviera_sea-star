@@ -15,9 +15,12 @@ document.addEventListener('DOMContentLoaded', function () {
     // Crear el mapa y cargar el fondo de OpenStreetMap
     const mapa = L.map('mapa-ruta');
 
+    // referrerPolicy: OpenStreetMap exige saber desde qué sitio se piden los mapas.
+    // Django por defecto no lo envía, y sin esto OpenStreetMap bloquea las imágenes.
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 18,
-        attribution: '&copy; OpenStreetMap'
+        attribution: '&copy; OpenStreetMap',
+        referrerPolicy: 'strict-origin-when-cross-origin'
     }).addTo(mapa);
 
     const puntos = [];
